@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sushi'N Shake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'AsianNinja';
+    src: url('assets/aAsianNinja.woff2') format('woff2'),
+         url('assets/aAsianNinja.otf') format('opentype'),
+         url('assets/aAsianNinja.ttf') format('truetype');
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0B0B0C;
+    --deep: #111113;
+    --ivory: #F5F0E8;
+    --gold: #C9A84C;
+    --red: #fb8500;
+    --pink: #FF6B9D;
+    --pink-soft: #ff8fb5;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--black);
+    font-family: 'Josefin Sans', sans-serif;
+    overflow: hidden;
+  }
+
+  /* ── BACKGROUND PARTICLES ── */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── LAYOUT ── */
+  .entry-wrapper {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  /* ── TOP LABEL ── */
+  .entry-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  /* ── TITRE ── */
+  .entry-title {
+    font-family: 'AsianNinja', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    color: var(--ivory);
+    letter-spacing: 0.05em;
+    margin-bottom: 64px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .entry-title span { color: var(--red); }
+
+  /* ── CARDS ── */
+  .entry-cards {
+    display: flex;
+    gap: 32px;
+    align-items: stretch;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.9s 0.6s forwards;
+  }
+
+  .entry-card {
+    position: relative;
+    width: clamp(220px, 30vw, 320px);
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 28px 36px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-color 0.4s,
+                box-shadow 0.4s;
+    gap: 20px;
+  }
+
+  .entry-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .entry-card.sushi::before {
+    background: radial-gradient(ellipse at 50% 0%, rgba(251,133,0,0.15) 0%, transparent 70%);
+  }
+  .entry-card.sweety::before {
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,107,157,0.15) 0%, transparent 70%);
+  }
+
+  .entry-card:hover {
+    transform: translateY(-8px);
+  }
+  .entry-card.sushi:hover {
+    border-color: rgba(251,133,0,0.4);
+    box-shadow: 0 24px 60px rgba(251,133,0,0.2);
+  }
+  .entry-card.sweety:hover {
+    border-color: rgba(255,107,157,0.4);
+    box-shadow: 0 24px 60px rgba(255,107,157,0.2);
+  }
+  .entry-card:hover::before { opacity: 1; }
+
+  .entry-card-logo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.4s;
+  }
+  .entry-card:hover .entry-card-logo { transform: scale(1.06); }
+
+  /* Sweety logo placeholder (cercle rose avec texte) */
+  .sweety-logo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: radial-gradient(135deg, #2a1020 0%, #1a0812 100%);
+    border: 2px solid var(--pink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.4s;
+    box-shadow: 0 0 20px rgba(255,107,157,0.3);
+  }
+  .entry-card:hover .sweety-logo { transform: scale(1.06); }
+  .sweety-logo-emoji { font-size: 40px; }
+
+  .entry-card-name {
+    font-family: 'AsianNinja', serif;
+    font-size: 28px;
+    color: var(--ivory);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s;
+  }
+  .entry-card.sushi:hover .entry-card-name { color: var(--red); }
+  .entry-card.sweety:hover .entry-card-name { color: var(--pink); }
+
+  .entry-card-sub {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    line-height: 1.6;
+  }
+
+  .entry-card-btn {
+    margin-top: 8px;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    position: relative;
+    z-index: 1;
+  }
+  .entry-card.sushi .entry-card-btn {
+    background: var(--red);
+    color: #fff;
+  }
+  .entry-card.sushi .entry-card-btn:hover { background: #e07600; }
+  .entry-card.sweety .entry-card-btn {
+    background: var(--pink);
+    color: #fff;
+  }
+  .entry-card.sweety .entry-card-btn:hover { background: var(--pink-soft); }
+
+  /* Séparateur */
+  .entry-sep {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: rgba(245,240,232,0.2);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    flex-shrink: 0;
+  }
+  .entry-sep-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15), transparent);
+  }
+
+  /* ── FOOTER ── */
+  .entry-footer {
+    position: fixed;
+    bottom: 28px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.2);
+    text-align: center;
+  }
+  .entry-footer a {
+    color: var(--red);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .entry-footer a:hover { opacity: 1; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MOBILE ── */
+ @media (max-width: 768px) {
+  .entry-wrapper {
+    padding: 100px 24px 40px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+  .entry-eyebrow { margin-bottom: 24px; }
+  .entry-title { margin-bottom: 32px; font-size: clamp(24px, 6vw, 36px); }
+  .entry-cards {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+  }
+  .entry-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 24px;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: left;
+    gap: 12px;
+  }
+  .entry-card-logo, .sweety-logo {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+  .entry-card-name {
+    font-size: 20px;
+    flex: 1;
+  }
+  .entry-card-sub {
+    width: 100%;
+    font-size: 10px;
+    padding-left: 76px;
+  }
+  .entry-card-btn {
+    width: 100%;
+    margin-top: 4px;
+    padding: 10px 18px;
+    font-size: 10px;
+  }
+  .entry-card-logo, .sweety-logo {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+  }
+  .sweety-logo-emoji { font-size: 28px; }
+  .entry-card-name { font-size: 22px; }
+  .entry-card-sub { font-size: 10px; }
+  .entry-card-btn { margin-top: 4px; padding: 8px 18px; font-size: 9px; }
+  .entry-sep {
+    flex-direction: row;
+    width: 100%;
+    max-width: 360px;
+  }
+  .entry-sep-line { width: 60px; height: 1px; flex: 1; }
+  html, body { overflow: auto; height: auto; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="entry-wrapper">
+
+  <p class="entry-eyebrow">Liedekerke, Belgium · Fine Japanese Experience</p>
+
+  <h1 class="entry-title">Sushi'N <span>Shake</span></h1>
+
+  <div class="entry-cards">
+
+    <!-- CARD SUSHI'N SHAKE -->
+    <a href="sushin.html" class="entry-card sushi">
+      <img src="assets/sushinshake.png" alt="Sushi'N Shake" class="entry-card-logo"/>
+      <div class="entry-card-name">Sushi'N Shake</div>
+      <div class="entry-card-sub">Sushis · Donburi · Gyoza<br>Makis · Yakisoba · Drinks</div>
+      <button class="entry-card-btn">Commander</button>
+    </a>
+
+    <!-- SÉPARATEUR -->
+    <div class="entry-sep">
+      <div class="entry-sep-line"></div>
+      <span>ou</span>
+      <div class="entry-sep-line"></div>
+    </div>
+
+    <!-- CARD SWEETY -->
+    <a href="sweety.html" onclick="openSoon(event)" class="entry-card sweety">
+      <img src="assets/sushinshakes2.png" alt="Sushi'N Shake" class="entry-card-logo"/>
+      <div class="entry-card-name">Sweety</div>
+      <div class="entry-card-sub">Desserts · Mochis · Milkshakes<br>Bubble Tea · Smoothies</div>
+      <button class="entry-card-btn">Découvrir</button>
+    </a>
+
+  </div>
+
+</div>
+
+
+
+<script>
+/* ── PARTICLES ── */
+const canvas = document.getElementById('bg-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x      = Math.random() * W;
+    this.y      = Math.random() * H;
+    this.r      = Math.random() * 1.5 + 0.4;
+    this.speedX = (Math.random() - 0.5) * 0.25;
+    this.speedY = -(Math.random() * 0.35 + 0.08);
+    this.alpha  = Math.random() * 0.35 + 0.05;
+    // Mix orange et rose
+    this.color  = Math.random() > 0.5 ? '#fb8500' : '#FF6B9D';
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.alpha -= 0.0008;
+    if (this.alpha <= 0 || this.y < 0) this.reset();
+  }
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.alpha;
+    ctx.fillStyle   = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+function init() {
+  resize();
+  particles = [];
+  for (let i = 0; i < 70; i++) particles.push(new Particle());
+}
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', resize);
+init();
+animate();
+</script>
+
+<!-- POPUP BIENTÔT DISPO -->
+<div id="soon-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(8px);">
+  <div style="background:#1a1a1c;border:1px solid rgba(255,107,157,0.3);border-radius:24px;padding:48px 40px;width:90%;max-width:420px;text-align:center;">
+    <div style="font-size:52px;margin-bottom:20px;">🍓</div>
+    <div style="font-family:'AsianNinja',serif;font-size:38px;color:#F5F0E8;margin-bottom:12px;">Bientôt <span style="color:#FF6B9D;">Dispo</span></div>
+    <div style="font-size:13px;color:#8a8680;line-height:1.8;margin-bottom:28px;">
+      Le site Sweety est en cours de finalisation.<br>
+      Crêpes, Pancakes, Gaufres, Mochis et bien plus<br>
+      arrivent très bientôt !
+    </div>
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,107,157,0.1);border:1px solid rgba(255,107,157,0.3);border-radius:50px;padding:10px 20px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#FF6B9D;margin-bottom:28px;">
+      🚀 Ouverture prochaine
+    </div>
+    <br>
+    <button onclick="closeSoon()" style="padding:14px 32px;background:#FF6B9D;color:#fff;font-family:sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;">
+      Compris !
+    </button>
+  </div>
+</div>
+
+<script>
+function openSoon(e) {
+  e.preventDefault();
+  document.getElementById('soon-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeSoon() {
+  document.getElementById('soon-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweety — Sushi'N Shake Desserts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+<style>
+  @font-face {
+    font-family: 'AsianNinja';
+    src: url('assets/aAsianNinja.woff2') format('woff2'),
+         url('assets/aAsianNinja.otf') format('opentype'),
+         url('assets/aAsianNinja.ttf') format('truetype');
+  }
+
+  :root {
+    --black: #0B0B0C;
+    --deep: #110a0e;
+    --surface: #1a0f14;
+    --surface2: #221219;
+    --ivory: #F5F0E8;
+    --ivory2: #E8E2D6;
+    --muted: #8a8086;
+    --pink: #FF6B9D;
+    --pink-soft: #ff8fb5;
+    --pink-deep: #c94d7a;
+    --gold: #C9A84C;
+    --border: rgba(255,107,157,0.08);
+    --border2: rgba(255,107,157,0.18);
+    --font-display: 'AsianNinja', serif;
+    --font-ui: 'Josefin Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--font-ui);
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  /* ══ NAV ══ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 28px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.6s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(11,11,12,0.92);
+    backdrop-filter: blur(20px);
+    padding: 18px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links { display: flex; gap: 44px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(245,240,232,0.7); text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--pink); }
+  .nav-cta {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #fff; background: var(--pink); padding: 10px 22px;
+    border: none; border-radius: 50px; cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 16px rgba(255,107,157,0.3);
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--pink-soft); transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 1px; background: var(--ivory); display: block; }
+
+  /* ══ MOBILE MENU ══ */
+  #mobile-menu {
+    display: none; position: fixed; inset: 0;
+    background: rgba(11,11,12,0.98); z-index: 200;
+    flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+  }
+  #mobile-menu.open { display: flex; }
+  #mobile-menu a {
+    font-family: var(--font-display); font-size: 36px; font-weight: 300;
+    color: var(--ivory); text-decoration: none; transition: color 0.3s;
+  }
+  #mobile-menu a:hover { color: var(--pink); }
+  .close-menu {
+    position: absolute; top: 28px; right: 60px;
+    font-size: 28px; color: var(--muted); background: none; border: none; cursor: pointer;
+  }
+
+  /* ══ HERO ══ */
+  #hero {
+    height: 100vh; min-height: 700px;
+    position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .hero-bg {
+  position: absolute; inset: 0;
+}
+.hero-slide { 
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.4s ease-in-out;
+}
+.hero-slide::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(11,11,12,0.55) 0%,
+    rgba(11,11,12,0.35) 40%,
+    rgba(11,11,12,0.55) 70%,
+    rgba(11,11,12,0.85) 100%
+  );
+}
+.hero-slide.active { opacity: 1; }
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to bottom, rgba(11,11,12,0.4) 0%, rgba(11,11,12,0.2) 40%, rgba(11,11,12,0.7) 100%);
+  }
+  #particles-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .hero-content {
+    position: relative; z-index: 3; text-align: center; max-width: 900px; padding: 0 40px;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--pink); margin-bottom: 32px;
+    opacity: 0; transform: translateY(20px); animation: fadeUp 1s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: var(--font-display); font-size: clamp(52px, 8vw, 100px);
+    font-weight: 300; line-height: 1.0; color: var(--ivory);
+    opacity: 0; transform: translateY(30px); animation: fadeUp 1.2s 0.5s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--pink); display: block; }
+  .hero-sub {
+    font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--ivory); margin-top: 32px;
+    opacity: 0; transform: translateY(20px); animation: fadeUp 1s 0.9s forwards;
+  }
+  .hero-actions {
+    display: flex; flex-direction: column; gap: 12px; align-items: center;
+    margin-top: 48px; width: 100%; max-width: 360px; margin-left: auto; margin-right: auto;
+    opacity: 0; transform: translateY(20px); animation: fadeUp 1s 1.1s forwards;
+  }
+  .hero-btn-main {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 28px; background: var(--pink); color: #fff;
+    font-family: var(--font-ui); font-size: 13px; font-weight: 400; letter-spacing: 0.1em;
+    border: none; border-radius: 50px; text-decoration: none; cursor: pointer; width: 100%;
+    transition: background 0.3s, transform 0.2s; box-shadow: 0 8px 24px rgba(255,107,157,0.3);
+  }
+  .hero-btn-main:hover { background: var(--pink-soft); transform: translateY(-2px); }
+  .hero-btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 13px 28px; background: transparent; color: var(--ivory);
+    font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.1em;
+    border: 2px solid rgba(255,255,255,0.35); border-radius: 50px; text-decoration: none; width: 100%;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+  }
+  .hero-btn-ghost:hover { background: var(--ivory); color: var(--black); border-color: var(--ivory); }
+
+  /* ══ SECTION BASE ══ */
+  section { padding: 120px 60px; }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--pink); margin-bottom: 16px; display: block;
+  }
+  .section-title {
+    font-family: var(--font-display); font-size: clamp(36px, 5vw, 72px);
+    font-weight: 300; line-height: 1.1; color: var(--ivory);
+  }
+  .section-title em { font-style: italic; color: var(--pink); }
+  .divider { width: 40px; height: 1px; background: var(--pink); margin: 24px 0; opacity: 0.5; }
+
+  /* ══ MENU PRINCIPAL : CRÊPES / PANCAKES / GAUFRES ══ */
+  #bases {
+    background: var(--deep);
+    padding: 120px 60px;
+  }
+  .bases-header { text-align: center; margin-bottom: 72px; }
+  .bases-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .base-card {
+    background: var(--surface);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .base-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(255,107,157,0.15);
+  }
+  .base-card-img {
+    width: 100%; height: 220px; object-fit: cover; display: block;
+    transition: transform 0.5s ease;
+  }
+  .base-card:hover .base-card-img { transform: scale(1.05); }
+  .base-card-body { padding: 28px 28px 32px; }
+  .base-card-name {
+    font-family: var(--font-display); font-size: 36px; color: var(--ivory);
+    margin-bottom: 8px; line-height: 1;
+  }
+  .base-card-price {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--pink); color: #fff;
+    font-family: var(--font-display); font-size: 18px;
+    padding: 6px 16px; border-radius: 50px;
+    margin-bottom: 16px;
+  }
+  .base-card-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.7;
+  }
+
+  /* ══ SECTION COMPOSER ══ */
+  #composer {
+    background: var(--black);
+    padding: 120px 60px;
+  }
+  .composer-header { text-align: center; margin-bottom: 80px; }
+  .composer-cols {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .composer-col {
+    background: var(--surface);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .composer-col:hover { border-color: var(--border2); }
+  .composer-col-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .composer-col-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--pink); color: #fff;
+    font-family: var(--font-display); font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .composer-col-title {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--ivory); font-weight: 400;
+  }
+  .composer-items { padding: 8px 0; }
+  .composer-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 28px;
+    border-bottom: 1px solid rgba(255,107,157,0.05);
+    transition: background 0.2s;
+  }
+  .composer-item:last-child { border-bottom: none; }
+  .composer-item:hover { background: var(--surface2); }
+  .composer-item-name { font-size: 13px; color: var(--ivory2); }
+  .composer-item-price {
+    font-family: var(--font-display); font-size: 15px; color: var(--pink);
+  }
+
+  /* ══ EXTRA IRRESISTABLES (colonne pleine largeur) ══ */
+  .irresistables-full {
+    max-width: 1100px; margin: 32px auto 0;
+    background: var(--surface);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .irresistables-full-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .irresistables-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    padding: 8px 0;
+  }
+  .irresistables-grid .composer-item {
+    border-bottom: 1px solid rgba(255,107,157,0.05);
+    border-right: 1px solid rgba(255,107,157,0.05);
+  }
+  .irresistables-grid .composer-item:nth-child(3n) { border-right: none; }
+
+  /* ══ BOISSONS ══ */
+  #boissons {
+    background: var(--deep);
+    padding: 120px 60px;
+  }
+  .boissons-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+    background: var(--border);
+    max-width: 900px; margin: 60px auto 0;
+  }
+  .boisson-item {
+    background: var(--surface);
+    padding: 24px 28px;
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    transition: background 0.3s;
+  }
+  .boisson-item:hover { background: var(--surface2); }
+  .boisson-name {
+    font-family: var(--font-ui); font-size: 18px; color: var(--ivory); margin-bottom: 4px;
+  }
+  .boisson-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .boisson-price {
+    font-family: var(--font-display); font-size: 20px; color: var(--ivory2); white-space: nowrap;
+  }
+
+  /* ══ MOCHIS ══ */
+  #mochis {
+    background: var(--black);
+    padding: 80px 60px;
+  }
+  .mochis-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+    background: var(--border);
+    max-width: 900px; margin: 60px auto 0;
+  }
+
+  /* ══ CONTACT ══ */
+  #contact {
+    background: var(--deep);
+    padding: 120px 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  }
+  .contact-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+  .contact-block:last-of-type { border-bottom: none; }
+  .contact-block-label {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--pink); margin-bottom: 12px; display: block;
+  }
+  .contact-block-value {
+    font-family: var(--font-display); font-size: 22px; font-weight: 300;
+    color: var(--ivory); line-height: 1.5;
+  }
+  .hours-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px;
+  }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-day { color: var(--muted); letter-spacing: 0.1em; font-size: 12px; text-transform: uppercase; }
+  .hours-time { color: var(--ivory2); font-family: var(--font-display); font-size: 17px; }
+  .map-container { background: var(--surface); overflow: hidden; position: relative; }
+  .map-container iframe { width: 100%; height: 100%; min-height: 420px; border: none; display: block; }
+
+  /* ══ FOOTER ══ */
+  footer { background: var(--black); border-top: 1px solid var(--border); padding: 60px 60px 0; }
+  .footer-main {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px;
+  }
+  .footer-logo { font-family: var(--font-display); font-size: 26px; color: var(--ivory); margin-bottom: 16px; }
+  .footer-logo span { color: var(--pink); }
+  .footer-brand-desc { font-size: 13px; line-height: 1.8; color: var(--muted); margin-bottom: 20px; max-width: 260px; }
+  .footer-social {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border2);
+    color: var(--ivory); text-decoration: none; transition: border-color 0.3s, color 0.3s;
+  }
+  .footer-social:hover { border-color: var(--pink); color: var(--pink); }
+  .footer-col-title { font-size: 14px; font-weight: 400; color: var(--ivory); margin-bottom: 24px; }
+  .footer-nav { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .footer-nav a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .footer-nav a:hover { color: var(--ivory); }
+  .footer-hours { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .footer-hours li { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--muted); }
+  .footer-hours li span:last-child { color: var(--ivory2); }
+  .footer-contact-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .footer-contact-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--muted); }
+  .footer-contact-list a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .footer-contact-list a:hover { color: var(--ivory); }
+  .footer-bottom { border-top: 1px solid var(--border); padding: 24px 0; font-size: 12px; color: var(--muted); }
+
+  /* ══ FAB MOBILE ══ */
+  .fab-commander { display: none; }
+  @media (max-width: 768px) {
+    .fab-commander {
+      display: flex; align-items: center; justify-content: center;
+      position: fixed; bottom: 28px; right: 24px;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--pink); color: #fff; border: none; cursor: pointer;
+      z-index: 150; box-shadow: 0 8px 24px rgba(255,107,157,0.45);
+      transition: transform 0.3s, opacity 0.4s; opacity: 1;
+    }
+    .fab-commander.hidden { opacity: 0; pointer-events: none; transform: scale(0.8); }
+  }
+
+  /* ══ ANIMATIONS ══ */
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ══ RESPONSIVE ══ */
+  @media (max-width: 1024px) {
+    .bases-grid { grid-template-columns: 1fr 1fr; }
+    .composer-cols { grid-template-columns: 1fr; }
+    .irresistables-grid { grid-template-columns: repeat(2, 1fr); }
+    #contact { grid-template-columns: 1fr; }
+    .footer-main { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 24px 24px; }
+    nav.scrolled { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 80px 24px; }
+    #bases, #composer, #boissons, #mochis, #contact { padding: 80px 24px; }
+    .bases-grid { grid-template-columns: 1fr; }
+    .boissons-grid, .mochis-grid { grid-template-columns: 1fr; }
+    .irresistables-grid { grid-template-columns: 1fr; }
+    .irresistables-grid .composer-item { border-right: none; }
+    footer { padding: 48px 24px 0; }
+    .footer-main { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .footer-nav { align-items: center; }
+    .footer-hours li { flex-direction: column; align-items: center; gap: 2px; }
+    .footer-contact-list { align-items: center; }
+    .footer-bottom { text-align: center; }
+    .close-menu { right: 24px; }
+  }
+  @keyframes float3d {
+  0%, 100% {
+    transform: translateY(0px) rotateX(0deg) rotateZ(-1deg) scale(1);
+  }
+  25% {
+    transform: translateY(-10px) rotateX(6deg) rotateZ(1deg) scale(1.03);
+  }
+  50% {
+    transform: translateY(-16px) rotateX(0deg) rotateZ(-1deg) scale(1.05);
+  }
+  75% {
+    transform: translateY(-8px) rotateX(-4deg) rotateZ(1deg) scale(1.02);
+  }
+}
+
+/* ══════════════════════════════════
+   PANIER SWEETY — CSS (rose)
+══════════════════════════════════ */
+.cart-popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.cart-popup-overlay.open{display:flex;}
+.cart-popup{background:#1a0f14;border:1px solid rgba(255,107,157,0.2);border-radius:20px;padding:36px;width:90%;max-width:420px;position:relative;text-align:center;}
+.cart-popup-close{position:absolute;top:14px;right:18px;background:none;border:none;color:#8a8080;font-size:22px;cursor:pointer;line-height:1;}
+.cart-popup-close:hover{color:#F5F0E8;}
+.cart-popup-label{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;}
+.cart-popup-name{font-family:'AsianNinja',serif;font-size:26px;color:#F5F0E8;margin-bottom:6px;line-height:1.2;}
+.cart-popup-desc{font-size:12px;color:#8a8080;line-height:1.6;margin-bottom:8px;}
+.cart-popup-price{font-family:'AsianNinja',serif;font-size:22px;color:#E8E2D6;margin-bottom:28px;}
+.cart-qty-wrap{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:28px;}
+.cart-qty-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,107,157,0.3);background:rgba(255,107,157,0.08);color:#F5F0E8;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cart-qty-btn:hover{background:rgba(255,107,157,0.2);}
+.cart-qty-num{font-family:'AsianNinja',serif;font-size:36px;color:#F5F0E8;min-width:40px;text-align:center;}
+.cart-popup-add-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 24px;background:var(--pink);color:#fff;font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;transition:background 0.3s;box-shadow:0 8px 24px rgba(255,107,157,0.3);}
+.cart-popup-add-btn:hover{background:var(--pink-soft);}
+.cart-fab{position:fixed;bottom:28px;right:24px;width:64px;height:64px;border-radius:50%;background:var(--pink);color:#fff;border:none;cursor:pointer;z-index:400;box-shadow:0 8px 28px rgba(255,107,157,0.5);display:flex;align-items:center;justify-content:center;transition:transform 0.3s;}
+.cart-fab:hover{transform:scale(1.08);}
+.cart-fab.visible{display:flex;}
+.cart-fab-badge{position:absolute;top:-4px;right:-4px;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--pink);font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center;border:2px solid var(--pink);}
+.cart-fab.visible .cart-fab-badge{display:flex;}
+.cart-sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:700;}
+.cart-sidebar-overlay.open{display:block;}
+.cart-sidebar{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);height:100%;background:#110a0e;border-left:1px solid rgba(255,107,157,0.15);z-index:800;display:flex;flex-direction:column;transform:translateX(110%);transition:transform 0.4s ease;}
+.cart-sidebar.open{transform:translateX(0);}
+.cart-sidebar-header{padding:28px;border-bottom:1px solid rgba(255,107,157,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.cart-sidebar-title{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;}
+.cart-sidebar-title span{color:var(--pink);}
+.cart-sidebar-close{width:36px;height:36px;border-radius:50%;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.15);color:#8a8080;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cart-sidebar-close:hover{color:#F5F0E8;}
+.cart-sidebar-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#8a8080;font-size:14px;}
+.cart-items-list{flex:1;overflow-y:auto;padding:16px 0;font-family: var(--font-ui);}
+.cart-line-item{padding:16px 28px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,107,157,0.06);}
+.cart-line-item:hover{background:rgba(255,107,157,0.04);}
+.cart-line-info{flex:1;}
+.cart-line-name{font-family:'AsianNinja',serif;font-size:17px;color:#F5F0E8;margin-bottom:3px;font-family: var(--font-ui);}
+.cart-line-price{font-size:12px;color:#8a8080;}
+.cart-line-controls{display:flex;align-items:center;gap:8px;}
+.cart-line-qty-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,107,157,0.2);background:rgba(255,107,157,0.06);color:#F5F0E8;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cart-line-qty-btn.remove{border-color:rgba(255,107,157,0.4);color:var(--pink);}
+.cart-line-qty{font-family:'AsianNinja',serif;font-size:18px;color:#F5F0E8;min-width:20px;text-align:center;}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;width:100%;}
+.cart-total-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a8080;}
+.cart-total-price{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;}
+.cart-phone-wrap{margin-bottom:14px;}
+.cart-phone-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);display:block;margin-bottom:8px;}
+.cart-phone-input{width:100%;background:rgba(255,107,157,0.05);border:1px solid rgba(255,107,157,0.15);border-radius:12px;padding:14px 18px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:15px;outline:none;transition:border-color 0.3s;}
+.cart-phone-input:focus{border-color:var(--pink);}
+.cart-phone-input::placeholder{color:#8a8080;}
+.cart-phone-error{font-size:11px;color:var(--pink);margin-top:6px;display:none;}
+.cart-order-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 24px;background:#25D366;color:#fff;font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;transition:background 0.3s;box-shadow:0 6px 20px rgba(37,211,102,0.3);}
+.cart-order-btn:hover{background:#1ebe5a;}
+.cart-confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:900;align-items:center;justify-content:center;}
+.cart-confirm-overlay.open{display:flex;}
+.cart-confirm-box{background:#1a0f14;border:1px solid rgba(255,107,157,0.2);border-radius:20px;padding:40px;width:90%;max-width:400px;text-align:center;}
+.cart-confirm-icon{width:64px;height:64px;background:rgba(37,211,102,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.cart-confirm-title{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;margin-bottom:10px;}
+.cart-confirm-sub{font-size:13px;color:#8a8080;line-height:1.7;margin-bottom:28px;}
+.cart-confirm-btn{padding:14px 36px;background:var(--pink);color:#fff;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;}
+.cart-confirm-btn:hover{background:var(--pink-soft);}
+/* STEPPER */
+.cart-stepper{display:flex;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(255,107,157,0.1);flex-shrink:0;}
+.cart-step-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.cart-step-circle{width:28px;height:28px;border-radius:50%;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.15);color:#8a8080;font-family:'Josefin Sans',sans-serif;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.cart-step-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8080;transition:color 0.3s;}
+.cart-step-line{flex:1;height:1px;background:rgba(255,107,157,0.1);margin:0 4px;margin-bottom:16px;}
+.cart-step-item.active .cart-step-circle{background:var(--pink);border-color:var(--pink);color:#fff;}
+.cart-step-item.active .cart-step-label{color:var(--pink);}
+.cart-step-item.done .cart-step-circle{background:rgba(255,107,157,0.15);border-color:var(--pink);color:var(--pink);}
+.cart-step-item.done .cart-step-label{color:rgba(255,107,157,0.7);}
+.cart-step-content{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.cart-step-inner{flex:1;overflow-y:auto;padding:24px 28px;}
+.cart-step-title{font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;margin-bottom:8px;text-align:center;}
+.cart-step-sub{font-size:12px;color:#8a8080;text-align:center;margin-bottom:28px;letter-spacing:0.05em;}
+.cart-delivery-btns{display:flex;gap:12px;margin-top:8px;}
+.cart-delivery-choice-btn{flex:1;padding:24px 12px;background:rgba(255,107,157,0.04);border:1px solid rgba(255,107,157,0.12);border-radius:16px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.cart-delivery-choice-btn:hover{border-color:rgba(255,107,157,0.4);background:rgba(255,107,157,0.08);}
+.cart-delivery-choice-btn.selected{border-color:var(--pink);background:rgba(255,107,157,0.12);color:var(--pink);}
+.cart-delivery-choice-btn.selected svg{stroke:var(--pink);}
+.cart-input{width:100%;background:rgba(255,107,157,0.05);border:1px solid rgba(255,107,157,0.12);border-radius:10px;padding:12px 16px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:14px;outline:none;margin-bottom:10px;transition:border-color 0.3s;display:block;}
+.cart-input:focus{border-color:var(--pink);}
+.cart-input::placeholder{color:#8a8080;}
+.cart-step-footer{padding:16px 28px 28px;border-top:1px solid rgba(255,107,157,0.1);display:flex;gap:10px;flex-shrink:0;}
+.cart-next-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 24px;background:var(--pink);color:#fff;font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;transition:background 0.3s;box-shadow:0 6px 20px rgba(255,107,157,0.3);}
+.cart-next-btn:hover{background:var(--pink-soft);}
+.cart-back-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 20px;background:transparent;color:#8a8080;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(255,107,157,0.12);border-radius:50px;cursor:pointer;transition:all 0.3s;white-space:nowrap;}
+.cart-back-btn:hover{color:#F5F0E8;border-color:rgba(255,107,157,0.3);}
+.cart-order-btn-ghost{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 24px;background:transparent;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;border:1px solid rgba(255,107,157,0.2);border-radius:50px;cursor:pointer;transition:background 0.3s;}
+.cart-order-btn-ghost:hover{background:rgba(255,107,157,0.08);}
+
+
+/* ══ DESSERT BUILDER MODAL ══ */
+.builder-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.82); z-index: 650;
+  align-items: flex-end; justify-content: center;
+  backdrop-filter: blur(6px);
+}
+.builder-overlay.open { display: flex; }
+@media (min-width: 600px) {
+  .builder-overlay { align-items: center; }
+}
+.builder-modal {
+  background: #1a0f14;
+  border: 1px solid rgba(255,107,157,0.2);
+  border-radius: 24px 24px 0 0;
+  width: 100%; max-width: 560px;
+  max-height: 90vh; display: flex; flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+@media (min-width: 600px) {
+  .builder-modal { border-radius: 24px; max-height: 85vh; }
+}
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.builder-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(255,107,157,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.builder-base-info { display: flex; align-items: center; gap: 12px; }
+.builder-base-emoji { font-size: 28px; }
+.builder-base-name {
+  font-family: var(--font-display); font-size: 24px; color: #F5F0E8;
+}
+.builder-base-price { font-size: 13px; color: var(--pink); letter-spacing: 0.1em; }
+.builder-close {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,107,157,0.08); border: 1px solid rgba(255,107,157,0.15);
+  color: #8a8080; font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.builder-close:hover { color: #F5F0E8; }
+.builder-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.builder-section-title {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--pink); margin-bottom: 12px; margin-top: 20px; display: block;
+}
+.builder-section-title:first-child { margin-top: 0; }
+.builder-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,107,157,0.06);
+}
+.builder-item:last-child { border-bottom: none; }
+.builder-item-left { display: flex; flex-direction: column; gap: 2px; }
+.builder-item-name { font-size: 14px; color: #F5F0E8; }
+.builder-item-price { font-size: 12px; color: var(--pink); }
+.builder-item-controls { display: flex; align-items: center; gap: 10px; }
+.builder-qty-btn {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid rgba(255,107,157,0.3);
+  background: rgba(255,107,157,0.08);
+  color: #F5F0E8; font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.builder-qty-btn:hover { background: rgba(255,107,157,0.2); }
+.builder-qty-btn.minus { color: var(--pink); }
+.builder-qty-num {
+  font-family: var(--font-display); font-size: 18px;
+  color: #F5F0E8; min-width: 20px; text-align: center;
+}
+.builder-qty-num.active { color: var(--pink); }
+.builder-footer {
+  padding: 16px 24px 24px;
+  border-top: 1px solid rgba(255,107,157,0.1);
+  flex-shrink: 0;
+}
+.builder-total-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 14px;
+}
+.builder-total-label {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #8a8080;
+}
+.builder-total-price {
+  font-family: var(--font-display); font-size: 26px; color: #F5F0E8;
+}
+.builder-extras-summary {
+  font-size: 11px; color: rgba(255,107,157,0.7);
+  margin-bottom: 12px; line-height: 1.5;
+  min-height: 16px;
+}
+.builder-add-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 16px 24px;
+  background: var(--pink); color: #fff;
+  font-family: var(--font-ui); font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  border: none; border-radius: 50px; cursor: pointer;
+  transition: background 0.3s;
+  box-shadow: 0 8px 24px rgba(255,107,157,0.35);
+}
+.builder-add-btn:hover { background: var(--pink-soft); }
+
+
+/* ══ BUILDER CONFIRMATION + BASE PICKER ══ */
+.builder-confirm-screen {
+  display: none; flex-direction: column; align-items: center;
+  justify-content: center; padding: 32px 24px; gap: 20px; text-align: center;
+  flex: 1;
+}
+.builder-confirm-screen.show { display: flex; }
+.builder-confirm-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(255,107,157,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+}
+.builder-confirm-title {
+  font-family: var(--font-display); font-size: 22px; color: #F5F0E8;
+}
+.builder-confirm-sub {
+  font-size: 13px; color: #8a8080; line-height: 1.6;
+}
+.builder-base-picker {
+  display: flex; gap: 10px; width: 100%; justify-content: center; flex-wrap: wrap;
+}
+.builder-base-pick-btn {
+  flex: 1; min-width: 100px; padding: 14px 10px;
+  background: rgba(255,107,157,0.08);
+  border: 1px solid rgba(255,107,157,0.2);
+  border-radius: 14px; color: #F5F0E8;
+  font-family: var(--font-ui); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.builder-base-pick-btn:hover {
+  border-color: var(--pink); background: rgba(255,107,157,0.15); color: var(--pink);
+}
+.builder-base-pick-btn .pick-emoji { font-size: 24px; }
+.builder-base-pick-btn .pick-price { color: var(--pink); font-size: 11px; }
+.builder-cancel-btn {
+  background: transparent; border: none; color: #8a8080;
+  font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em;
+  text-transform: uppercase; cursor: pointer; text-decoration: underline;
+  padding: 8px;
+}
+.builder-cancel-btn:hover { color: #F5F0E8; }
+
+
+/* ══ BOISSONS CATÉGORIES ══ */
+.boisson-category-header {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: #F5F0E8;
+  padding: 20px 0 8px;
+  border-bottom: 2px solid var(--pink);
+  margin-bottom: 4px;
+  grid-column: 1 / -1;
+  letter-spacing: 0.05em;
+}
+
+/* ══ POPUP BIENTÔT DISPO ══ */
+.soon-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.85); z-index: 999;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
+}
+.soon-overlay.open { display: flex; }
+.soon-box {
+  background: #1a0f14;
+  border: 1px solid rgba(255,107,157,0.3);
+  border-radius: 24px;
+  padding: 48px 40px;
+  width: 90%; max-width: 420px;
+  text-align: center;
+  animation: slideUp 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.soon-emoji { font-size: 52px; margin-bottom: 20px; }
+.soon-title {
+  font-family: var(--font-display);
+  font-size: 38px; color: #F5F0E8;
+  margin-bottom: 12px;
+}
+.soon-title span { color: var(--pink); }
+.soon-sub {
+  font-size: 13px; color: #8a8080;
+  line-height: 1.8; margin-bottom: 28px;
+}
+.soon-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,107,157,0.1);
+  border: 1px solid rgba(255,107,157,0.3);
+  border-radius: 50px; padding: 10px 20px;
+  font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--pink);
+  margin-bottom: 28px;
+}
+.soon-close {
+  padding: 14px 32px;
+  background: var(--pink); color: #fff;
+  font-family: var(--font-ui); font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  border: none; border-radius: 50px; cursor: pointer;
+  transition: background 0.3s;
+}
+.soon-close:hover { background: var(--pink-soft); }
+
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu">
+  <button class="close-menu" onclick="document.getElementById('mobile-menu').classList.remove('open')">✕</button>
+  <a href="#bases" onclick="document.getElementById('mobile-menu').classList.remove('open')">Menu</a>
+  <a href="#composer" onclick="document.getElementById('mobile-menu').classList.remove('open')">Composer</a>
+  <a href="#boissons" onclick="document.getElementById('mobile-menu').classList.remove('open')">Boissons</a>
+  <a href="#contact" onclick="document.getElementById('mobile-menu').classList.remove('open')">Contact</a>
+  <a href="sushin.html" style="color:orange;">sushi'n shake</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+    <img src="assets/sushinshakes2.png" alt="Sweety" style="height:60px;width:auto;display:block;">
+    <span style="font-family:var(--font-display);font-size:22px;color:var(--pink);">Sweety</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#bases">Menu</a></li>
+    <li><a href="#composer">Composer</a></li>
+    <li><a href="#boissons">Boissons</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="sushin.html" style="color:var(--pink);">← Sushi'N Shake</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openCartSidebar()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+    Panier <span id="nav-cart-badge" style="display:none;background:#fff;color:var(--pink);border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;align-items:center;justify-content:center;margin-left:4px;">0</span>
+  </button>
+  <div class="hamburger" onclick="document.getElementById('mobile-menu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg">
+  <div class="hero-slide" style="background-image: url('assets/sweety.png');"></div>
+  <div class="hero-slide" style="background-image: url('assets/sweety1.png');"></div>
+</div>
+  <div class="hero-overlay"></div>
+  <canvas id="particles-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-eyebrow">🍓 Desserts · Liedekerke, Belgium</p>
+    <h1 class="hero-title">
+      Douceurs<br><em>sucrées.</em>
+    </h1>
+    <p class="hero-sub">Crêpes · Pancakes · Gaufres · Bubble Tea</p>
+    <div class="hero-actions">
+      <a href="#bases" class="hero-btn-main">
+        Voir le menu
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a href="tel:0233584444" class="hero-btn-ghost">
+        Commander par téléphone
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BASES : CRÊPES / PANCAKES / GAUFRES -->
+<section id="bases">
+  <div class="bases-header reveal">
+    <span class="section-label">Le Menu Sweety</span>
+    <h2 class="section-title">Choisissez<br>votre <em>base</em></h2>
+    <div class="divider"></div>
+    <p style="font-size:14px;color:rgba(245,240,232,0.6);max-width:500px;margin:0 auto;line-height:1.8;">
+      Composez votre dessert en choisissant d'abord votre base, puis ajoutez vos toppings, fruits et irrésistables.
+    </p>
+  </div>
+
+  <div class="bases-grid">
+
+    <!-- CRÊPES -->
+    <div class="base-card reveal" onclick="openDessertBuilder('Crêpes', 5.00)" style="cursor:pointer;">
+     <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
+  <img src="assets/crêpes.png" alt="Crêpes" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;"/>
+</div>
+      <div class="base-card-body">
+        <div class="base-card-name">Crêpes</div>
+        <div class="base-card-price">5 €</div>
+        <div class="base-card-desc">Crêpe dorée et légère, à garnir selon vos envies. La base classique, incontournable.</div>
+      </div>
+    </div>
+
+    <!-- PANCAKES -->
+    <div class="base-card reveal reveal-delay-1" onclick="openDessertBuilder('Pancakes', 5.50)" style="cursor:pointer;">
+      <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
+  <img src="assets/pancakes.png" alt="Pancakes" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.7s;"/>
+</div>
+      <div class="base-card-body">
+        <div class="base-card-name">Pancakes</div>
+        <div class="base-card-price">5.5 €</div>
+        <div class="base-card-desc">Pancakes moelleux et épais, parfaits pour accueillir toutes vos gourmandises.</div>
+      </div>
+    </div>
+
+    <!-- GAUFRES -->
+    <div class="base-card reveal reveal-delay-2" onclick="openDessertBuilder('Gaufres', 6.00)" style="cursor:pointer;">
+      <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
+  <img src="assets/gauffre.png" alt="Pancakes" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.7s;"/>
+</div>
+      <div class="base-card-body">
+        <div class="base-card-name">Gaufres</div>
+        <div class="base-card-price">6 €</div>
+        <div class="base-card-desc">Gaufres croustillantes dorées à la perfection, aux alvéoles généreuses.</div>
+      </div>
+    </div>
+
+
+    <!-- MOJITO -->
+    <div class="base-card reveal reveal-delay-3" onclick="openDrinkBuilder('Mojito')" style="cursor:pointer;">
+      <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
+        <img src="assets/mojito.png" alt="Mojito" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:1.2s;"/>
+      </div>
+      <div class="base-card-body">
+        <div class="base-card-name">Mojito</div>
+        <div class="base-card-price">5.90 €</div>
+        <div class="base-card-desc">Classique, Fraises ou Violette — mojito sans alcool, frais et désaltérant.</div>
+      </div>
+    </div>
+
+    <!-- MILKSHAKE -->
+    <div class="base-card reveal reveal-delay-3" onclick="openDrinkBuilder('Milkshake')" style="cursor:pointer;">
+      <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
+        <img src="assets/milkshake.png" alt="Milkshake" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.4s;"/>
+      </div>
+      <div class="base-card-body">
+        <div class="base-card-name">Milkshake</div>
+        <div class="base-card-price">5.90 €</div>
+        <div class="base-card-desc">Vanille, Kinder Bueno, Oreo, Spéculoos, Twix White, Rafaello et bien plus.</div>
+      </div>
+    </div>
+
+    <!-- SMOOTHIE -->
+    <div class="base-card reveal reveal-delay-3" onclick="openDrinkBuilder('Smoothie')" style="cursor:pointer;">
+      <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
+        <img src="assets/smoothie.png" alt="Smoothie" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.9s;"/>
+      </div>
+      <div class="base-card-body">
+        <div class="base-card-name">Smoothie</div>
+        <div class="base-card-price">5.90 €</div>
+        <div class="base-card-desc">Fraise, Framboise, Mangue, Avocat, Ananas, Tropical — ou créez votre propre mix !</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- À COMPOSER -->
+<section id="composer">
+  <div class="composer-header reveal">
+    <span class="section-label">À Composer</span>
+    <h2 class="section-title">Personnalisez<br>votre <em>dessert</em></h2>
+    <div class="divider" style="margin:24px auto;"></div>
+  </div>
+
+  <div class="composer-cols">
+
+    <!-- TOPPING -->
+    <div class="composer-col reveal">
+      <div class="composer-col-header">
+        <div class="composer-col-num">1</div>
+        <div class="composer-col-title">Topping</div>
+      </div>
+      <div class="composer-items">
+        <div class="composer-item"><span class="composer-item-name">Nutella</span><span class="composer-item-price">1.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Cassonade</span><span class="composer-item-price">1.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Chantilly</span><span class="composer-item-price">1.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Caramel beurre salé</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Coulis pistache</span><span class="composer-item-price">2.00€</span></div>
+      </div>
+    </div>
+
+    <!-- FRUITS -->
+    <div class="composer-col reveal reveal-delay-1">
+      <div class="composer-col-header">
+        <div class="composer-col-num">2</div>
+        <div class="composer-col-title">🍓 Fruits</div>
+      </div>
+      <div class="composer-items">
+        <div class="composer-item"><span class="composer-item-name">Fraises</span><span class="composer-item-price">1.75€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Ananas</span><span class="composer-item-price">1.25€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Mûres</span><span class="composer-item-price">1.25€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Myrtilles</span><span class="composer-item-price">1.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Mangue</span><span class="composer-item-price">1.50€</span></div>
+      </div>
+    </div>
+
+    <!-- IRRÉSISTABLES -->
+    <div class="composer-col reveal reveal-delay-2">
+      <div class="composer-col-header">
+        <div class="composer-col-num">3</div>
+        <div class="composer-col-title">Irrésistables</div>
+      </div>
+      <div class="composer-items">
+        <div class="composer-item"><span class="composer-item-name">Kinder Bueno</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Kinder Bueno White</span><span class="composer-item-price">2.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Kinder Country</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Oreo</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Spéculoos</span><span class="composer-item-price">1.50€</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- IRRÉSISTABLES SUPPLÉMENTAIRES -->
+  <div class="irresistables-full reveal" style="margin-top:32px;max-width:1100px;margin-left:auto;margin-right:auto;">
+    <div class="irresistables-full-header">
+      <div class="composer-col-num">+</div>
+      <div class="composer-col-title">Plus d'irrésistables</div>
+    </div>
+    <div class="irresistables-grid">
+      <div class="composer-item"><span class="composer-item-name">M&M's</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Snickers</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Mikado</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Brownie</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Noix de pécan</span><span class="composer-item-price">2.00€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Pistache</span><span class="composer-item-price">2.00€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Copeaux de choco</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Noix</span><span class="composer-item-price">2.00€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Rafaello</span><span class="composer-item-price">2.00€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Galak</span><span class="composer-item-price">2.00€</span></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- BOISSONS -->
+<section id="boissons">
+  <div class="reveal">
+    <span class="section-label">Boissons</span>
+    <h2 class="section-title">Pour accompagner<br>votre <em>douceur</em></h2>
+  </div>
+  <div class="boissons-grid">
+
+    <!-- SOFT -->
+    <div class="boisson-category-header">🥤 Soft</div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Pales Cola', 'Soft', 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Pales Cola</div></div><div class="boisson-price">€2.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Pales Orange Grenadine', 'Soft', 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Pales Orange Grenadine</div></div><div class="boisson-price">€2.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Pales Myrtille & Fraise', 'Soft', 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Pales Myrtille &amp; Fraise</div></div><div class="boisson-price">€2.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Pales Pêche & Violette', 'Soft', 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Pales Pêche &amp; Violette</div></div><div class="boisson-price">€2.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Eau plate', 'Soft', 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Eau plate</div></div><div class="boisson-price">€2.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Eau gazeuse', 'Soft', 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Eau gazeuse</div></div><div class="boisson-price">€2.50</div>
+    </div>
+
+    <!-- MOJITO -->
+    <div class="boisson-category-header">🍹 Mojito</div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mojito Classique', 'Sans alcool', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Classique</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mojito Fraises', 'Sans alcool', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Fraises</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mojito Violette', 'Sans alcool', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Violette</div></div><div class="boisson-price">€5.90</div>
+    </div>
+
+    <!-- MILKSHAKE -->
+    <div class="boisson-category-header">🥛 Milkshake</div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Vanille', 'Milkshake maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Vanille</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Kinder Bueno', 'Milkshake maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Kinder Bueno</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Oreo', 'Milkshake maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Oreo</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Spéculoos', 'Milkshake maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Spéculoos</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Twix White', 'Milkshake maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Twix White</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Kinder Bueno White', 'Milkshake maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Kinder Bueno White</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Rafaello', 'Milkshake maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Rafaello</div></div><div class="boisson-price">€5.90</div>
+    </div>
+
+    <!-- SMOOTHIE -->
+    <div class="boisson-category-header">🍓 Smoothie</div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Fraise', 'Smoothie maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Fraise</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Framboise', 'Smoothie maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Framboise</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Fruits des bois', 'Smoothie maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Fruits des bois</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Avocat', 'Smoothie maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Avocat</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Mangue', 'Smoothie maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mangue</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Ananas', 'Smoothie maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Ananas</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Tropical', 'Smoothie maison', 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name">Tropical</div></div><div class="boisson-price">€5.90</div>
+    </div>
+    <div class="boisson-item reveal" style="background:rgba(255,107,157,0.06);border:1px dashed rgba(255,107,157,0.3);border-radius:10px;justify-content:center;cursor:default;">
+      <div><div class="boisson-name" style="color:var(--pink);text-align:center;">Créez votre propre mix !</div><div class="boisson-desc" style="text-align:center;">Dites-nous vos fruits préférés</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOCHIS -->
+<section id="mochis">
+  <div class="reveal">
+    <span class="section-label">Desserts</span>
+    <h2 class="section-title">Nos <em>Desserts</em></h2>
+  </div>
+  <div class="mochis-grid">
+    <div class="boisson-item reveal" onclick="openAddToCart('Tiramisu', 'Dessert maison', 4.00)" style="cursor:pointer;">
+      <div><div class="boisson-name">Tiramisu</div></div><div class="boisson-price">€4.00</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Mango', '2 pcs.', 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mochi Ice Mango</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Framboise', '2 pcs.', 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mochi Ice Framboise</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Tropical', '2 pcs.', 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mochi Ice Tropical</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Chocolat', '2 pcs.', 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mochi Ice Chocolat</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Pistache', '2 pcs.', 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mochi Ice Pistache</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Lemon', '2 pcs.', 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mochi Ice Lemon</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Coco', '2 pcs.', 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mochi Ice Coco</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    </div>
+    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Spéculoos', '2 pcs.', 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name">Mochi Ice Spéculoos</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-info reveal">
+    <span class="section-label">Nous Trouver</span>
+    <h2 class="section-title" style="margin-bottom:48px">Venez nous<br><em>rendre visite</em></h2>
+    <div class="contact-block">
+      <span class="contact-block-label">Adresse</span>
+      <div class="contact-block-value">Opperstraat 59<br>1770 Liedekerke, Belgium</div>
+    </div>
+    <div class="contact-block">
+      <span class="contact-block-label">Horaires</span>
+      <div>
+        <div class="hours-row"><span class="hours-day">Lundi – Jeudi</span><span class="hours-time">16:00 – 22:30</span></div>
+        <div class="hours-row"><span class="hours-day">Vendredi – Samedi</span><span class="hours-time">16:00 – 00:00</span></div>
+        <div class="hours-row"><span class="hours-day">Dimanche</span><span class="hours-time">16:00 – 23:00</span></div>
+      </div>
+    </div>
+    <div class="contact-block">
+      <span class="contact-block-label">Téléphone</span>
+      <div class="contact-block-value"><a href="tel:0233584444" style="color:var(--ivory);text-decoration:none;">02 335 84 44</a></div>
+    </div>
+  </div>
+  <div class="map-container reveal reveal-delay-2">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2509.4!2d4.0809!3d50.8656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3e4f12345%3A0x1!2sOpperstraat+59%2C+1770+Liedekerke!5e0!3m2!1sfr!2sbe!4v1680000000000"
+      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <div class="footer-logo">Sweety <span>🍓</span></div>
+      <p class="footer-brand-desc">La douceur sucrée de Sushi'N Shake. Crêpes, pancakes, gaufres et bien plus — composez votre dessert parfait.</p>
+      <a href="https://www.instagram.com/sushin.shake/" target="_blank" class="footer-social">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+      </a>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigation</div>
+      <ul class="footer-nav">
+        <li><a href="#bases">Menu</a></li>
+        <li><a href="#composer">Composer</a></li>
+        <li><a href="#boissons">Boissons</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="sushin.html" style="color:var(--pink);">Sushi'N Shake →</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Horaires</div>
+      <ul class="footer-hours">
+        <li><span>Lundi – Jeudi</span><span>16h00 – 22h30</span></li>
+        <li><span>Vendredi – Samedi</span><span>16h00 – 00h00</span></li>
+        <li><span>Dimanche</span><span>16h00 – 23h00</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-contact-list">
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Opperstraat 59, 1770 Liedekerke
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:0233584444">+32 2 335 84 44</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Sushi'N Shake — Sweety. Tous droits réservés. Website created by <a href="https://soufware.be/" target="_blank" style="color:var(--pink);text-decoration:none;">Soufware</a></p>
+  </div>
+</footer>
+
+<!-- FAB MOBILE -->
+<!-- FAB PANIER -->
+<button class="cart-fab" id="cart-fab" onclick="openCartSidebar()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+  <span class="cart-fab-badge" id="cart-fab-badge">0</span>
+</button>
+
+<script>
+/* NAV SCROLL */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* SCROLL REVEAL */
+const revealEls = document.querySelectorAll('.reveal');
+const observer  = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => observer.observe(el));
+
+/* SMOOTH SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+/* PARTICLES */
+const canvas = document.getElementById('particles-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H, particles = [];
+function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.r = Math.random() * 1.5 + 0.4;
+    this.speedX = (Math.random() - 0.5) * 0.3; this.speedY = -(Math.random() * 0.4 + 0.1);
+    this.alpha = Math.random() * 0.4 + 0.1;
+    this.color = Math.random() > 0.5 ? '#FF6B9D' : '#ff8fb5';
+  }
+  update() { this.x += this.speedX; this.y += this.speedY; this.alpha -= 0.001; if (this.alpha <= 0 || this.y < 0) this.reset(); }
+  draw() { ctx.save(); ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+}
+function init() { resize(); particles = []; for (let i = 0; i < 80; i++) particles.push(new Particle()); }
+function animate() { ctx.clearRect(0, 0, W, H); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+window.addEventListener('resize', () => resize());
+init(); animate();
+
+/* HERO SLIDESHOW SWEETY */
+const sweetySlides = document.querySelectorAll('.hero-slide');
+let currentSweetySlide = 0;
+sweetySlides[0].classList.add('active');
+setInterval(() => {
+  sweetySlides[currentSweetySlide].classList.remove('active');
+  currentSweetySlide = (currentSweetySlide + 1) % sweetySlides.length;
+  sweetySlides[currentSweetySlide].classList.add('active');
+}, 4000);
+
+/* FAB HIDE ON HERO */
+const fabBtn = document.getElementById('fab-btn');
+const heroSection = document.getElementById('hero');
+fabBtn.classList.add('hidden');
+new IntersectionObserver(entries => {
+  entries.forEach(e => { fabBtn.classList.toggle('hidden', e.isIntersecting); });
+}, { threshold: 0.1 }).observe(heroSection);
+</script>
+
+<!-- POPUP AJOUT PANIER -->
+<div class="cart-popup-overlay" id="cart-popup-overlay" onclick="if(event.target===this)closeCartPopup()">
+  <div class="cart-popup">
+    <button class="cart-popup-close" onclick="closeCartPopup()">&#x2715;</button>
+    <div class="cart-popup-label">Ajouter au panier</div>
+    <div class="cart-popup-name" id="popup-name"></div>
+    <div class="cart-popup-desc" id="popup-desc"></div>
+    <div class="cart-popup-price" id="popup-price"></div>
+    <div class="cart-qty-wrap">
+      <button class="cart-qty-btn" onclick="changePopupQty(-1)">&#8722;</button>
+      <div class="cart-qty-num" id="popup-qty">1</div>
+      <button class="cart-qty-btn" onclick="changePopupQty(1)">+</button>
+    </div>
+    <button class="cart-popup-add-btn" onclick="confirmAddToCart()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+      Ajouter au panier
+    </button>
+  </div>
+</div>
+
+<!-- SIDEBAR PANIER WIZARD -->
+<div class="cart-sidebar-overlay" id="cart-sidebar-overlay" onclick="closeCartSidebar()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-sidebar-header">
+    <div class="cart-sidebar-title">Mon <span>Panier</span></div>
+    <button class="cart-sidebar-close" onclick="closeCartSidebar()">&#x2715;</button>
+  </div>
+  <div class="cart-stepper">
+    <div class="cart-step-item active" id="step-ind-1"><div class="cart-step-circle">1</div><div class="cart-step-label">Panier</div></div>
+    <div class="cart-step-line"></div>
+    <div class="cart-step-item" id="step-ind-2"><div class="cart-step-circle">2</div><div class="cart-step-label">Livraison</div></div>
+    <div class="cart-step-line"></div>
+    <div class="cart-step-item" id="step-ind-3"><div class="cart-step-circle">3</div><div class="cart-step-label">Paiement</div></div>
+    <div class="cart-step-line"></div>
+    <div class="cart-step-item" id="step-ind-4"><div class="cart-step-circle">4</div><div class="cart-step-label">Commander</div></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="cart-step-content" id="cart-step-1">
+    <div class="cart-sidebar-empty" id="cart-empty-state">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="opacity:0.2"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+      <span style="color:#F5F0E8;font-size:15px;">Votre panier est vide</span>
+      <span style="font-size:12px;color:#8a8080;text-align:center;line-height:1.7;padding:0 20px;">Cliquez sur un article pour l'ajouter</span>
+      <a href="#bases" onclick="closeCartSidebar()" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--pink);color:#fff;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;border-radius:50px;text-decoration:none;margin-top:8px;">Voir le menu</a>
+    </div>
+    <div class="cart-items-list" id="cart-items-list" style="display:none;"></div>
+    <div class="cart-step-footer" id="cart-step1-footer" style="display:none;flex-direction:column;">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total estimé</span>
+        <span class="cart-total-price" id="cart-total-step1">€0.00</span>
+      </div>
+      <button class="cart-next-btn" onclick="goToStep(2)" style="width:100%;">
+        <span>Continuer</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="cart-step-content" id="cart-step-2" style="display:none;">
+    <div class="cart-step-inner">
+      <div class="cart-step-title">Comment recevoir votre commande ?</div>
+      <div class="cart-step-sub">Choisissez une option pour continuer</div>
+      <div class="cart-delivery-btns">
+        <button class="cart-delivery-choice-btn" id="choice-place" onclick="selectDelivery('place')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Sur place</span>
+        </button>
+        <button class="cart-delivery-choice-btn" id="choice-livrer" onclick="selectDelivery('livrer')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span>À livrer</span>
+        </button>
+      </div>
+      <div id="address-section" style="display:none;margin-top:20px;">
+        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--pink);margin-bottom:14px;">📍 Adresse de livraison</div>
+        <input type="text" id="cart-customer-name" placeholder="Votre nom complet *" maxlength="50" class="cart-input"/>
+        <input type="text" id="cart-customer-rue" placeholder="Rue *" maxlength="100" class="cart-input"/>
+        <div style="display:flex;gap:10px;">
+          <input type="text" id="cart-customer-numero" placeholder="N° *" maxlength="10" class="cart-input" style="width:80px;flex-shrink:0;"/>
+          <input type="text" id="cart-customer-cp" placeholder="Code postal *" maxlength="10" class="cart-input" style="flex:1;"/>
+        </div>
+        <input type="text" id="cart-customer-ville" placeholder="Ville / Commune *" maxlength="100" class="cart-input"/>
+        <div id="cart-emporter-error" style="font-size:11px;color:var(--pink);margin-top:6px;display:none;"></div>
+      </div>
+    </div>
+    <div class="cart-step-footer">
+      <button class="cart-back-btn" onclick="goToStep(1)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-14 0"/><path d="m5 12 7-7"/><path d="m5 12 7 7"/></svg>
+        Retour
+      </button>
+      <button class="cart-next-btn" onclick="validateStep2()" style="flex:1;">
+        <span>Continuer</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="cart-step-content" id="cart-step-3" style="display:none;">
+    <div class="cart-step-inner">
+      <div class="cart-step-title">Mode de paiement</div>
+      <div class="cart-step-sub">Choisissez comment vous souhaitez payer</div>
+      <div class="cart-delivery-btns">
+        <button class="cart-delivery-choice-btn" id="pay-cash" onclick="selectPayment('cash')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+          <span>Espèces</span>
+        </button>
+        <button class="cart-delivery-choice-btn" id="pay-card" onclick="selectPayment('card')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          <span>Carte</span>
+        </button>
+      </div>
+    </div>
+    <div class="cart-step-footer">
+      <button class="cart-back-btn" onclick="goToStep(2)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-14 0"/><path d="m5 12 7-7"/><path d="m5 12 7 7"/></svg>
+        Retour
+      </button>
+      <button class="cart-next-btn" onclick="validateStep3()" style="flex:1;">
+        <span>Continuer</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="cart-step-content" id="cart-step-4" style="display:none;">
+    <div class="cart-step-inner">
+      <div class="cart-step-title">Récapitulatif</div>
+      <div id="recap-box" style="background:rgba(255,107,157,0.04);border-radius:14px;padding:16px;margin-bottom:20px;border:1px solid rgba(255,107,157,0.1);">
+        <div id="recap-delivery" style="font-size:12px;color:#8a8080;margin-bottom:8px;"></div>
+        <div id="recap-address" style="font-size:12px;color:#8a8080;margin-bottom:8px;display:none;"></div>
+        <div id="recap-payment" style="font-size:12px;color:#8a8080;margin-bottom:12px;"></div>
+        <div style="border-top:1px solid rgba(255,107,157,0.1);padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a8080;">Total</span>
+          <span class="cart-total-price" id="cart-total-step4">€0.00</span>
+        </div>
+      </div>
+      <div class="cart-phone-wrap">
+        <span class="cart-phone-label">Votre numéro *</span>
+        <input type="tel" class="cart-phone-input" id="cart-phone" placeholder="0472123456" maxlength="10"/>
+        <div class="cart-phone-error" id="cart-phone-error">Entrez un numéro valide (ex: 0472123456)</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+        <button onclick="sendCartWhatsApp()" class="cart-order-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          <span>WhatsApp</span>
+        </button>
+        <button onclick="sendSMSOrder(event)" class="cart-order-btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>SMS</span>
+        </button>
+        <button onclick="window.location.href='tel:0233584444'" class="cart-order-btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>Appeler</span>
+        </button>
+      </div>
+    </div>
+    <div class="cart-step-footer" style="padding-top:0;">
+      <button class="cart-back-btn" onclick="goToStep(3)" style="width:100%;justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-14 0"/><path d="m5 12 7-7"/><path d="m5 12 7 7"/></svg>
+        Retour
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRMATION -->
+<div class="cart-confirm-overlay" id="cart-confirm-overlay">
+  <div class="cart-confirm-box">
+    <div class="cart-confirm-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="cart-confirm-title">Commande envoyée !</div>
+    <div class="cart-confirm-sub">Votre commande a été transmise via WhatsApp.<br>Nous vous confirmons dès que possible.<br><br><strong style="color:#F5F0E8;">Sushi'N Shake Sweety — 02 335 84 44</strong></div>
+    <button class="cart-confirm-btn" onclick="closeConfirm()">Parfait, merci !</button>
+  </div>
+</div>
+
+<script>
+/* ══ PANIER SWEETY WIZARD ══ */
+var cart = [];
+var popupItem = null;
+var popupQty = 1;
+var deliveryChoice = null;
+var paymentMethod = null;
+var customerName = '';
+var customerAddress = '';
+var currentStep = 1;
+
+function openAddToCart(name, desc, price) {
+  popupItem = { name: name, desc: desc, price: parseFloat(price) };
+  popupQty = 1;
+  document.getElementById('popup-name').textContent = name;
+  document.getElementById('popup-desc').textContent = desc;
+  document.getElementById('popup-price').textContent = '€' + parseFloat(price).toFixed(2);
+  document.getElementById('popup-qty').textContent = 1;
+  document.getElementById('cart-popup-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCartPopup() {
+  document.getElementById('cart-popup-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function changePopupQty(d) {
+  popupQty = Math.max(1, popupQty + d);
+  document.getElementById('popup-qty').textContent = popupQty;
+}
+function confirmAddToCart() {
+  if (!popupItem) return;
+  var found = -1;
+  for (var i = 0; i < cart.length; i++) { if (cart[i].name === popupItem.name) { found = i; break; } }
+  if (found >= 0) { cart[found].qty += popupQty; }
+  else { cart.push({ name: popupItem.name, desc: popupItem.desc, price: popupItem.price, qty: popupQty }); }
+  closeCartPopup();
+  updateCartUI();
+  var fab = document.getElementById('cart-fab');
+  fab.style.transform = 'scale(1.3)';
+  setTimeout(function() { fab.style.transform = ''; }, 350);
+}
+
+function updateCartUI() {
+  var n = 0, total = 0;
+  for (var i = 0; i < cart.length; i++) { n += cart[i].qty; total += cart[i].price * cart[i].qty; }
+  document.getElementById('cart-fab-badge').textContent = n;
+  var fab = document.getElementById('cart-fab');
+  if (n > 0) { fab.classList.add('visible'); document.getElementById('cart-fab-badge').style.display = 'flex'; } else { fab.classList.remove('visible'); document.getElementById('cart-fab-badge').style.display = 'none'; }
+  var badge = document.getElementById('nav-cart-badge');
+  if (badge) { badge.textContent = n; badge.style.display = n > 0 ? 'flex' : 'none'; }
+  var empty = document.getElementById('cart-empty-state');
+  var list  = document.getElementById('cart-items-list');
+  var foot  = document.getElementById('cart-step1-footer');
+  if (cart.length === 0) {
+    empty.style.display = 'flex'; list.style.display = 'none'; foot.style.display = 'none';
+  } else {
+    empty.style.display = 'none'; list.style.display = 'block'; foot.style.display = 'flex';
+    var html = '';
+    for (var i = 0; i < cart.length; i++) {
+      html += '<div class="cart-line-item">'
+        + '<div class="cart-line-info"><div class="cart-line-name">' + cart[i].name + '</div>'
+        + '<div class="cart-line-price">€' + cart[i].price.toFixed(2) + ' / pièce</div></div>'
+        + '<div class="cart-line-controls">'
+        + '<button class="cart-line-qty-btn remove" onclick="cartDec(' + i + ')">−</button>'
+        + '<div class="cart-line-qty">' + cart[i].qty + '</div>'
+        + '<button class="cart-line-qty-btn" onclick="cartInc(' + i + ')">+</button>'
+        + '</div></div>';
+    }
+    document.getElementById('cart-items-list').innerHTML = html;
+    document.getElementById('cart-total-step1').textContent = '€' + total.toFixed(2);
+  }
+}
+function cartInc(i) { cart[i].qty++; updateCartUI(); }
+function cartDec(i) { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); updateCartUI(); }
+
+function openCartSidebar() {
+  document.getElementById('cart-sidebar').classList.add('open');
+  document.getElementById('cart-sidebar-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
+  goToStep(1);
+}
+function closeCartSidebar() {
+  document.getElementById('cart-sidebar').classList.remove('open');
+  document.getElementById('cart-sidebar-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
+}
+
+function goToStep(step) {
+  currentStep = step;
+  for (var s = 1; s <= 4; s++) {
+    var el = document.getElementById('cart-step-' + s);
+    if (el) el.style.display = s === step ? 'flex' : 'none';
+    var ind = document.getElementById('step-ind-' + s);
+    if (ind) {
+      ind.classList.remove('active', 'done');
+      if (s === step) ind.classList.add('active');
+      else if (s < step) ind.classList.add('done');
+    }
+  }
+  if (step === 4) updateStep4Recap();
+}
+
+function selectDelivery(type) {
+  deliveryChoice = type;
+  document.getElementById('choice-place').classList.toggle('selected', type === 'place');
+  document.getElementById('choice-livrer').classList.toggle('selected', type === 'livrer');
+  document.getElementById('address-section').style.display = type === 'livrer' ? 'block' : 'none';
+}
+
+function validateStep2() {
+  if (!deliveryChoice) { alert('Choisissez sur place ou à livrer.'); return; }
+  var emErr = document.getElementById('cart-emporter-error');
+  if (deliveryChoice === 'livrer') {
+    var nom = document.getElementById('cart-customer-name').value.trim();
+    var rue = document.getElementById('cart-customer-rue').value.trim();
+    var numero = document.getElementById('cart-customer-numero').value.trim();
+    var cp = document.getElementById('cart-customer-cp').value.trim();
+    var ville = document.getElementById('cart-customer-ville').value.trim();
+    if (nom.length < 2 || rue.length < 2 || numero.length < 1 || cp.length < 4 || ville.length < 2) {
+      emErr.textContent = 'Veuillez remplir tous les champs.';
+      emErr.style.display = 'block'; return;
+    }
+    var total = 0; for (var i = 0; i < cart.length; i++) total += cart[i].price * cart[i].qty;
+    if (total < 40) {
+      emErr.textContent = 'Minimum 40€ requis pour la livraison. (actuel : ' + total.toFixed(2) + '€)';
+      emErr.style.display = 'block'; return;
+    }
+    emErr.style.display = 'none';
+    customerName = nom;
+    customerAddress = numero + ' ' + rue + ', ' + cp + ' ' + ville + ', Belgique';
+  }
+  goToStep(3);
+}
+
+function selectPayment(type) {
+  paymentMethod = type;
+  document.getElementById('pay-cash').classList.toggle('selected', type === 'cash');
+  document.getElementById('pay-card').classList.toggle('selected', type === 'card');
+}
+function validateStep3() {
+  if (!paymentMethod) { alert('Choisissez un mode de paiement.'); return; }
+  goToStep(4);
+}
+
+function updateStep4Recap() {
+  var total = 0; for (var i = 0; i < cart.length; i++) total += cart[i].price * cart[i].qty;
+  var totalFinal = deliveryChoice === 'livrer' ? total + 4.50 : total;
+  document.getElementById('recap-delivery').textContent = deliveryChoice === 'livrer' ? '🚚 Livraison à domicile (+4.50€)' : '🏠 Sur place';
+  var addrEl = document.getElementById('recap-address');
+  if (deliveryChoice === 'livrer' && customerAddress) {
+    addrEl.style.display = 'block'; addrEl.textContent = '📍 ' + customerName + ' — ' + customerAddress;
+  } else { addrEl.style.display = 'none'; }
+  document.getElementById('recap-payment').textContent = paymentMethod === 'cash' ? '💵 Paiement en espèces' : '💳 Paiement par carte';
+  document.getElementById('cart-total-step4').textContent = '€' + totalFinal.toFixed(2);
+}
+
+function sendCartWhatsApp() {
+  var inp = document.getElementById('cart-phone');
+  var err = document.getElementById('cart-phone-error');
+  var phone = inp.value.trim().replace(/ /g, '');
+  if (!/^0[0-9]{9}$/.test(phone)) {
+    err.style.display = 'block'; inp.style.borderColor = 'var(--pink)'; inp.focus(); return;
+  }
+  err.style.display = 'none'; inp.style.borderColor = '';
+  if (deliveryChoice === 'livrer') {
+    var btn = document.querySelector('.cart-order-btn');
+    btn.disabled = true; btn.querySelector('span').textContent = 'Vérification...';
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(customerAddress) + '&limit=1&countrycodes=be', { headers: { 'Accept-Language': 'fr' } })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      btn.disabled = false; btn.querySelector('span').textContent = 'WhatsApp';
+      if (!data || data.length === 0) {
+        var emErr = document.getElementById('cart-emporter-error');
+        emErr.textContent = 'Adresse introuvable. Vérifiez vos informations.';
+        emErr.style.display = 'block'; goToStep(2); return;
+      }
+      finishOrder(phone);
+    })
+    .catch(function() { btn.disabled = false; btn.querySelector('span').textContent = 'WhatsApp'; finishOrder(phone); });
+    return;
+  }
+  finishOrder(phone);
+}
+
+function finishOrder(phone) {
+  var total = 0; for (var i = 0; i < cart.length; i++) total += cart[i].price * cart[i].qty;
+  var msg = 'Nouvelle commande - Sweety (Sushi N Shake)\n\n';
+  if (deliveryChoice === 'livrer') {
+    msg += 'Type : A LIVRER\nNom : ' + customerName + '\nAdresse : ' + customerAddress + '\nFrais : 4.50EUR\n';
+  } else { msg += 'Type : SUR PLACE\n'; }
+  msg += 'Paiement : ' + (paymentMethod === 'cash' ? 'ESPECES' : 'CARTE') + '\n';
+  msg += 'Numero : ' + phone + '\n\nCommande :\n';
+  for (var i = 0; i < cart.length; i++) {
+    msg += '- ' + cart[i].qty + 'x ' + cart[i].name + '  ' + (cart[i].price * cart[i].qty).toFixed(2) + 'EUR\n';
+  }
+  var totalFinal = deliveryChoice === 'livrer' ? total + 4.50 : total;
+  msg += '\nSous-total : ' + total.toFixed(2) + 'EUR\n';
+  if (deliveryChoice === 'livrer') msg += 'Frais de livraison : 4.50EUR\n';
+  msg += 'TOTAL : ' + totalFinal.toFixed(2) + 'EUR\n\n(commande via sweety.sushinshake.be)';
+  window.location.href = 'https://wa.me/32471759016?text=' + encodeURIComponent(msg);
+  cart = []; deliveryChoice = null; paymentMethod = null; customerName = ''; customerAddress = '';
+  updateCartUI(); closeCartSidebar();
+  document.getElementById('cart-confirm-overlay').classList.add('open');
+}
+
+function sendSMSOrder(e) {
+  e.preventDefault();
+  var phone = document.getElementById('cart-phone').value.trim().replace(/ /g, '');
+  var total = 0; for (var i = 0; i < cart.length; i++) total += cart[i].price * cart[i].qty;
+  var msg = 'Commande Sweety Sushi N Shake\n';
+  if (deliveryChoice === 'livrer') msg += 'LIVRAISON - ' + customerName + ' - ' + customerAddress + '\n';
+  else msg += 'SUR PLACE\n';
+  msg += 'Paiement : ' + (paymentMethod === 'cash' ? 'ESPECES' : 'CARTE') + '\n';
+  if (phone) msg += 'Tel : ' + phone + '\n';
+  for (var i = 0; i < cart.length; i++) {
+    msg += cart[i].qty + 'x ' + cart[i].name + ' ' + (cart[i].price * cart[i].qty).toFixed(2) + 'EUR\n';
+  }
+  var totalFinal = deliveryChoice === 'livrer' ? total + 4.50 : total;
+  msg += 'TOTAL : ' + totalFinal.toFixed(2) + 'EUR';
+  window.location.href = 'sms:0471759016?body=' + encodeURIComponent(msg);
+}
+function closeConfirm() { document.getElementById('cart-confirm-overlay').classList.remove('open'); }
+</script>
+
+
+<!-- ══ DESSERT BUILDER MODAL ══ -->
+<div class="builder-overlay" id="builder-overlay" onclick="if(event.target===this)closeBuilder()">
+  <div class="builder-modal">
+    <div class="builder-header">
+      <div class="builder-base-info">
+        <div class="builder-base-emoji" id="builder-emoji">🥞</div>
+        <div>
+          <div class="builder-base-name" id="builder-base-name">Crêpes</div>
+          <div class="builder-base-price" id="builder-base-price">Base — 5.00€</div>
+        </div>
+      </div>
+      <button class="builder-close" onclick="closeBuilder()">&#x2715;</button>
+    </div>
+
+    <div class="builder-body" id="builder-body">
+
+      <!-- TOPPINGS -->
+      <span class="builder-section-title">🍫 Toppings</span>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Nutella</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Nutella',1.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Nutella">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Nutella',1.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Cassonade</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Cassonade',1.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Cassonade">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Cassonade',1.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Chantilly</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Chantilly',1.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Chantilly">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Chantilly',1.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Caramel beurre salé</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Caramel beurre salé',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Caramel beurre salé">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Caramel beurre salé',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Coulis pistache</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Coulis pistache',2.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Coulis pistache">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Coulis pistache',2.00,1)">+</button>
+        </div>
+      </div>
+
+      <!-- FRUITS -->
+      <span class="builder-section-title">🍓 Fruits</span>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Fraises</div><div class="builder-item-price">+1.75€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Fraises',1.75,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Fraises">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Fraises',1.75,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Ananas</div><div class="builder-item-price">+1.25€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Ananas',1.25,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Ananas">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Ananas',1.25,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Mûres</div><div class="builder-item-price">+1.25€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Mûres',1.25,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Mûres">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Mûres',1.25,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Myrtilles</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Myrtilles',1.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Myrtilles">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Myrtilles',1.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Mangue</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Mangue',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Mangue">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Mangue',1.50,1)">+</button>
+        </div>
+      </div>
+
+      <!-- IRRÉSISTABLES -->
+      <span class="builder-section-title">✨ Irrésistables</span>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Kinder Bueno</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Kinder Bueno',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Kinder Bueno">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Kinder Bueno',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Kinder Bueno White</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Kinder Bueno White',2.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Kinder Bueno White">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Kinder Bueno White',2.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Kinder Country</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Kinder Country',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Kinder Country">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Kinder Country',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Oreo</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Oreo',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Oreo">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Oreo',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Spéculoos</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Spéculoos',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Spéculoos">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Spéculoos',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">M&M's</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('MandMs',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-MandMs">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('MandMs',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Snickers</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Snickers',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Snickers">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Snickers',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Mikado</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Mikado',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Mikado">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Mikado',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Brownie</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Brownie',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Brownie">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Brownie',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Noix de pécan</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Noix de pécan',2.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Noix de pécan">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Noix de pécan',2.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Pistache</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Pistache',2.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Pistache">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Pistache',2.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Copeaux de choco</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Copeaux de choco',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Copeaux de choco">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Copeaux de choco',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Noix</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Noix',2.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Noix">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Noix',2.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Rafaello</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Rafaello',2.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Rafaello">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Rafaello',2.00,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Galak</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Galak',2.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Galak">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Galak',2.00,1)">+</button>
+        </div>
+      </div>
+
+    </div><!-- /builder-body -->
+
+    <!-- ÉCRAN SUCCÈS -->
+    <div id="builder-success" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 24px;flex:1;overflow-y:auto;">
+      <div style="font-size:48px;">🎉</div>
+      <div style="font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;text-align:center;">Ajouté au panier !</div>
+      <div style="font-size:13px;color:#8a8080;text-align:center;">Que souhaitez-vous faire ?</div>
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px;">
+        <button onclick="openDessertBuilder('Crêpes',5.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span>🥞 Crêpes</span><span style="color:var(--pink);">5.00€</span>
+        </button>
+        <button onclick="openDessertBuilder('Pancakes',5.50)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span>🥞 Pancakes</span><span style="color:var(--pink);">5.50€</span>
+        </button>
+        <button onclick="openDessertBuilder('Gaufres',6.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span>🧇 Gaufres</span><span style="color:var(--pink);">6.00€</span>
+        </button>
+        <button onclick="showBuilderBoissons()" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.04);border:1px solid rgba(255,107,157,0.12);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span>🥤 Ajouter une boisson</span><span style="color:var(--pink);font-size:11px;">→</span>
+        </button>
+        <button onclick="closeBuilder()" style="padding:12px 20px;background:transparent;border:1px solid rgba(255,107,157,0.15);border-radius:14px;color:#8a8080;font-family:'Josefin Sans',sans-serif;font-size:12px;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;width:100%;">
+          Voir mon panier
+        </button>
+      </div>
+    </div>
+
+    <!-- ÉCRAN BOISSONS -->
+    <div id="builder-boissons" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
+      <div style="padding:16px 24px 12px;border-bottom:1px solid rgba(255,107,157,0.1);display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <button onclick="document.getElementById('builder-boissons').style.display='none';document.getElementById('builder-success').style.display='flex';" style="background:none;border:none;color:#8a8080;font-size:22px;cursor:pointer;padding:0;line-height:1;">←</button>
+        <span style="font-family:'AsianNinja',serif;font-size:20px;color:#F5F0E8;">Choisir une boisson</span>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:16px 24px;">
+        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;">🥤 Soft</div>
+        <div onclick="builderAddDrink('Pales Cola',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Pales Cola</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink('Pales Orange Grenadine',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Pales Orange Grenadine</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink('Pales Myrtille & Fraise',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Pales Myrtille &amp; Fraise</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink('Pales Pêche & Violette',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Pales Pêche &amp; Violette</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink('Eau plate',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Eau plate</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink('Eau gazeuse',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Eau gazeuse</span><span style="color:var(--pink);">€2.50</span></div>
+
+        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;">🍹 Mojito</div>
+        <div onclick="builderAddDrink('Mojito Classique',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Classique</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Mojito Fraises',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Fraises</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Mojito Violette',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Violette</span><span style="color:var(--pink);">€5.90</span></div>
+
+        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;">🥛 Milkshake</div>
+        <div onclick="builderAddDrink('Milkshake Vanille',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Vanille</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Milkshake Kinder Bueno',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Kinder Bueno</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Milkshake Oreo',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Oreo</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Milkshake Spéculoos',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Spéculoos</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Milkshake Twix White',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Twix White</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Milkshake Kinder Bueno White',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Kinder Bueno White</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Milkshake Rafaello',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Rafaello</span><span style="color:var(--pink);">€5.90</span></div>
+
+        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;">🍓 Smoothie</div>
+        <div onclick="builderAddDrink('Smoothie Fraise',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Fraise</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Smoothie Framboise',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Framboise</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Smoothie Fruits des bois',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Fruits des bois</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Smoothie Avocat',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Avocat</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Smoothie Mangue',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Mangue</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Smoothie Ananas',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Ananas</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink('Smoothie Tropical',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Tropical</span><span style="color:var(--pink);">€5.90</span></div>
+      </div>
+    </div>
+
+    <!-- FOOTER PRINCIPAL -->
+    <div id="builder-footer-main">
+      <div class="builder-footer">
+        <div class="builder-extras-summary" id="builder-summary">Aucun extra sélectionné</div>
+        <div class="builder-total-row">
+          <span class="builder-total-label">Total</span>
+          <span class="builder-total-price" id="builder-total">€5.00</span>
+        </div>
+        <button class="builder-add-btn" onclick="builderAddToCart()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+          Ajouter au panier
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ DESSERT BUILDER ══ */
+var builderBase = { name: '', price: 0, emoji: '🥞' };
+var builderExtras = {};
+
+var baseEmojis = { 'Crêpes': '🥞', 'Pancakes': '🥞', 'Gaufres': '🧇' };
+
+function openDessertBuilder(baseName, basePrice) {
+  builderBase = { name: baseName, price: basePrice, emoji: baseEmojis[baseName] || '🍽️' };
+  builderExtras = {};
+  /* Reset tous les compteurs */
+  document.querySelectorAll('.builder-qty-num').forEach(function(el) {
+    el.textContent = '0';
+    el.classList.remove('active');
+  });
+  document.getElementById('builder-base-name').textContent = baseName;
+  document.getElementById('builder-base-price').textContent = 'Base — ' + basePrice.toFixed(2) + '€';
+  document.getElementById('builder-emoji').textContent = baseEmojis[baseName] || '🍽️';
+  builderUpdateTotal();
+  document.getElementById('builder-body').style.display = 'block';
+  document.getElementById('builder-footer-main').style.display = 'block';
+  document.getElementById('builder-success').style.display = 'none';
+  document.getElementById('builder-boissons').style.display = 'none';
+  document.getElementById('builder-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  var body = document.getElementById('builder-body');
+  if (body) body.scrollTop = 0;
+}
+
+function closeBuilder() {
+  document.getElementById('builder-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function builderChange(name, price, dir) {
+  if (!builderExtras[name]) builderExtras[name] = { price: price, qty: 0 };
+  builderExtras[name].qty = Math.max(0, builderExtras[name].qty + dir);
+  /* Sanitize key pour getElementById */
+  var safeKey = name.replace(/'/g, "\'");
+  var el = document.getElementById('bqty-' + name);
+  if (el) {
+    el.textContent = builderExtras[name].qty;
+    el.classList.toggle('active', builderExtras[name].qty > 0);
+  }
+  builderUpdateTotal();
+}
+
+function builderUpdateTotal() {
+  var total = builderBase.price;
+  var extras = [];
+  for (var k in builderExtras) {
+    if (builderExtras[k].qty > 0) {
+      total += builderExtras[k].price * builderExtras[k].qty;
+      var label = builderExtras[k].qty > 1 ? k + ' x' + builderExtras[k].qty : k;
+      extras.push(label);
+    }
+  }
+  document.getElementById('builder-total').textContent = '€' + total.toFixed(2);
+  var summaryEl = document.getElementById('builder-summary');
+  if (extras.length === 0) {
+    summaryEl.textContent = 'Aucun extra sélectionné';
+  } else {
+    summaryEl.textContent = '+ ' + extras.join(', ');
+  }
+}
+
+function builderAddToCart() {
+  var extras = [];
+  var totalPrice = builderBase.price;
+  for (var k in builderExtras) {
+    if (builderExtras[k].qty > 0) {
+      totalPrice += builderExtras[k].price * builderExtras[k].qty;
+      var label = builderExtras[k].qty > 1 ? k + ' x' + builderExtras[k].qty : k;
+      extras.push(label);
+    }
+  }
+  var itemName = builderBase.name;
+  if (extras.length > 0) { itemName += ' + ' + extras.join(', '); }
+  var desc = extras.length > 0 ? 'Base + ' + extras.length + ' extra(s)' : 'Base seule';
+  var found = -1;
+  for (var i = 0; i < cart.length; i++) { if (cart[i].name === itemName) { found = i; break; } }
+  if (found >= 0) { cart[found].qty += 1; }
+  else { cart.push({ name: itemName, desc: desc, price: totalPrice, qty: 1 }); }
+  updateCartUI();
+  var fab = document.getElementById('cart-fab');
+  fab.style.transform = 'scale(1.3)';
+  setTimeout(function() { fab.style.transform = ''; }, 350);
+  builderExtras = {};
+  document.querySelectorAll('.builder-qty-num').forEach(function(el) { el.textContent = '0'; el.classList.remove('active'); });
+  document.getElementById('builder-body').style.display = 'none';
+  document.getElementById('builder-footer-main').style.display = 'none';
+  document.getElementById('builder-boissons').style.display = 'none';
+  document.getElementById('builder-success').style.display = 'flex';
+}
+
+function showBuilderBoissons() {
+  document.getElementById('builder-success').style.display = 'none';
+  document.getElementById('builder-boissons').style.display = 'flex';
+}
+
+function builderAddDrink(name, price) {
+  cart.push({ name: name, desc: 'Boisson', price: price, qty: 1 });
+  updateCartUI();
+  var fab = document.getElementById('cart-fab');
+  fab.style.transform = 'scale(1.3)';
+  setTimeout(function() { fab.style.transform = ''; }, 350);
+  document.getElementById('builder-boissons').style.display = 'none';
+  document.getElementById('builder-success').style.display = 'flex';
+}
+</script>
+
+
+<!-- ══ DRINK BUILDER MODAL ══ -->
+<div class="builder-overlay" id="drink-builder-overlay" onclick="if(event.target===this)closeDrinkBuilder()">
+  <div class="builder-modal">
+    <div class="builder-header">
+      <div class="builder-base-info">
+        <div class="builder-base-emoji" id="drink-builder-emoji">🍹</div>
+        <div>
+          <div class="builder-base-name" id="drink-builder-name">Mojito</div>
+          <div class="builder-base-price" id="drink-builder-price">5.90€</div>
+        </div>
+      </div>
+      <button class="builder-close" onclick="closeDrinkBuilder()">&#x2715;</button>
+    </div>
+
+    <!-- ÉCRAN CHOIX VARIANTE -->
+    <div id="drink-choice-screen" style="flex:1;overflow-y:auto;padding:20px 24px;">
+      <div id="drink-variants" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+
+    <!-- ÉCRAN SUCCÈS DRINK -->
+    <div id="drink-success-screen" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 24px;flex:1;">
+      <div style="font-size:48px;">🎉</div>
+      <div style="font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;text-align:center;">Ajouté au panier !</div>
+      <div style="font-size:13px;color:#8a8080;text-align:center;">Que souhaitez-vous faire ?</div>
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px;">
+        <button onclick="openDrinkBuilder(currentDrinkType)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span id="drink-success-another">🍹 Un autre Mojito</span><span style="color:var(--pink);">→</span>
+        </button>
+        <button onclick="closeDrinkBuilder();openDessertBuilder('Crêpes',5.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span>🥞 Ajouter un dessert</span><span style="color:var(--pink);">→</span>
+        </button>
+        <button onclick="closeDrinkBuilder()" style="padding:12px 20px;background:transparent;border:1px solid rgba(255,107,157,0.15);border-radius:14px;color:#8a8080;font-family:'Josefin Sans',sans-serif;font-size:12px;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;width:100%;">
+          Voir mon panier
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ DRINK BUILDER ══ */
+var currentDrinkType = '';
+
+var drinkData = {
+  'Mojito': {
+    emoji: '🍹',
+    price: 5.90,
+    variants: ['Classique', 'Fraises', 'Violette']
+  },
+  'Milkshake': {
+    emoji: '🥛',
+    price: 5.90,
+    variants: ['Vanille', 'Kinder Bueno', 'Oreo', 'Spéculoos', 'Twix White', 'Kinder Bueno White', 'Rafaello']
+  },
+  'Smoothie': {
+    emoji: '🍓',
+    price: 5.90,
+    variants: ['Fraise', 'Framboise', 'Fruits des bois', 'Avocat', 'Mangue', 'Ananas', 'Tropical', 'Votre propre mix 🎨']
+  }
+};
+
+function openDrinkBuilder(type) {
+  currentDrinkType = type;
+  var data = drinkData[type];
+  document.getElementById('drink-builder-emoji').textContent = data.emoji;
+  document.getElementById('drink-builder-name').textContent = type;
+  document.getElementById('drink-builder-price').textContent = data.price.toFixed(2) + '€ / verre';
+  document.getElementById('drink-success-another').textContent = data.emoji + ' Un autre ' + type;
+
+  /* Générer les boutons variantes */
+ var html = '';
+  html += '<div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);margin-bottom:16px;">Choisissez votre variante</div>';
+  for (var i = 0; i < data.variants.length; i++) {
+    var v = data.variants[i];
+    html += '<div onclick="drinkSelectVariant(\'' + type + '\', \'' + v + '\', ' + data.price + ')"'
+      + ' style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;'
+      + 'padding:14px 20px;background:rgba(255,107,157,0.04);border:1px solid rgba(255,107,157,0.1);'
+      + 'border-radius:12px;margin-bottom:8px;transition:background 0.2s;"'
+      + ' onmouseover="this.style.background=\'rgba(255,107,157,0.1)\'"'
+      + ' onmouseout="this.style.background=\'rgba(255,107,157,0.04)\'">'
+      + '<span style="color:#F5F0E8;font-size:14px;">' + v + '</span>'
+      + '<span style="color:var(--pink);font-size:13px;">€' + data.price.toFixed(2) + '</span>'
+      + '</div>';
+  }
+  document.getElementById('drink-variants').innerHTML = html;
+
+  /* Reset écrans */
+  document.getElementById('drink-choice-screen').style.display = 'block';
+  document.getElementById('drink-success-screen').style.display = 'none';
+
+  document.getElementById('drink-builder-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('drink-choice-screen').scrollTop = 0;
+}
+
+function closeDrinkBuilder() {
+  document.getElementById('drink-builder-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function drinkSelectVariant(type, variant, price) {
+  var name = variant === 'Votre propre mix 🎨' ? type + ' — Mix personnalisé' : type + ' ' + variant;
+  cart.push({ name: name, desc: type, price: price, qty: 1 });
+  updateCartUI();
+  var fab = document.getElementById('cart-fab');
+  fab.style.transform = 'scale(1.3)';
+  setTimeout(function() { fab.style.transform = ''; }, 350);
+  document.getElementById('drink-choice-screen').style.display = 'none';
+  document.getElementById('drink-success-screen').style.display = 'flex';
+}
+</script>
+
+<script>
+function openSoon(e) {
+  e.preventDefault();
+  document.getElementById('soon-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSoon() {
+  document.getElementById('soon-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<!-- POPUP BIENTÔT DISPO -->
+<div class="soon-overlay" id="soon-overlay" onclick="if(event.target===this)closeSoon()">
+  <div class="soon-box">
+    <div class="soon-emoji">🍓</div>
+    <div class="soon-title">Bientôt <span>Dispo</span></div>
+    <div class="soon-sub">
+      Le site Sweety est en cours de finalisation.<br>
+      Crêpes, Pancakes, Gaufres, Mochis et bien plus<br>
+      arrivent très bientôt !
+    </div>
+    <div class="soon-badge">
+      🚀 Ouverture prochaine
+    </div>
+    <br>
+    <button class="soon-close" onclick="closeSoon()">Compris !</button>
+  </div>
+</div>
+
+</body>
+</html>
