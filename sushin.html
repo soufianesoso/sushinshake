@@ -4264,9 +4264,14 @@ function finishOrder(phone) {
   }
   msg += 'Paiement : ' + (paymentMethod === 'cash' ? 'ESPECES' : 'CARTE') + '\n';
   msg += 'Numero : ' + phone + '\n\nCommande :\n';
-  cart.forEach(i => { msg += '- ' + i.qty + 'x ' + i.name + '  ' + (i.price * i.qty).toFixed(2) + 'EUR\n'; });
-  var totalFinal = deliveryChoice === 'livrer' ? total + 4.50 : total;
-  msg += '\nSous-total : ' + total.toFixed(2) + 'EUR\n';
+  var totalCheck = 0;
+cart.forEach(i => {
+  var lineTotal = parseFloat((i.price * i.qty).toFixed(2));
+  totalCheck += lineTotal;
+  msg += '- ' + i.qty + 'x ' + i.name + '  ' + lineTotal.toFixed(2) + 'EUR\n';
+});
+var totalFinal = deliveryChoice === 'livrer' ? totalCheck + 4.50 : totalCheck;
+msg += '\nSous-total : ' + totalCheck.toFixed(2) + 'EUR\n';
   if (deliveryChoice === 'livrer') msg += 'Frais de livraison : 4.50EUR\n';
   msg += 'TOTAL : ' + totalFinal.toFixed(2) + 'EUR\n\n(commande via sushinshake.be)';
  
@@ -4286,7 +4291,7 @@ function resetCart() {
 function sendSMSOrder(e) {
   e.preventDefault();
   var phone = document.getElementById('cart-phone').value.trim().replace(/ /g, '');
-  var total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  var total = 0;
   var msg = 'Commande Sushi N Shake\n';
   if (deliveryChoice === 'livrer') msg += 'LIVRAISON - ' + customerName + ' - ' + customerAddress + '\n';
   else msg += 'SUR PLACE\n';
