@@ -1026,8 +1026,9 @@ html {
 }
 
 
-  .menu-category { display: none; }
-  .menu-category.active { display: block; }
+ .menu-category { display: none; }
+.menu-category.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .menu-items {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1047,8 +1048,8 @@ html {
     cursor: pointer;
   }
 .menu-item-img {
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
   border-radius: 12px;
   object-fit: contain;
   object-position: center;
@@ -1059,7 +1060,7 @@ html {
   transform: scale(1.08);
 }
 @media (max-width: 768px) {
-  .menu-item-img { width: 130px; height: 130px; }
+  .menu-item-img { width: 160px; height: 160px; }
 }
   .menu-item:hover { background: var(--surface2); }
   .menu-item-info { flex: 1; }
@@ -2552,7 +2553,7 @@ html {
   <ul class="nav-links">
     <li><a href="#signature" data-i18n="nav.signatures">Signatures</a></li>
     <li><a href="#evenement" data-i18n="nav.events">Événements</a></li>
-    <li><a href="#menu" data-i18n="nav.menu">Menu</a></li>
+    <li><a href="#menu" data-i18n="nav.menu" style="color:#fb8500;font-weight:400;text-shadow:0 0 12px rgba(251,133,0,0.6);">Menu</a></li>
     <li><a href="#about" data-i18n="nav.story">Notre histoire</a></li>
     <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     <li><a href="sweety.html" onclick="openSoon(event)" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#FF6B9D;background:rgba(255,107,157,0.12);border:1px solid rgba(255,107,157,0.3);padding:10px 22px;border-radius:50px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:background 0.3s;" onmouseover="this.style.background='rgba(255,107,157,0.25)'" onmouseout="this.style.background='rgba(255,107,157,0.12)'">sweety 🍓</a></li>
@@ -2850,20 +2851,26 @@ html {
  
   <!-- ── ENTRÉES ── -->
   <div id="cat-entrees" class="menu-category active">
+    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥢 Entrées</span>
+    </div>
     <div class="menu-items">
-      <div class="menu-item" onclick="openAddToCart('Poulet Yakitori', '2 pcs.', 6.90)"><div class="menu-item-info"><div class="menu-item-name">Poulet Yakitori</div><div class="menu-item-desc">2 pcs.</div></div><img src="assets/PouletYakitori.webp" alt="Poulet Yakitori" class="menu-item-img"/><div class="menu-item-price">€6.90</div></div>
-      <div class="menu-item" onclick="openAddToCart('Scampi Dynamite', '6 pcs.', 7.50)"><div class="menu-item-info"><div class="menu-item-name">Scampi Dynamite</div><div class="menu-item-desc">6 pcs.</div></div><img src="assets/entree-scampi-dynamite.webp" alt="Scampi Dynamite" class="menu-item-img"/><div class="menu-item-price">€7.50</div></div>
+      <div class="menu-item" onclick="openAddToCart('Poulet Yakitori', '2 pcs.', 6.90)"><div class="menu-item-info"><div class="menu-item-name">Poulet Yakitori</div><div class="menu-item-desc">2 pcs.</div></div><img src="assets/PouletYakitori.webp" alt="Poulet Yakitori" class="menu-item-img" style="object-fit:cover;"/><div class="menu-item-price">€6.90</div></div>
+      <div class="menu-item" onclick="openAddToCart('Scampi Dynamite', '6 pcs.', 7.50)"><div class="menu-item-info"><div class="menu-item-name">Scampi Dynamite</div><div class="menu-item-desc">6 pcs.</div></div><img src="assets/entree-scampi-dynamite.webp" alt="Scampi Dynamite" class="menu-item-img" style="object-fit:cover;"/><div class="menu-item-price">€7.50</div></div>
       <div class="menu-item" onclick="openAddToCart('Boeuf Yakitori', '2 pcs.', 7.20)"><div class="menu-item-info"><div class="menu-item-name">Boeuf Yakitori</div><div class="menu-item-desc">2 pcs.</div></div><img src="assets/poulet-Yakitori.webp" alt="Boeuf Yakitori" class="menu-item-img"/><div class="menu-item-price">€7.20</div></div>
       <div class="menu-item" onclick="openAddToCart('Gyoza Végétarien', '4 pcs.', 7.20)"><div class="menu-item-info"><div class="menu-item-name">Gyoza Végétarien</div><div class="menu-item-desc">4 pcs.</div></div><img src="assets/entree-gyoza-veggie.webp" alt="Gyoza Végétarien" class="menu-item-img"/><div class="menu-item-price">€7.20</div></div>
       <div class="menu-item" onclick="openAddToCart('Tempura Scampi + Spicy', '4 pcs.', 6.90)"><div class="menu-item-info"><div class="menu-item-name">Tempura Scampi + Spicy</div><div class="menu-item-desc">4 pcs.</div></div><img src="assets/tempura-scampi.webp" alt="Tempura Scampi" class="menu-item-img"/><div class="menu-item-price">€6.90</div></div>
       <div class="menu-item" onclick="openAddToCart('Gyoza Scampi', '4 pcs.', 6.90)"><div class="menu-item-info"><div class="menu-item-name">Gyoza Scampi</div><div class="menu-item-desc">4 pcs.</div></div><img src="assets/entree-gyoza-scampi.webp" alt="Gyoza Scampi" class="menu-item-img"/><div class="menu-item-price">€6.90</div></div>
       <div class="menu-item" onclick="openAddToCart('Karaage Poulet + Spicy', '7 pcs.', 7.50)"><div class="menu-item-info"><div class="menu-item-name">Karaage Poulet + Spicy</div><div class="menu-item-desc">7 pcs.</div></div><img src="assets/Poulet-karaage.webp" alt="Karaage Poulet" class="menu-item-img"/><div class="menu-item-price">€7.50</div></div>
-      <div class="menu-item" onclick="openAddToCart('Saumon Yakitori', '2 pcs.', 7.50)"><div class="menu-item-info"><div class="menu-item-name">Saumon Yakitori</div><div class="menu-item-desc">2 pcs.</div></div><img src="assets/entree-yakitori-saumon.webp" alt="Saumon Yakitori" class="menu-item-img"/><div class="menu-item-price">€7.50</div></div>
+      <div class="menu-item" onclick="openAddToCart('Saumon Yakitori', '2 pcs.', 7.50)"><div class="menu-item-info"><div class="menu-item-name">Saumon Yakitori</div><div class="menu-item-desc">2 pcs.</div></div><img src="assets/entree-yakitori-saumon.webp" alt="Saumon Yakitori" class="menu-item-img" style="object-fit:cover;"/><div class="menu-item-price">€7.50</div></div>
     </div>
   </div>
 
   <!-- ── SUSHIS 8 PCS ── -->
   <div id="cat-sushis" class="menu-category">
+   <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍣 Sushis <span style="color:var(--red);">8 pcs.</span></span>
+    </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Saumon Avocat', 'Riz, saumon, avocat, sésame', 8.20)"><div class="menu-item-info"><div class="menu-item-name">Saumon Avocat</div><div class="menu-item-desc">Riz, saumon, avocat, sésame</div></div><img src="assets/sushi-saumon-avocat.webp" alt="Saumon Avocat" class="menu-item-img"/><div class="menu-item-price">€8.20</div></div>
       <div class="menu-item" onclick="openAddToCart('Saumon Cheese Avocat', 'Riz, saumon, avocat, fromage, ciboulette', 8.90)"><div class="menu-item-info"><div class="menu-item-name">Saumon Cheese Avocat</div><div class="menu-item-desc">Riz, saumon, avocat, fromage, ciboulette</div></div><img src="assets/sushi-saumon-cheese-avocat.webp" alt="Saumon Cheese Avocat" class="menu-item-img"/><div class="menu-item-price">€8.90</div></div>
@@ -2883,6 +2890,9 @@ html {
 
   <!-- ── NIGIRI & SASHIMI ── -->
   <div id="cat-nigiri" class="menu-category">
+    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🐟 Nigiri <span style="color:var(--red);">&</span> Sashimi</span>
+    </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Nigiri Saumon', '3 pcs.', 7.20)"><div class="menu-item-info"><div class="menu-item-name">Nigiri Saumon</div><div class="menu-item-desc">3 pcs.</div></div><img src="assets/nigiri-saumon.webp" alt="Nigiri Saumon" class="menu-item-img"/><div class="menu-item-price">€7.20</div></div>
       <div class="menu-item" onclick="openAddToCart('Sashimi Saumon', '5 pcs.', 8.00)"><div class="menu-item-info"><div class="menu-item-name">Sashimi Saumon</div><div class="menu-item-desc">5 pcs.</div></div><img src="assets/sashimi-saumon.webp" alt="Sashimi Saumon" class="menu-item-img"/><div class="menu-item-price">€8.00</div></div>
@@ -2898,6 +2908,9 @@ html {
 
   <!-- ── CROUSTY ROLL 8 PCS ── -->
   <div id="cat-crousty" class="menu-category">
+    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🌯 Crousty <span style="color:var(--red);">Roll</span></span>
+    </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Crousty Cheese', 'Fromage et miel', 9.50)"><div class="menu-item-info"><div class="menu-item-name">Crousty Cheese</div><div class="menu-item-desc">Fromage et miel</div></div><img src="assets/crousty-cheese.webp" alt="Crousty Cheese" class="menu-item-img"/><div class="menu-item-price">€9.50</div></div>
       <div class="menu-item" onclick="openAddToCart('Crousty Boeuf', 'Poivrons, boeuf, carotte', 9.90)"><div class="menu-item-info"><div class="menu-item-name">Crousty Boeuf</div><div class="menu-item-desc">Poivrons, boeuf, carotte</div></div><img src="assets/crousty-boeuf.webp" alt="Crousty Boeuf" class="menu-item-img"/><div class="menu-item-price">€9.90</div></div>
@@ -2912,6 +2925,9 @@ html {
 
   <!-- ── MAKI 8 PCS ── -->
   <div id="cat-maki" class="menu-category">
+    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🌀 Maki <span style="color:var(--red);">8 pcs.</span></span>
+    </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Maki Saumon', '8 pcs.', 6.60)"><div class="menu-item-info"><div class="menu-item-name">Maki Saumon</div><div class="menu-item-desc">8 pcs.</div></div><img src="assets/maki-saumon.webp" alt="Maki Saumon" class="menu-item-img"/><div class="menu-item-price">€6.60</div></div>
       <div class="menu-item" onclick="openAddToCart('Maki Saumon Épicé', '8 pcs.', 6.80)"><div class="menu-item-info"><div class="menu-item-name">Maki Saumon Épicé</div><div class="menu-item-desc">8 pcs.</div></div><img src="assets/maki-saumon-epice.webp" alt="Maki Saumon Épicé" class="menu-item-img"/><div class="menu-item-price">€6.80</div></div>
@@ -2924,6 +2940,9 @@ html {
 
   <!-- ── DONBURI ── -->
   <div id="cat-donburi" class="menu-category">
+    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍚 Donburi</span>
+    </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Donburi Végétarien', 'Bowl végétarien sur riz assaisonné', 14.50)"><div class="menu-item-info"><div class="menu-item-name">Donburi Végétarien</div><div class="menu-item-desc">Bowl végétarien sur riz assaisonné</div></div><img src="assets/donburi-veggie.webp" alt="Donburi Végétarien" class="menu-item-img"/><div class="menu-item-price">€14.50</div></div>
       <div class="menu-item" onclick="openAddToCart('Donburi Karaage Poulet', 'Poulet frit japonais, riz assaisonné, sauce maison', 15.90)"><div class="menu-item-info"><div class="menu-item-name">Donburi Karaage Poulet</div><div class="menu-item-desc">Poulet frit japonais, riz assaisonné, sauce maison</div><span class="menu-item-badge">★ #1 Most Liked</span></div><img src="assets/donburi-karaage.webp" alt="Donburi Karaage" class="menu-item-img"/><div class="menu-item-price">€15.90</div></div>
@@ -2938,6 +2957,9 @@ html {
 
   <!-- ── PLATS & BOWLS ── -->
   <div id="cat-plats" class="menu-category">
+    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥗 Plats <span style="color:var(--red);">&</span> Bowls</span>
+    </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Chiracha Bowl — Thon Cru', 'Bowl façon poke, thon cru', 15.50)"><div class="menu-item-info"><div class="menu-item-name">Chiracha Bowl — Thon Cru</div><div class="menu-item-desc">Bowl façon poke, thon cru</div></div><img src="assets/bowl-thon.webp" alt="Chiracha Bowl Thon" class="menu-item-img"/><div class="menu-item-price">€15.50</div></div>
       <div class="menu-item" onclick="openAddToCart('Chiracha Bowl — Saumon', 'Bowl façon poke, saumon', 16.50)"><div class="menu-item-info"><div class="menu-item-name">Chiracha Bowl — Saumon</div><div class="menu-item-desc">Bowl façon poke, saumon</div></div><img src="assets/bowl-saumon.webp" alt="Chiracha Bowl Saumon" class="menu-item-img"/><div class="menu-item-price">€16.50</div></div>
@@ -2951,16 +2973,22 @@ html {
 
   <!-- ── YAKISOBA & UDON ── -->
   <div id="cat-yakisoba" class="menu-category">
+    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍜 Yakisoba <span style="color:var(--red);">&</span> Udon</span>
+    </div>
     <div class="menu-items">
-      <div class="menu-item" onclick="openAddToCart('Poulet Teriyaki', 'Yakisoba ou Udon au poulet teriyaki', 15.50)"><div class="menu-item-info"><div class="menu-item-name">Poulet Teriyaki</div><div class="menu-item-desc">Yakisoba ou Udon au poulet teriyaki</div></div><img src="assets/yaki-poulet-teriyaki.webp" alt="Poulet Teriyaki" class="menu-item-img"/><div class="menu-item-price">€15.50</div></div>
-      <div class="menu-item" onclick="openAddToCart('Boeuf Épicé', 'Yakisoba ou Udon au boeuf épicé', 16.90)"><div class="menu-item-info"><div class="menu-item-name">Boeuf Épicé</div><div class="menu-item-desc">Yakisoba ou Udon au boeuf épicé</div></div><img src="assets/yaki-boeuf-epice.webp" alt="Boeuf Épicé" class="menu-item-img"/><div class="menu-item-price">€16.90</div></div>
-      <div class="menu-item" onclick="openAddToCart('Scampis Grillés', 'Yakisoba ou Udon aux scampis grillés', 16.90)"><div class="menu-item-info"><div class="menu-item-name">Scampis Grillés</div><div class="menu-item-desc">Yakisoba ou Udon aux scampis grillés</div></div><img src="assets/yaki-scampis.webp" alt="Scampis Grillés" class="menu-item-img"/><div class="menu-item-price">€16.90</div></div>
-      <div class="menu-item" onclick="openAddToCart('Végétarien', 'Yakisoba ou Udon végétarien', 14.50)"><div class="menu-item-info"><div class="menu-item-name">Végétarien</div><div class="menu-item-desc">Yakisoba ou Udon végétarien</div></div><img src="assets/yaki-veggie.webp" alt="Végétarien" class="menu-item-img"/><div class="menu-item-price">€14.50</div></div>
+      <div class="menu-item" onclick="openAddToCart('Poulet Teriyaki', 'Yakisoba ou Udon au poulet teriyaki', 15.50)"><div class="menu-item-info"><div class="menu-item-name">Poulet Teriyaki</div><div class="menu-item-desc">Yakisoba ou Udon au poulet teriyaki</div></div><img src="assets/yaki-poulet-teriyaki.webp" alt="Poulet Teriyaki" class="menu-item-img"style="object-fit:cover;"/><div class="menu-item-price">€15.50</div></div>
+      <div class="menu-item" onclick="openAddToCart('Boeuf Épicé', 'Yakisoba ou Udon au boeuf épicé', 16.90)"><div class="menu-item-info"><div class="menu-item-name">Boeuf Épicé</div><div class="menu-item-desc">Yakisoba ou Udon au boeuf épicé</div></div><img src="assets/yaki-boeuf-epice.webp" alt="Boeuf Épicé" class="menu-item-img" style="object-fit:cover;"/><div class="menu-item-price">€16.90</div></div>
+      <div class="menu-item" onclick="openAddToCart('Scampis Grillés', 'Yakisoba ou Udon aux scampis grillés', 16.90)"><div class="menu-item-info"><div class="menu-item-name">Scampis Grillés</div><div class="menu-item-desc">Yakisoba ou Udon aux scampis grillés</div></div><img src="assets/yaki-scampis.webp" alt="Scampis Grillés" class="menu-item-img" style="object-fit:cover;"/><div class="menu-item-price">€16.90</div></div>
+      <div class="menu-item" onclick="openAddToCart('Végétarien', 'Yakisoba ou Udon végétarien', 14.50)"><div class="menu-item-info"><div class="menu-item-name">Végétarien</div><div class="menu-item-desc">Yakisoba ou Udon végétarien</div></div><img src="assets/yaki-veggie.webp" alt="Végétarien" class="menu-item-img" style="object-fit:cover;"/><div class="menu-item-price">€14.50</div></div>
     </div>
   </div>
 
   <!-- ── ACCOMPAGNEMENTS ── -->
   <div id="cat-accompagnements" class="menu-category">
+    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
+      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥡 Accompagnements</span>
+    </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Riz Blanc', 'Riz japonais nature', 3.40)"><div class="menu-item-info"><div class="menu-item-name">Riz Blanc</div><div class="menu-item-desc">Riz japonais nature</div></div><img src="assets/accomp-riz-blanc.webp" alt="Riz Blanc" class="menu-item-img"/><div class="menu-item-price">€3.40</div></div>
       <div class="menu-item" onclick="openAddToCart('Riz Épicé', 'Riz assaisonné épicé', 3.70)"><div class="menu-item-info"><div class="menu-item-name">Riz Épicé</div><div class="menu-item-desc">Riz assaisonné épicé</div></div><img src="assets/accomp-riz-epice.webp" alt="Riz Épicé" class="menu-item-img"/><div class="menu-item-price">€3.70</div></div>
@@ -3061,7 +3089,7 @@ html {
   </div>
  
   <!-- ── SLIDER PHOTOS (inchangé) ── -->
-  <div style="margin-top: 80px;">
+<div style="margin-top: 40px;">
     <div class="menu-slider">
       <button class="menu-slider-btn menu-slider-btn--prev">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -3693,11 +3721,13 @@ document.addEventListener('keydown', e => {
   function closeMobileMenu() { document.getElementById('mobile-menu').classList.remove('open'); }
 
   /* MENU TABS */
-  function switchTab(e, cat) {
+function switchTab(e, cat) {
     document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.menu-category').forEach(c => c.classList.remove('active'));
     e.target.classList.add('active');
-    document.getElementById('cat-' + cat).classList.add('active');
+    var catEl = document.getElementById('cat-' + cat);
+    catEl.classList.add('active');
+    setTimeout(() => catEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }
 
   /* SCROLL REVEAL */
@@ -3749,7 +3779,7 @@ document.addEventListener('keydown', e => {
     }
   }
 
-  function initParticles() {
+function initParticles() {
     resize();
     particles = [];
     for (let i = 0; i < 80; i++) particles.push(new Particle());
