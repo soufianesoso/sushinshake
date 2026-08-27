@@ -16,21 +16,20 @@
          url('assets/aAsianNinja.otf') format('opentype'),
          url('assets/aAsianNinja.ttf') format('truetype');
   }
-
   :root {
-    --black: #0B0B0C;
-    --deep: #110a0e;
-    --surface: #1a0f14;
-    --surface2: #221219;
-    --ivory: #F5F0E8;
-    --ivory2: #E8E2D6;
-    --muted: #8a8086;
+    --black: #FFF8F0;
+    --deep: #FFF0E8;
+    --surface: #FFE4F0;
+    --surface2: #FFD6E8;
+    --ivory: #2D1B1B;
+   --ivory2: #3D1F1F;
+    --muted: #7A4A5A;
     --pink: #FF6B9D;
     --pink-soft: #ff8fb5;
     --pink-deep: #c94d7a;
     --gold: #C9A84C;
-    --border: rgba(255,107,157,0.08);
-    --border2: rgba(255,107,157,0.18);
+    --border: rgba(255,107,157,0.15);
+    --border2: rgba(255,107,157,0.30);
     --font-display: 'AsianNinja', serif;
     --font-ui: 'Josefin Sans', sans-serif;
   }
@@ -55,15 +54,15 @@
     transition: background 0.6s, padding 0.4s;
   }
   nav.scrolled {
-    background: rgba(11,11,12,0.92);
+    background: rgba(255,248,240,0.92);
     backdrop-filter: blur(20px);
     padding: 18px 60px;
     border-bottom: 1px solid var(--border);
   }
   .nav-links { display: flex; gap: 44px; list-style: none; }
-  .nav-links a {
+    .nav-links a {
     font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase;
-    color: rgba(245,240,232,0.7); text-decoration: none; transition: color 0.3s;
+    color: #c94d7a; text-decoration: none; transition: color 0.3s;
   }
   .nav-links a:hover { color: var(--pink); }
   .nav-cta {
@@ -88,7 +87,7 @@
   #mobile-menu.open { display: flex; }
   #mobile-menu a {
     font-family: var(--font-display); font-size: 36px; font-weight: 300;
-    color: var(--ivory); text-decoration: none; transition: color 0.3s;
+       color: var(--ivory);text-decoration: none; transition: color 0.3s;
   }
   #mobile-menu a:hover { color: var(--pink); }
   .close-menu {
@@ -138,13 +137,13 @@
   }
   .hero-title {
     font-family: var(--font-display); font-size: clamp(52px, 8vw, 100px);
-    font-weight: 300; line-height: 1.0; color: var(--ivory);
+        font-weight: 300; line-height: 1.0; color: #F5F0E8;
     opacity: 0; transform: translateY(30px); animation: fadeUp 1.2s 0.5s forwards;
   }
   .hero-title em { font-style: italic; color: var(--pink); display: block; }
   .hero-sub {
     font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--ivory); margin-top: 32px;
+      color: #F5F0E8; margin-top: 32px;
     opacity: 0; transform: translateY(20px); animation: fadeUp 1s 0.9s forwards;
   }
   .hero-actions {
@@ -162,9 +161,9 @@
   .hero-btn-main:hover { background: var(--pink-soft); transform: translateY(-2px); }
   .hero-btn-ghost {
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 13px 28px; background: transparent; color: var(--ivory);
+    padding: 13px 28px; background: transparent; color: #F5F0E8;
     font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.1em;
-    border: 2px solid rgba(255,255,255,0.35); border-radius: 50px; text-decoration: none; width: 100%;
+    border: 2px solid rgba(245,240,232,0.5); border-radius: 50px; text-decoration: none; width: 100%;
     transition: background 0.3s, color 0.3s, border-color 0.3s;
   }
   .hero-btn-ghost:hover { background: var(--ivory); color: var(--black); border-color: var(--ivory); }
@@ -315,11 +314,11 @@
   }
   .boisson-item:hover { background: var(--surface2); }
   .boisson-name {
-    font-family: var(--font-ui); font-size: 18px; color: var(--ivory); margin-bottom: 4px;
+    font-family: var(--font-ui); font-size: 18px; color: var(--pink-deep); margin-bottom: 4px;
   }
   .boisson-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
   .boisson-price {
-    font-family: var(--font-display); font-size: 20px; color: var(--ivory2); white-space: nowrap;
+    font-family: var(--font-display); font-size: 20px; color: var(--gold); white-space: nowrap;
   }
 
   /* ══ MOCHIS ══ */
@@ -421,7 +420,13 @@
   }
   @media (max-width: 768px) {
     nav { padding: 24px 24px; }
-    nav.scrolled { padding: 16px 24px; }
+     nav.scrolled {
+    background: rgba(255,248,240,0.92);
+    backdrop-filter: blur(20px);
+    padding: 16px 24px;
+  }
+  nav.scrolled .nav-links a { color: #c94d7a }
+  nav.scrolled .nav-logo-text { color: #2D1B1B; }
     .nav-links { display: none; }
     .nav-cta { display: none; }
     .hamburger { display: flex; }
@@ -705,13 +710,15 @@
 /* ══ BOISSONS CATÉGORIES ══ */
 .boisson-category-header {
   font-family: var(--font-display);
-  font-size: 22px;
-  color: #F5F0E8;
-  padding: 20px 0 8px;
-  border-bottom: 2px solid var(--pink);
-  margin-bottom: 4px;
+  font-size: 20px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+  padding: 14px 22px;
+  border-bottom: none;
+  margin-bottom: 2px;
   grid-column: 1 / -1;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 14px rgba(255,107,157,0.25);
 }
 
 /* ══ POPUP BIENTÔT DISPO ══ */
@@ -849,7 +856,7 @@
     </div>
 
     <!-- PANCAKES -->
-    <div class="base-card reveal reveal-delay-1" onclick="openDessertBuilder('Pancakes', 5.50)" style="cursor:pointer;">
+    <div class="base-card reveal reveal-delay-1" onclick="openDessertBuilder('Pancakes', 6.00)" style="cursor:pointer;">
       <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
   <img src="assets/pancakes.webp" alt="Pancakes" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.7s;"/>
 </div>
@@ -861,7 +868,7 @@
     </div>
 
     <!-- GAUFRES -->
-    <div class="base-card reveal reveal-delay-2" onclick="openDessertBuilder('Gaufres', 6.00)" style="cursor:pointer;">
+    <div class="base-card reveal reveal-delay-2" onclick="openDessertBuilder('Gaufres', 5.50)" style="cursor:pointer;">
       <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
   <img src="assets/gauffre.webp" alt="Pancakes" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.7s;"/>
 </div>
@@ -929,11 +936,13 @@
         <div class="composer-col-title">Topping</div>
       </div>
       <div class="composer-items">
-        <div class="composer-item"><span class="composer-item-name">Nutella</span><span class="composer-item-price">1.00€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Cassonade</span><span class="composer-item-price">1.00€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Chantilly</span><span class="composer-item-price">1.00€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Caramel beurre salé</span><span class="composer-item-price">1.50€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Coulis pistache</span><span class="composer-item-price">2.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Cassonade</span><span class="composer-item-price">1.25€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Coulis Nutella</span><span class="composer-item-price">1.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Coulis Fraises</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Coulis Pistache</span><span class="composer-item-price">2.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Coulis Chocolat Blanc</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Coulis Spéculoos</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Caramel Beurre Salé</span><span class="composer-item-price">1.50€</span></div>
       </div>
     </div>
 
@@ -945,10 +954,10 @@
       </div>
       <div class="composer-items">
         <div class="composer-item"><span class="composer-item-name">Fraises</span><span class="composer-item-price">1.75€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Ananas</span><span class="composer-item-price">1.25€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Framboise</span><span class="composer-item-price">1.25€</span></div>
         <div class="composer-item"><span class="composer-item-name">Mûres</span><span class="composer-item-price">1.25€</span></div>
         <div class="composer-item"><span class="composer-item-name">Myrtilles</span><span class="composer-item-price">1.00€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Mangue</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name">Banane</span><span class="composer-item-price">1.50€</span></div>
       </div>
     </div>
 
@@ -977,15 +986,11 @@
     </div>
     <div class="irresistables-grid">
       <div class="composer-item"><span class="composer-item-name">M&M's</span><span class="composer-item-price">1.50€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Snickers</span><span class="composer-item-price">1.50€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Mikado</span><span class="composer-item-price">1.50€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Brownie</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Copeaux Choc. Lait</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name">Copeaux Choc. Blanc</span><span class="composer-item-price">1.50€</span></div>
       <div class="composer-item"><span class="composer-item-name">Noix de pécan</span><span class="composer-item-price">2.00€</span></div>
       <div class="composer-item"><span class="composer-item-name">Pistache</span><span class="composer-item-price">2.00€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Copeaux de choco</span><span class="composer-item-price">1.50€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Noix</span><span class="composer-item-price">2.00€</span></div>
       <div class="composer-item"><span class="composer-item-name">Rafaello</span><span class="composer-item-price">2.00€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Galak</span><span class="composer-item-price">2.00€</span></div>
     </div>
   </div>
 
@@ -1399,6 +1404,7 @@ new IntersectionObserver(entries => {
       <div class="cart-step-title">Récapitulatif</div>
       <div id="recap-box" style="background:rgba(255,107,157,0.04);border-radius:14px;padding:16px;margin-bottom:20px;border:1px solid rgba(255,107,157,0.1);">
         <div id="recap-delivery" style="font-size:12px;color:#8a8080;margin-bottom:8px;"></div>
+                <div id="recap-frais" style="font-size:12px;color:#8a8080;margin-bottom:8px;"></div>
         <div id="recap-address" style="font-size:12px;color:#8a8080;margin-bottom:8px;display:none;"></div>
         <div id="recap-payment" style="font-size:12px;color:#8a8080;margin-bottom:12px;"></div>
         <div style="border-top:1px solid rgba(255,107,157,0.1);padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
@@ -1598,7 +1604,8 @@ function validateStep3() {
 function updateStep4Recap() {
   var total = 0; for (var i = 0; i < cart.length; i++) total += cart[i].price * cart[i].qty;
   var totalFinal = deliveryChoice === 'livrer' ? total + 4.50 : total;
-  document.getElementById('recap-delivery').textContent = deliveryChoice === 'livrer' ? '🚚 Livraison à domicile (+4.50€)' : '🏠 Sur place';
+  document.getElementById('recap-delivery').textContent = deliveryChoice === 'livrer' ? '🚚 Livraison à domicile' : '🏠 Sur place';
+  document.getElementById('recap-frais').textContent = deliveryChoice === 'livrer' ? 'Frais de livraison : +4.50€' : '';
   var addrEl = document.getElementById('recap-address');
   if (deliveryChoice === 'livrer' && customerAddress) {
     addrEl.style.display = 'block'; addrEl.textContent = '📍 ' + customerName + ' — ' + customerAddress;
@@ -1692,46 +1699,62 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
 
     <div class="builder-body" id="builder-body">
 
-      <!-- TOPPINGS -->
+           <!-- TOPPINGS -->
       <span class="builder-section-title">🍫 Toppings</span>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Nutella</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Coulis Nutella</div><div class="builder-item-price">+1.00€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Nutella',1.00,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Nutella">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Nutella',1.00,1)">+</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Coulis Nutella',1.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Coulis Nutella">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Coulis Nutella',1.00,1)">+</button>
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Cassonade</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Cassonade</div><div class="builder-item-price">+1.25€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Cassonade',1.00,-1)">−</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Cassonade',1.25,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Cassonade">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Cassonade',1.00,1)">+</button>
+          <button class="builder-qty-btn" onclick="builderChange('Cassonade',1.25,1)">+</button>
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Chantilly</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Coulis Fraises</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Chantilly',1.00,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Chantilly">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Chantilly',1.00,1)">+</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Coulis Fraises',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Coulis Fraises">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Coulis Fraises',1.50,1)">+</button>
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Caramel beurre salé</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Coulis Pistache</div><div class="builder-item-price">+2.00€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Caramel beurre salé',1.50,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Caramel beurre salé">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Caramel beurre salé',1.50,1)">+</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Coulis Pistache',2.00,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Coulis Pistache">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Coulis Pistache',2.00,1)">+</button>
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Coulis pistache</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Coulis Choc. Blanc</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Coulis pistache',2.00,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Coulis pistache">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Coulis pistache',2.00,1)">+</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Coulis Choc. Blanc',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Coulis Choc. Blanc">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Coulis Choc. Blanc',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Coulis Spéculoos</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Coulis Spéculoos',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Coulis Spéculoos">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Coulis Spéculoos',1.50,1)">+</button>
+        </div>
+      </div>
+      <div class="builder-item">
+        <div class="builder-item-left"><div class="builder-item-name">Caramel Beurre Salé</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-controls">
+          <button class="builder-qty-btn minus" onclick="builderChange('Caramel Beurre Salé',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Caramel Beurre Salé">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Caramel Beurre Salé',1.50,1)">+</button>
         </div>
       </div>
 
@@ -1746,11 +1769,11 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Ananas</div><div class="builder-item-price">+1.25€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Framboise</div><div class="builder-item-price">+1.25€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Ananas',1.25,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Ananas">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Ananas',1.25,1)">+</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Framboise',1.25,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Framboise">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Framboise',1.25,1)">+</button>
         </div>
       </div>
       <div class="builder-item">
@@ -1770,17 +1793,17 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Mangue</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Banane</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Mangue',1.50,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Mangue">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Mangue',1.50,1)">+</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Banane',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Banane">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Banane',1.50,1)">+</button>
         </div>
       </div>
 
       <!-- IRRÉSISTABLES -->
       <span class="builder-section-title">✨ Irrésistables</span>
-      <div class="builder-item">
+           <div class="builder-item">
         <div class="builder-item-left"><div class="builder-item-name">Kinder Bueno</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Kinder Bueno',1.50,-1)">−</button>
@@ -1829,27 +1852,19 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Snickers</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Copeaux Choc. Lait</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Snickers',1.50,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Snickers">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Snickers',1.50,1)">+</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Copeaux Choc. Lait',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Copeaux Choc. Lait">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Copeaux Choc. Lait',1.50,1)">+</button>
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Mikado</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name">Copeaux Choc. Blanc</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Mikado',1.50,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Mikado">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Mikado',1.50,1)">+</button>
-        </div>
-      </div>
-      <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Brownie</div><div class="builder-item-price">+1.50€</div></div>
-        <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Brownie',1.50,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Brownie">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Brownie',1.50,1)">+</button>
+          <button class="builder-qty-btn minus" onclick="builderChange('Copeaux Choc. Blanc',1.50,-1)">−</button>
+          <div class="builder-qty-num" id="bqty-Copeaux Choc. Blanc">0</div>
+          <button class="builder-qty-btn" onclick="builderChange('Copeaux Choc. Blanc',1.50,1)">+</button>
         </div>
       </div>
       <div class="builder-item">
@@ -1869,35 +1884,11 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Copeaux de choco</div><div class="builder-item-price">+1.50€</div></div>
-        <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Copeaux de choco',1.50,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Copeaux de choco">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Copeaux de choco',1.50,1)">+</button>
-        </div>
-      </div>
-      <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Noix</div><div class="builder-item-price">+2.00€</div></div>
-        <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Noix',2.00,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Noix">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Noix',2.00,1)">+</button>
-        </div>
-      </div>
-      <div class="builder-item">
         <div class="builder-item-left"><div class="builder-item-name">Rafaello</div><div class="builder-item-price">+2.00€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Rafaello',2.00,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Rafaello">0</div>
           <button class="builder-qty-btn" onclick="builderChange('Rafaello',2.00,1)">+</button>
-        </div>
-      </div>
-      <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Galak</div><div class="builder-item-price">+2.00€</div></div>
-        <div class="builder-item-controls">
-          <button class="builder-qty-btn minus" onclick="builderChange('Galak',2.00,-1)">−</button>
-          <div class="builder-qty-num" id="bqty-Galak">0</div>
-          <button class="builder-qty-btn" onclick="builderChange('Galak',2.00,1)">+</button>
         </div>
       </div>
 
@@ -1912,7 +1903,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         <button onclick="openDessertBuilder('Crêpes',5.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
           <span>🥞 Crêpes</span><span style="color:var(--pink);">5.00€</span>
         </button>
-        <button onclick="openDessertBuilder('Pancakes',5.50)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+        <button onclick="openDessertBuilder('Pancakes',6.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
           <span>🥞 Pancakes</span><span style="color:var(--pink);">5.50€</span>
         </button>
         <button onclick="openDessertBuilder('Gaufres',6.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
