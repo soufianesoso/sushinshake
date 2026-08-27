@@ -22,19 +22,19 @@
  
 <style>
   :root {
-  --black: #0B0B0C;
-  --deep: #111113;
-  --surface: #161618;
-  --surface2: #1c1c1f;
-  --ivory: #F5F0E8;
-  --ivory2: #E8E2D6;
-  --muted: #8a8680;
+  --black: #FFF8F0;
+  --deep: #FFF3E6;
+  --surface: #FFFFFF;
+  --surface2: #FFEDDC;
+  --ivory: #241E1A;
+  --ivory2: #3A2E26;
+  --muted: #8a7d70;
   --red: #fb8500;
   --red-soft: #e07600;
   --gold: #C9A84C;
   --gold-soft: #a8893e;
-  --border: rgba(255,255,255,0.06);
-  --border2: rgba(255,255,255,0.12);
+  --border: rgba(11,11,12,0.08);
+  --border2: rgba(11,11,12,0.15);
   --font-display: 'AsianNinja', serif;
   --font-ui: 'Josefin Sans', sans-serif;
   --cover-timing: 0.5s;
@@ -169,7 +169,7 @@ html {
 
 
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-  .hamburger span { width: 24px; height: 1px; background: var(--ivory); display: block; }
+  .hamburger span { width: 24px; height: 1px; background: #FFF8F0; display: block; }
 
   /* HERO */
   #hero {
@@ -242,13 +242,13 @@ html {
     transform: translateY(20px);
     animation: fadeUp 1s 0.3s forwards;
   }
-  .hero-title {
+   .hero-title {
     font-family: var(--font-display);
     font-size: clamp(52px, 8vw, 100px);
     font-weight: 300;
     line-height: 1.0;
     letter-spacing: -0.01em;
-    color: var(--ivory);
+    color: #FFF8F0;
     opacity: 0;
     transform: translateY(30px);
     animation: fadeUp 1.2s 0.5s forwards;
@@ -262,7 +262,7 @@ html {
     font-size: 13px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--ivory);
+    color: #FFF8F0;
     margin-top: 32px;
     opacity: 0;
     transform: translateY(20px);
@@ -352,7 +352,7 @@ html {
   .exp-text p {
     font-size: 15px;
     line-height: 1.9;
-    color: rgba(245,240,232,0.65);
+    color: rgba(36,30,26,0.7);
     max-width: 480px;
   }
   .exp-text p + p { margin-top: 20px; }
@@ -559,7 +559,7 @@ html {
 .evt-desc {
   font-size: 14px;
   line-height: 1.9;
-  color: rgba(245,240,232,0.6);
+  color: rgba(36,30,26,0.65);
   max-width: 480px;
   margin-bottom: 40px;
 }
@@ -861,7 +861,7 @@ html {
   font-family: var(--font-display);
   font-size: clamp(22px, 2.5vw, 36px);
   font-weight: 400;
-  color: var(--ivory);
+  color: #FFF8F0;
   margin-bottom: 12px;
   line-height: 1.2;
 }
@@ -879,7 +879,7 @@ html {
 .dish-card:focus .dish-name .char {
   opacity: 1;
   transform: translateY(0);
-  color: var(--ivory);
+  color: #FFF8F0;
 }
 .dish-card:hover .dish-name .char {
   transition-delay: calc(0.1s + var(--char-index) * var(--title-stagger));
@@ -887,7 +887,7 @@ html {
 .dish-desc {
   font-size: 14px;
   line-height: 1.8;
-  color: rgba(245,240,232,0.75);
+  color: rgba(255,248,240,0.75);
   margin-bottom: 14px;
 }
 .dish-desc .word {
@@ -908,13 +908,13 @@ html {
   font-family: var(--font-display);
   font-size: 28px;
   font-weight: 300;
-  color: var(--ivory2);
+  color: #FFF8F0;
   display: inline-block;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.5s 0.4s, transform 0.5s 0.4s;
 }
-.dish-price span { font-size: 13px; color: var(--muted); vertical-align: super; }
+.dish-price span { font-size: 13px; color: rgba(255,248,240,0.6); vertical-align: super; }
 .dish-card:hover .dish-price,
 .dish-card:focus .dish-price {
   opacity: 1;
@@ -1150,7 +1150,7 @@ html {
     font-family: var(--font-display);
     font-size: clamp(14px, 2vw, 22px);
     font-style: italic;
-    color: rgba(245,240,232,0.3);
+    color: rgba(36,30,26,0.15);
     position: relative;
     overflow: hidden;
     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1213,10 +1213,10 @@ html {
   50%       { transform: translateY(-14px); }
 }
 
-  .about-text p {
+   .about-text p {
     font-size: 15px;
     line-height: 1.9;
-    color: rgba(245,240,232,0.65);
+    color: rgba(36,30,26,0.7);
     margin-bottom: 24px;
     max-width: 480px;
   }
@@ -1519,7 +1519,7 @@ html {
     font-family: var(--font-display);
     font-size: 36px;
     font-weight: 300;
-    color: var(--ivory);
+    color: #FFF8F0;
     text-decoration: none;
     letter-spacing: 0.05em;
     transition: color 0.3s;
@@ -1614,7 +1614,7 @@ html {
   gap: 10px;
   padding: 13px 28px;
   background: transparent;
-  color: var(--ivory);
+  color: #FFF8F0;
   font-family: var(--font-ui);
   font-size: 13px;
   font-weight: 400;
@@ -1627,9 +1627,9 @@ html {
   width: 100%;
 }
 .hero-btn-menu:hover {
-  background: var(--ivory);
-  color: var(--black);
-  border-color: var(--ivory);
+  background: #FFF8F0;
+  color: #241E1A;
+  border-color: #FFF8F0;
   transform: translateY(-2px);
 }
 
@@ -2464,11 +2464,11 @@ html {
 /* LANG SWITCHER */
 .lang-switcher{display:flex;align-items:center;gap:4px;margin-right:10px;pointer-events:auto;}
 .lang-btn{font-family:var(--font-ui);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.5);background:none;border:1px solid transparent;border-radius:50px;padding:5px 10px;cursor:pointer;transition:color 0.2s,border-color 0.2s,background 0.2s;}
-.lang-btn:hover{color:var(--ivory);}
-.lang-btn.active{color:var(--ivory);border-color:var(--red);background:rgba(251,133,0,0.12);}
+.lang-btn:hover{color:#FFF8F0;}
+.lang-btn.active{color:#FFF8F0;border-color:var(--red);background:rgba(251,133,0,0.12);}
 #mobile-menu .lang-switcher{margin-top:16px;gap:8px;}
 #mobile-menu .lang-btn{font-size:13px;padding:8px 18px;border:1px solid var(--border2);}
-#mobile-menu .lang-btn.active{border-color:var(--red);background:rgba(251,133,0,0.15);color:var(--ivory);}
+#mobile-menu .lang-btn.active{border-color:var(--red);background:rgba(251,133,0,0.15);color:#FFF8F0;}
 </style>
 </head>
 <body>
@@ -2861,7 +2861,7 @@ html {
   <div class="menu-header reveal">
     <span class="section-label" data-i18n="menu.label">Le Menu</span>
     <h2 class="section-title"><span data-i18n="menu.title1">Chaque création,</span><br><em data-i18n="menu.title2">soigneusement composée</em></h2>
-    <p style="font-size:13px;color:rgba(245,240,232,0.6);letter-spacing:0.05em;margin-top:16px;margin-bottom:8px;" data-i18n="menu.hint">
+    <p style="font-size:13px;color:rgba(36,30,26,0.65);letter-spacing:0.05em;margin-top:16px;margin-bottom:8px;" data-i18n="menu.hint">
       Cliquez sur un plat pour l'ajouter directement à votre panier
     </p>
     <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,133,0,0.12);border:1px solid rgba(251,133,0,0.3);border-radius:50px;padding:10px 20px;margin-top:4px;">
@@ -2881,7 +2881,7 @@ html {
     <button class="menu-tab"         onclick="switchTab(event,'yakisoba')" data-i18n="menu.tab.yakisoba">Yakisoba & Udon</button>
     <button class="menu-tab"         onclick="switchTab(event,'accompagnements')" data-i18n="menu.tab.accomp">Accomp.</button>
     <button class="menu-tab"         onclick="switchTab(event,'boissons')" data-i18n="menu.tab.boissons">Boissons</button>
-    <button class="menu-tab"         onclick="switchTab(event,'desserts')" data-i18n="menu.tab.desserts">Desserts</button>
+    <a href="sweety.html" class="menu-tab" style="background:rgba(255,107,157,0.12);border-color:rgba(255,107,157,0.4);color:#FF6B9D;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">🍓 Envie d'un dessert ?</a>
   </div>
  
   <!-- ── ENTRÉES ── -->
@@ -4101,7 +4101,9 @@ if (sigGrid && sigDotsContainer) {
 ════════════════════════════════════════════ -->
 <script>
 /* ══ VARIABLES ══ */
-var cart = [];
+var cart = JSON.parse(localStorage.getItem('sns_cart') || '[]');
+function saveCart() { localStorage.setItem('sns_cart', JSON.stringify(cart)); }
+document.addEventListener('DOMContentLoaded', updateCartUI);
 var popupItem = null;
 var popupQty = 1;
 var deliveryChoice = null;
@@ -4134,6 +4136,7 @@ function confirmAddToCart() {
   var found = cart.findIndex(i => i.name === popupItem.name);
   if (found >= 0) { cart[found].qty += popupQty; }
   else { cart.push({ ...popupItem, qty: popupQty }); }
+  saveCart();
   closeCartPopup();
   updateCartUI();
   var fab = document.getElementById('cart-fab');
@@ -4174,8 +4177,8 @@ function updateCartUI() {
   }
 }
  
-function cartInc(i) { cart[i].qty++; updateCartUI(); }
-function cartDec(i) { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); updateCartUI(); }
+function cartInc(i) { cart[i].qty++; saveCart(); updateCartUI(); }
+function cartDec(i) { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); saveCart(); updateCartUI(); }
  
 /* ══ SIDEBAR ══ */
 function openCartSidebar() {
@@ -4347,6 +4350,7 @@ msg += '\nSous-total : ' + totalCheck.toFixed(2) + 'EUR\n';
 function resetCart() {
   cart = []; deliveryChoice = null; paymentMethod = null;
   customerName = ''; customerAddress = '';
+  saveCart();
   updateCartUI();
   closeCartSidebar();
   document.getElementById('cart-confirm-overlay').classList.add('open');

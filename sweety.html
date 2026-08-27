@@ -1455,7 +1455,9 @@ new IntersectionObserver(entries => {
 
 <script>
 /* ══ PANIER SWEETY WIZARD ══ */
-var cart = [];
+var cart = JSON.parse(localStorage.getItem('sns_cart') || '[]');
+function saveCart() { localStorage.setItem('sns_cart', JSON.stringify(cart)); }
+document.addEventListener('DOMContentLoaded', updateCartUI);
 var popupItem = null;
 var popupQty = 1;
 var deliveryChoice = null;
@@ -1484,10 +1486,10 @@ function changePopupQty(d) {
 }
 function confirmAddToCart() {
   if (!popupItem) return;
-  var found = -1;
-  for (var i = 0; i < cart.length; i++) { if (cart[i].name === popupItem.name) { found = i; break; } }
+  var found = cart.findIndex(i => i.name === popupItem.name);
   if (found >= 0) { cart[found].qty += popupQty; }
-  else { cart.push({ name: popupItem.name, desc: popupItem.desc, price: popupItem.price, qty: popupQty }); }
+  else { cart.push({ ...popupItem, qty: popupQty }); }
+  saveCart();
   closeCartPopup();
   updateCartUI();
   var fab = document.getElementById('cart-fab');
@@ -1525,8 +1527,8 @@ function updateCartUI() {
     document.getElementById('cart-total-step1').textContent = '€' + total.toFixed(2);
   }
 }
-function cartInc(i) { cart[i].qty++; updateCartUI(); }
-function cartDec(i) { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); updateCartUI(); }
+function cartInc(i) { cart[i].qty++; saveCart(); updateCartUI(); }
+function cartDec(i) { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); saveCart(); updateCartUI(); }
 
 function openCartSidebar() {
   document.getElementById('cart-sidebar').classList.add('open');
@@ -1658,7 +1660,8 @@ function finishOrder(phone) {
   if (deliveryChoice === 'livrer') msg += 'Frais de livraison : 4.50EUR\n';
   msg += 'TOTAL : ' + totalFinal.toFixed(2) + 'EUR\n\n(commande via sweety.sushinshake.be)';
   window.location.href = 'https://wa.me/32471759016?text=' + encodeURIComponent(msg);
-  cart = []; deliveryChoice = null; paymentMethod = null; customerName = ''; customerAddress = '';
+   cart = []; deliveryChoice = null; paymentMethod = null; customerName = ''; customerAddress = '';
+  saveCart();
   updateCartUI(); closeCartSidebar();
   document.getElementById('cart-confirm-overlay').classList.add('open');
 }
