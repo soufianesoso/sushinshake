@@ -2152,6 +2152,15 @@ html {
 .cart-confirm-btn:hover{background:#e07600;}
 .menu-item{cursor:pointer;}
 
+.cart-freebies-box { margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; }
+.cart-freebie-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border-radius: 10px; font-family: 'Josefin Sans', sans-serif; font-size: 12.5px; line-height: 1.4; }
+.cart-freebie-line.locked { background: rgba(255,255,255,0.04); color: #8a8680; border: 1px dashed rgba(255,255,255,0.12); }
+.cart-freebie-line.locked strong { color: #F5F0E8; }
+.cart-freebie-line.unlocked { background: rgba(251,133,0,0.12); color: #F5F0E8; border: 1px solid rgba(251,133,0,0.3); }
+.cart-freebie-add, .cart-freebie-remove { flex-shrink: 0; border: none; border-radius: 50px; padding: 6px 14px; font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+.cart-freebie-add { background: #fb8500; color: #fff; }
+.cart-freebie-remove { background: rgba(255,255,255,0.08); color: #F5F0E8; }
+
 @media (max-width: 768px) {
   #experience { padding: 80px 24px; }
   .evt-title { font-size: clamp(28px, 7vw, 42px); }
@@ -3451,6 +3460,7 @@ html {
     </div>
     <div class="cart-items-list" id="cart-items-list" style="display:none;"></div>
     <div class="cart-step-footer" id="cart-step1-footer" style="display:none;">
+            <div id="cart-freebies-box" class="cart-freebies-box"></div>
       <div class="cart-total-row">
         <span class="cart-total-label" data-i18n="cart.total">Total estimé</span>
         <span class="cart-total-price" id="cart-total-step1">€0.00</span>
@@ -3714,6 +3724,10 @@ function setLanguage(lang) {
   // Re-render cart UI if open
   updateCartUI();
 }
+
+// Apply the saved/shared language (localStorage 'sushi_lang') as soon as the page loads,
+// so navigating between sushin.html and sweety.html keeps the same language.
+document.addEventListener('DOMContentLoaded', function() { setLanguage(currentLang); });
 
 
 </script>
@@ -4145,8 +4159,48 @@ function confirmAddToCart() {
 }
  
 /* ══ CART UI ══ */
+var FREEBIES = [
+  { name: 'The Sweet', desc: 'Riz, poulet, avocat, fromage, miel, sésame, spicy par dessus', threshold: 40, emoji: '🍣' },
+  { name: 'Smoothie Mangue', desc: 'Smoothie maison', threshold: 60, emoji: '🍓' }
+];
+function addFreebie(idx) {
+  var f = FREEBIES[idx];
+  if (cart.some(i => i.name === f.name && i.free)) return;
+  cart.push({ name: f.name, desc: f.desc, price: 0, qty: 1, free: true });
+  saveCart(); updateCartUI();
+}
+function removeFreebie(idx) {
+  var f = FREEBIES[idx];
+  var i = cart.findIndex(item => item.name === f.name && item.free);
+  if (i >= 0) { cart.splice(i, 1); saveCart(); updateCartUI(); }
+}
+function renderFreebiesStatus(total) {
+  var box = document.getElementById('cart-freebies-box');
+  if (!box) return;
+  var html = '';
+  FREEBIES.forEach(function(f, idx) {
+    var inCart = cart.some(item => item.name === f.name && item.free);
+    var remaining = f.threshold - total;
+    if (inCart) {
+      html += '<div class="cart-freebie-line unlocked"><span>' + f.emoji + ' ' + f.name + ' offert ajouté ✅</span><button class="cart-freebie-remove" onclick="removeFreebie(' + idx + ')">Retirer</button></div>';
+    } else if (remaining <= 0) {
+      html += '<div class="cart-freebie-line unlocked"><span>' + f.emoji + ' ' + f.name + ' offert débloqué !</span><button class="cart-freebie-add" onclick="addFreebie(' + idx + ')">Ajouter</button></div>';
+    } else {
+      html += '<div class="cart-freebie-line locked"><span>Il vous reste <strong>' + remaining.toFixed(2) + '€</strong> pour avoir ' + f.emoji + ' ' + f.name + ' offert</span></div>';
+    }
+  });
+  box.innerHTML = html;
+}
 function updateCartUI() {
-  var n = 0, total = 0;
+  var total = 0;
+  cart.forEach(i => { total += i.price * i.qty; });
+  var changed = false;
+  FREEBIES.forEach(function(f) {
+    var idx = cart.findIndex(item => item.name === f.name && item.free);
+    if (idx >= 0 && total < f.threshold) { cart.splice(idx, 1); changed = true; }
+  });
+  if (changed) saveCart();
+  var n = 0; total = 0;
   cart.forEach(i => { n += i.qty; total += i.price * i.qty; });
   document.getElementById('cart-fab-badge').textContent = n;
   var fab = document.getElementById('cart-fab');
@@ -4172,9 +4226,10 @@ function updateCartUI() {
           <button class="cart-line-qty-btn" onclick="cartInc(${i})">+</button>
         </div>
       </div>`).join('');
-    document.getElementById('cart-total-step1').textContent = '€' + total.toFixed(2);
+      document.getElementById('cart-total-step1').textContent = '€' + total.toFixed(2);
     updateStep4Recap(total);
   }
+  renderFreebiesStatus(total);
 }
  
 function cartInc(i) { cart[i].qty++; saveCart(); updateCartUI(); }

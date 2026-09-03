@@ -660,6 +660,15 @@
 }
 .builder-add-btn:hover { background: var(--pink-soft); }
 
+.cart-freebies-box { margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; }
+.cart-freebie-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border-radius: 10px; font-family: 'Josefin Sans', sans-serif; font-size: 12.5px; line-height: 1.4; }
+.cart-freebie-line.locked { background: rgba(255,255,255,0.04); color: #8a8680; border: 1px dashed rgba(255,255,255,0.12); }
+.cart-freebie-line.locked strong { color: #F5F0E8; }
+.cart-freebie-line.unlocked { background: rgba(251,133,0,0.12); color: #F5F0E8; border: 1px solid rgba(251,133,0,0.3); }
+.cart-freebie-add, .cart-freebie-remove { flex-shrink: 0; border: none; border-radius: 50px; padding: 6px 14px; font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+.cart-freebie-add { background: var(--pink); color: #fff; }
+.cart-freebie-remove { background: rgba(255,255,255,0.08); color: #F5F0E8; }
+
 
 /* ══ BUILDER CONFIRMATION + BASE PICKER ══ */
 .builder-confirm-screen {
@@ -768,6 +777,15 @@
 }
 .soon-close:hover { background: var(--pink-soft); }
 
+
+/* == LANG SWITCHER (rose) == */
+.lang-switcher{display:flex;align-items:center;gap:4px;margin-right:4px;pointer-events:auto;}
+.lang-btn{font-family:var(--font-ui);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,77,122,0.55);background:none;border:1px solid transparent;border-radius:50px;padding:5px 10px;cursor:pointer;transition:color 0.2s,border-color 0.2s,background 0.2s;}
+.lang-btn:hover{color:#c94d7a;}
+.lang-btn.active{color:#fff;border-color:var(--pink);background:var(--pink);}
+#mobile-menu .lang-switcher{margin-top:8px;gap:8px;}
+#mobile-menu .lang-btn{font-size:13px;padding:8px 18px;border:1px solid rgba(255,107,157,0.3);color:#F5F0E8;}
+#mobile-menu .lang-btn.active{border-color:var(--pink);background:var(--pink);color:#fff;}
 </style>
 </head>
 <body>
@@ -775,11 +793,16 @@
 <!-- MOBILE MENU -->
 <div id="mobile-menu">
   <button class="close-menu" onclick="document.getElementById('mobile-menu').classList.remove('open')">✕</button>
-  <a href="#bases" onclick="document.getElementById('mobile-menu').classList.remove('open')">Menu</a>
-  <a href="#composer" onclick="document.getElementById('mobile-menu').classList.remove('open')">Composer</a>
-  <a href="#boissons" onclick="document.getElementById('mobile-menu').classList.remove('open')">Boissons</a>
-  <a href="#contact" onclick="document.getElementById('mobile-menu').classList.remove('open')">Contact</a>
-  <a href="sushin.html" style="color:orange;">sushi'n shake</a>
+  <a href="#bases" data-i18n="nav.menu" onclick="document.getElementById('mobile-menu').classList.remove('open')">Menu</a>
+  <a href="#composer" data-i18n="nav.composer" onclick="document.getElementById('mobile-menu').classList.remove('open')">Composer</a>
+  <a href="#boissons" data-i18n="nav.boissons" onclick="document.getElementById('mobile-menu').classList.remove('open')">Boissons</a>
+  <a href="#contact" data-i18n="nav.contact" onclick="document.getElementById('mobile-menu').classList.remove('open')">Contact</a>
+  <div class="lang-switcher nav-lang-mobile">
+    <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')">FR</button>
+    <button class="lang-btn" data-lang="nl" onclick="setLanguage('nl')">NL</button>
+    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+  </div>
+  <a href="sushin.html" data-i18n="nav.sushinlink" style="color:orange;">sushi'n shake</a>
 </div>
 
 <!-- NAV -->
@@ -789,15 +812,20 @@
     <span style="font-family:var(--font-display);font-size:22px;color:var(--pink);">Sweety</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#bases">Menu</a></li>
-    <li><a href="#composer">Composer</a></li>
-    <li><a href="#boissons">Boissons</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="sushin.html" style="color:orange;" >← Sushi'N Shake</a></li>
+    <li><a href="#bases" data-i18n="nav.menu">Menu</a></li>
+    <li><a href="#composer" data-i18n="nav.composer">Composer</a></li>
+    <li><a href="#boissons" data-i18n="nav.boissons">Boissons</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    <li><a href="sushin.html" data-i18n="nav.sushinlink" style="color:orange;" >← Sushi'N Shake</a></li>
   </ul>
+  <div class="lang-switcher nav-lang-desktop" id="lang-nav">
+    <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')">FR</button>
+    <button class="lang-btn" data-lang="nl" onclick="setLanguage('nl')">NL</button>
+    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+  </div>
   <button class="nav-cta" onclick="openCartSidebar()">
     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
-    Panier <span id="nav-cart-badge" style="display:none;background:#fff;color:var(--pink);border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;align-items:center;justify-content:center;margin-left:4px;">0</span>
+    <span data-i18n="nav.cart">Panier</span> <span id="nav-cart-badge" style="display:none;background:#fff;color:var(--pink);border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;align-items:center;justify-content:center;margin-left:4px;">0</span>
   </button>
   <div class="hamburger" onclick="document.getElementById('mobile-menu').classList.add('open')">
     <span></span><span></span><span></span>
@@ -813,17 +841,17 @@
   <div class="hero-overlay"></div>
   <canvas id="particles-canvas"></canvas>
   <div class="hero-content">
-    <p class="hero-eyebrow">🍓 Desserts · Liedekerke, Belgium</p>
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">🍓 Desserts · Liedekerke, Belgium</p>
     <h1 class="hero-title">
-      Douceurs<br><em>sucrées.</em>
+      <span data-i18n="hero.title1">Douceurs</span><br><em data-i18n="hero.title2">sucrées.</em>
     </h1>
-    <p class="hero-sub">Crêpes · Pancakes · Gaufres · Bubble Tea</p>
+    <p class="hero-sub" data-i18n="hero.sub">Crêpes · Pancakes · Gaufres · Bubble Tea</p>
     <div class="hero-actions">
       <a href="#bases" class="hero-btn-main">
-        Voir le menu
+        <span data-i18n="hero.btnMenu">Voir le menu</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
-      <a href="tel:0233584444" class="hero-btn-ghost">
+      <a href="tel:0233584444" class="hero-btn-ghost" data-i18n="hero.btnPhone">
         Commander par téléphone
       </a>
     </div>
@@ -833,10 +861,10 @@
 <!-- BASES : CRÊPES / PANCAKES / GAUFRES -->
 <section id="bases">
   <div class="bases-header reveal">
-    <span class="section-label">Le Menu Sweety</span>
-    <h2 class="section-title">Choisissez<br>votre <em>base</em></h2>
+    <span class="section-label" data-i18n="bases.label">Le Menu Sweety</span>
+    <h2 class="section-title"><span data-i18n="bases.title1">Choisissez</span><br><span data-i18n="bases.title2Pre">votre</span> <em data-i18n="bases.title2Em">base</em></h2>
     <div class="divider"></div>
-    <p style="font-size:14px;color:rgba(245,240,232,0.6);max-width:500px;margin:0 auto;line-height:1.8;">
+    <p style="font-size:14px;color:rgba(245,240,232,0.6);max-width:500px;margin:0 auto;line-height:1.8;" data-i18n="bases.hint">
       Composez votre dessert en choisissant d'abord votre base, puis ajoutez vos toppings, fruits et irrésistables.
     </p>
   </div>
@@ -844,38 +872,38 @@
   <div class="bases-grid">
 
     <!-- CRÊPES -->
-    <div class="base-card reveal" onclick="openDessertBuilder('Crêpes', 5.00)" style="cursor:pointer;">
+    <div class="base-card reveal" onclick="openBaseChoice('Crêpes', 5.00)" style="cursor:pointer;">
      <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
   <img src="assets/crêpes.webp" alt="Crêpes" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;"/>
 </div>
       <div class="base-card-body">
-        <div class="base-card-name">Crêpes</div>
+        <div class="base-card-name" data-i18n="base.crepes.name">Crêpes</div>
         <div class="base-card-price">5 €</div>
-        <div class="base-card-desc">Crêpe dorée et légère, à garnir selon vos envies. La base classique, incontournable.</div>
+        <div class="base-card-desc" data-i18n="base.crepes.desc">Crêpe dorée et légère, à garnir selon vos envies. La base classique, incontournable.</div>
       </div>
     </div>
 
     <!-- PANCAKES -->
-    <div class="base-card reveal reveal-delay-1" onclick="openDessertBuilder('Pancakes', 6.00)" style="cursor:pointer;">
+    <div class="base-card reveal reveal-delay-1" onclick="openBaseChoice('Pancakes', 6.00)" style="cursor:pointer;">
       <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
   <img src="assets/pancakes.webp" alt="Pancakes" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.7s;"/>
 </div>
       <div class="base-card-body">
-        <div class="base-card-name">Pancakes</div>
+        <div class="base-card-name" data-i18n="base.pancakes.name">Pancakes</div>
         <div class="base-card-price">5.5 €</div>
-        <div class="base-card-desc">Pancakes moelleux et épais, parfaits pour accueillir toutes vos gourmandises.</div>
+        <div class="base-card-desc" data-i18n="base.pancakes.desc">Pancakes moelleux et épais, parfaits pour accueillir toutes vos gourmandises.</div>
       </div>
     </div>
 
     <!-- GAUFRES -->
-    <div class="base-card reveal reveal-delay-2" onclick="openDessertBuilder('Gaufres', 5.50)" style="cursor:pointer;">
+    <div class="base-card reveal reveal-delay-2" onclick="openBaseChoice('Gaufres', 5.50)" style="cursor:pointer;">
       <div style="width:100%;height:220px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%, rgba(255,107,157,0.15) 0%, var(--surface) 70%);">
   <img src="assets/gauffre.webp" alt="Pancakes" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.7s;"/>
 </div>
       <div class="base-card-body">
-        <div class="base-card-name">Gaufres</div>
+        <div class="base-card-name" data-i18n="base.gaufres.name">Gaufres</div>
         <div class="base-card-price">6 €</div>
-        <div class="base-card-desc">Gaufres croustillantes dorées à la perfection, aux alvéoles généreuses.</div>
+        <div class="base-card-desc" data-i18n="base.gaufres.desc">Gaufres croustillantes dorées à la perfection, aux alvéoles généreuses.</div>
       </div>
     </div>
 
@@ -886,9 +914,9 @@
         <img src="assets/mojito.webp" alt="Mojito" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:1.2s;"/>
       </div>
       <div class="base-card-body">
-        <div class="base-card-name">Mojito</div>
+        <div class="base-card-name" data-i18n="base.mojito.name">Mojito</div>
         <div class="base-card-price">5.90 €</div>
-        <div class="base-card-desc">Classique, Fraises ou Violette — mojito sans alcool, frais et désaltérant.</div>
+        <div class="base-card-desc" data-i18n="base.mojito.desc">Classique, Fraises ou Violette — mojito sans alcool, frais et désaltérant.</div>
       </div>
     </div>
 
@@ -898,9 +926,9 @@
         <img src="assets/milkshake.webp" alt="Milkshake" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.4s;"/>
       </div>
       <div class="base-card-body">
-        <div class="base-card-name">Milkshake</div>
+        <div class="base-card-name" data-i18n="base.milkshake.name">Milkshake</div>
         <div class="base-card-price">5.90 €</div>
-        <div class="base-card-desc">Vanille, Kinder Bueno, Oreo, Spéculoos, Twix White, Rafaello et bien plus.</div>
+        <div class="base-card-desc" data-i18n="base.milkshake.desc">Vanille, Kinder Bueno, Oreo, Spéculoos, Twix White, Rafaello et bien plus.</div>
       </div>
     </div>
 
@@ -910,9 +938,9 @@
         <img src="assets/smoothie.webp" alt="Smoothie" style="height:200px;width:auto;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(255,107,157,0.4));animation:float3d 4s ease-in-out infinite;animation-delay:0.9s;"/>
       </div>
       <div class="base-card-body">
-        <div class="base-card-name">Smoothie</div>
+        <div class="base-card-name" data-i18n="base.smoothie.name">Smoothie</div>
         <div class="base-card-price">5.90 €</div>
-        <div class="base-card-desc">Fraise, Framboise, Mangue, Avocat, Ananas, Tropical — ou créez votre propre mix !</div>
+        <div class="base-card-desc" data-i18n="base.smoothie.desc">Fraise, Framboise, Mangue, Avocat, Ananas, Tropical — ou créez votre propre mix !</div>
       </div>
     </div>
 
@@ -922,8 +950,8 @@
 <!-- À COMPOSER -->
 <section id="composer">
   <div class="composer-header reveal">
-    <span class="section-label">À Composer</span>
-    <h2 class="section-title">Personnalisez<br>votre <em>dessert</em></h2>
+    <span class="section-label" data-i18n="composer.label">À Composer</span>
+    <h2 class="section-title"><span data-i18n="composer.title1">Personnalisez</span><br><span data-i18n="composer.title2Pre">votre</span> <em data-i18n="composer.title2Em">dessert</em></h2>
     <div class="divider" style="margin:24px auto;"></div>
   </div>
 
@@ -933,16 +961,16 @@
     <div class="composer-col reveal">
       <div class="composer-col-header">
         <div class="composer-col-num">1</div>
-        <div class="composer-col-title">Topping</div>
+        <div class="composer-col-title" data-i18n="composer.col1Title">Topping</div>
       </div>
       <div class="composer-items">
-        <div class="composer-item"><span class="composer-item-name">Cassonade</span><span class="composer-item-price">1.25€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Coulis Nutella</span><span class="composer-item-price">1.00€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Coulis Fraises</span><span class="composer-item-price">1.50€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Coulis Pistache</span><span class="composer-item-price">2.00€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Coulis Chocolat Blanc</span><span class="composer-item-price">1.50€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Coulis Spéculoos</span><span class="composer-item-price">1.50€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Caramel Beurre Salé</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.cassonade">Cassonade</span><span class="composer-item-price">1.25€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.coulisNutella">Coulis Nutella</span><span class="composer-item-price">1.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.coulisFraises">Coulis Fraises</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.coulisPistache">Coulis Pistache</span><span class="composer-item-price">2.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.coulisChocBlanc">Coulis Chocolat Blanc</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.coulisSpeculoos">Coulis Spéculoos</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.carambs">Caramel Beurre Salé</span><span class="composer-item-price">1.50€</span></div>
       </div>
     </div>
 
@@ -950,14 +978,14 @@
     <div class="composer-col reveal reveal-delay-1">
       <div class="composer-col-header">
         <div class="composer-col-num">2</div>
-        <div class="composer-col-title">🍓 Fruits</div>
+        <div class="composer-col-title" data-i18n="composer.col2Title">🍓 Fruits</div>
       </div>
       <div class="composer-items">
-        <div class="composer-item"><span class="composer-item-name">Fraises</span><span class="composer-item-price">1.75€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Framboise</span><span class="composer-item-price">1.25€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Mûres</span><span class="composer-item-price">1.25€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Myrtilles</span><span class="composer-item-price">1.00€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Banane</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.fraises">Fraises</span><span class="composer-item-price">1.75€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.framboise">Framboise</span><span class="composer-item-price">1.25€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.mures">Mûres</span><span class="composer-item-price">1.25€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.myrtilles">Myrtilles</span><span class="composer-item-price">1.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.banane">Banane</span><span class="composer-item-price">1.50€</span></div>
       </div>
     </div>
 
@@ -965,14 +993,14 @@
     <div class="composer-col reveal reveal-delay-2">
       <div class="composer-col-header">
         <div class="composer-col-num">3</div>
-        <div class="composer-col-title">Irrésistables</div>
+        <div class="composer-col-title" data-i18n="composer.col3Title">Irrésistables</div>
       </div>
       <div class="composer-items">
-        <div class="composer-item"><span class="composer-item-name">Kinder Bueno</span><span class="composer-item-price">1.50€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Kinder Bueno White</span><span class="composer-item-price">2.00€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Kinder Country</span><span class="composer-item-price">1.50€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Oreo</span><span class="composer-item-price">1.50€</span></div>
-        <div class="composer-item"><span class="composer-item-name">Spéculoos</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.kinderBueno">Kinder Bueno</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.kinderBuenoWhite">Kinder Bueno White</span><span class="composer-item-price">2.00€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.kinderCountry">Kinder Country</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.oreo">Oreo</span><span class="composer-item-price">1.50€</span></div>
+        <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.speculoos">Spéculoos</span><span class="composer-item-price">1.50€</span></div>
       </div>
     </div>
 
@@ -982,15 +1010,15 @@
   <div class="irresistables-full reveal" style="margin-top:32px;max-width:1100px;margin-left:auto;margin-right:auto;">
     <div class="irresistables-full-header">
       <div class="composer-col-num">+</div>
-      <div class="composer-col-title">Plus d'irrésistables</div>
+      <div class="composer-col-title" data-i18n="composer.moreTitle">Plus d'irrésistables</div>
     </div>
     <div class="irresistables-grid">
-      <div class="composer-item"><span class="composer-item-name">M&M's</span><span class="composer-item-price">1.50€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Copeaux Choc. Lait</span><span class="composer-item-price">1.50€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Copeaux Choc. Blanc</span><span class="composer-item-price">1.50€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Noix de pécan</span><span class="composer-item-price">2.00€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Pistache</span><span class="composer-item-price">2.00€</span></div>
-      <div class="composer-item"><span class="composer-item-name">Rafaello</span><span class="composer-item-price">2.00€</span></div>
+      <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.mms">M&M's</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.copeauxLait">Copeaux Choc. Lait</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.copeauxBlanc">Copeaux Choc. Blanc</span><span class="composer-item-price">1.50€</span></div>
+      <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.noixPecan">Noix de pécan</span><span class="composer-item-price">2.00€</span></div>
+      <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.pistache">Pistache</span><span class="composer-item-price">2.00€</span></div>
+      <div class="composer-item"><span class="composer-item-name" data-i18n="ingr.rafaello">Rafaello</span><span class="composer-item-price">2.00€</span></div>
     </div>
   </div>
 
@@ -999,93 +1027,93 @@
 <!-- BOISSONS -->
 <section id="boissons">
   <div class="reveal">
-    <span class="section-label">Boissons</span>
-    <h2 class="section-title">Pour accompagner<br>votre <em>douceur</em></h2>
+    <span class="section-label" data-i18n="boissons.label">Boissons</span>
+    <h2 class="section-title"><span data-i18n="boissons.title1">Pour accompagner</span><br><span data-i18n="boissons.title2Pre">votre</span> <em data-i18n="boissons.title2Em">douceur</em></h2>
   </div>
   <div class="boissons-grid">
 
     <!-- SOFT -->
-    <div class="boisson-category-header">🥤 Soft</div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Pales Cola', 'Soft', 2.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Pales Cola</div></div><div class="boisson-price">€2.50</div>
+    <div class="boisson-category-header" data-i18n="boissons.catSoft">🥤 Soft</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('drink.palesCola'), t('boissons.descSoft'), 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.palesCola">Pales Cola</div></div><div class="boisson-price">€2.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Pales Orange Grenadine', 'Soft', 2.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Pales Orange Grenadine</div></div><div class="boisson-price">€2.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('drink.palesOrange'), t('boissons.descSoft'), 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.palesOrange">Pales Orange Grenadine</div></div><div class="boisson-price">€2.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Pales Myrtille & Fraise', 'Soft', 2.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Pales Myrtille &amp; Fraise</div></div><div class="boisson-price">€2.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('drink.palesMyrtilleFraise'), t('boissons.descSoft'), 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.palesMyrtilleFraise">Pales Myrtille &amp; Fraise</div></div><div class="boisson-price">€2.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Pales Pêche & Violette', 'Soft', 2.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Pales Pêche &amp; Violette</div></div><div class="boisson-price">€2.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('drink.palesPecheViolette'), t('boissons.descSoft'), 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.palesPecheViolette">Pales Pêche &amp; Violette</div></div><div class="boisson-price">€2.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Eau plate', 'Soft', 2.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Eau plate</div></div><div class="boisson-price">€2.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('drink.eauPlate'), t('boissons.descSoft'), 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.eauPlate">Eau plate</div></div><div class="boisson-price">€2.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Eau gazeuse', 'Soft', 2.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Eau gazeuse</div></div><div class="boisson-price">€2.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('drink.eauGazeuse'), t('boissons.descSoft'), 2.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.eauGazeuse">Eau gazeuse</div></div><div class="boisson-price">€2.50</div>
     </div>
 
     <!-- MOJITO -->
-    <div class="boisson-category-header">🍹 Mojito</div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mojito Classique', 'Sans alcool', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Classique</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-category-header" data-i18n="boissons.catMojito">🍹 Mojito</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.mojito.name')+' '+t('drink.mojitoClassique'), t('boissons.descSansAlcool'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.mojitoClassique">Classique</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mojito Fraises', 'Sans alcool', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Fraises</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.mojito.name')+' '+t('drink.mojitoFraises'), t('boissons.descSansAlcool'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.mojitoFraises">Fraises</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mojito Violette', 'Sans alcool', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Violette</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.mojito.name')+' '+t('drink.mojitoViolette'), t('boissons.descSansAlcool'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.mojitoViolette">Violette</div></div><div class="boisson-price">€5.90</div>
     </div>
 
     <!-- MILKSHAKE -->
-    <div class="boisson-category-header">🥛 Milkshake</div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Vanille', 'Milkshake maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Vanille</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-category-header" data-i18n="boissons.catMilkshake">🥛 Milkshake</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.milkshake.name')+' '+t('drink.milkshakeVanille'), t('boissons.descMilkshakeMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.milkshakeVanille">Vanille</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Kinder Bueno', 'Milkshake maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Kinder Bueno</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.milkshake.name')+' '+t('drink.milkshakeKinderBueno'), t('boissons.descMilkshakeMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.milkshakeKinderBueno">Kinder Bueno</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Oreo', 'Milkshake maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Oreo</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.milkshake.name')+' '+t('drink.milkshakeOreo'), t('boissons.descMilkshakeMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.milkshakeOreo">Oreo</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Spéculoos', 'Milkshake maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Spéculoos</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.milkshake.name')+' '+t('drink.milkshakeSpeculoos'), t('boissons.descMilkshakeMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.milkshakeSpeculoos">Spéculoos</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Twix White', 'Milkshake maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Twix White</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.milkshake.name')+' '+t('drink.milkshakeTwixWhite'), t('boissons.descMilkshakeMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.milkshakeTwixWhite">Twix White</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Kinder Bueno White', 'Milkshake maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Kinder Bueno White</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.milkshake.name')+' '+t('drink.milkshakeKinderBuenoWhite'), t('boissons.descMilkshakeMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.milkshakeKinderBuenoWhite">Kinder Bueno White</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Milkshake Rafaello', 'Milkshake maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Rafaello</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.milkshake.name')+' '+t('drink.milkshakeRafaello'), t('boissons.descMilkshakeMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.milkshakeRafaello">Rafaello</div></div><div class="boisson-price">€5.90</div>
     </div>
 
     <!-- SMOOTHIE -->
-    <div class="boisson-category-header">🍓 Smoothie</div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Fraise', 'Smoothie maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Fraise</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-category-header" data-i18n="boissons.catSmoothie">🍓 Smoothie</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.smoothie.name')+' '+t('drink.smoothieFraise'), t('boissons.descSmoothieMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.smoothieFraise">Fraise</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Framboise', 'Smoothie maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Framboise</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.smoothie.name')+' '+t('drink.smoothieFramboise'), t('boissons.descSmoothieMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.smoothieFramboise">Framboise</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Fruits des bois', 'Smoothie maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Fruits des bois</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.smoothie.name')+' '+t('drink.smoothieFruitsBois'), t('boissons.descSmoothieMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.smoothieFruitsBois">Fruits des bois</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Avocat', 'Smoothie maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Avocat</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.smoothie.name')+' '+t('drink.smoothieAvocat'), t('boissons.descSmoothieMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.smoothieAvocat">Avocat</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Mangue', 'Smoothie maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mangue</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.smoothie.name')+' '+t('drink.smoothieMangue'), t('boissons.descSmoothieMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.smoothieMangue">Mangue</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Ananas', 'Smoothie maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Ananas</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.smoothie.name')+' '+t('drink.smoothieAnanas'), t('boissons.descSmoothieMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.smoothieAnanas">Ananas</div></div><div class="boisson-price">€5.90</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Smoothie Tropical', 'Smoothie maison', 5.90)" style="cursor:pointer;">
-      <div><div class="boisson-name">Tropical</div></div><div class="boisson-price">€5.90</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('base.smoothie.name')+' '+t('drink.smoothieTropical'), t('boissons.descSmoothieMaison'), 5.90)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="drink.smoothieTropical">Tropical</div></div><div class="boisson-price">€5.90</div>
     </div>
     <div class="boisson-item reveal" style="background:rgba(255,107,157,0.06);border:1px dashed rgba(255,107,157,0.3);border-radius:10px;justify-content:center;cursor:default;">
-      <div><div class="boisson-name" style="color:var(--pink);text-align:center;">Créez votre propre mix !</div><div class="boisson-desc" style="text-align:center;">Dites-nous vos fruits préférés</div></div>
+      <div><div class="boisson-name" style="color:var(--pink);text-align:center;" data-i18n="boissons.customMixName">Créez votre propre mix !</div><div class="boisson-desc" style="text-align:center;" data-i18n="boissons.customMixSub">Dites-nous vos fruits préférés</div></div>
     </div>
 
   </div>
@@ -1094,36 +1122,36 @@
 <!-- MOCHIS -->
 <section id="mochis">
   <div class="reveal">
-    <span class="section-label">Desserts</span>
-    <h2 class="section-title">Nos <em>Desserts</em></h2>
+    <span class="section-label" data-i18n="desserts.label">Desserts</span>
+    <h2 class="section-title"><span data-i18n="desserts.titlePre">Nos</span> <em data-i18n="desserts.titleEm">Desserts</em></h2>
   </div>
   <div class="mochis-grid">
-    <div class="boisson-item reveal" onclick="openAddToCart('Tiramisu', 'Dessert maison', 4.00)" style="cursor:pointer;">
-      <div><div class="boisson-name">Tiramisu</div></div><div class="boisson-price">€4.00</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.tiramisu'), t('dessert.dessertMaison'), 4.00)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.tiramisu">Tiramisu</div></div><div class="boisson-price">€4.00</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Mango', '2 pcs.', 4.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mochi Ice Mango</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.mochiMango'), t('desserts.pcs2'), 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.mochiMango">Mochi Ice Mango</div><div class="boisson-desc" data-i18n="desserts.pcs2">2 pcs.</div></div><div class="boisson-price">€4.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Framboise', '2 pcs.', 4.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mochi Ice Framboise</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.mochiFramboise'), t('desserts.pcs2'), 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.mochiFramboise">Mochi Ice Framboise</div><div class="boisson-desc" data-i18n="desserts.pcs2">2 pcs.</div></div><div class="boisson-price">€4.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Tropical', '2 pcs.', 4.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mochi Ice Tropical</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.mochiTropical'), t('desserts.pcs2'), 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.mochiTropical">Mochi Ice Tropical</div><div class="boisson-desc" data-i18n="desserts.pcs2">2 pcs.</div></div><div class="boisson-price">€4.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Chocolat', '2 pcs.', 4.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mochi Ice Chocolat</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.mochiChocolat'), t('desserts.pcs2'), 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.mochiChocolat">Mochi Ice Chocolat</div><div class="boisson-desc" data-i18n="desserts.pcs2">2 pcs.</div></div><div class="boisson-price">€4.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Pistache', '2 pcs.', 4.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mochi Ice Pistache</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.mochiPistache'), t('desserts.pcs2'), 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.mochiPistache">Mochi Ice Pistache</div><div class="boisson-desc" data-i18n="desserts.pcs2">2 pcs.</div></div><div class="boisson-price">€4.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Lemon', '2 pcs.', 4.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mochi Ice Lemon</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.mochiLemon'), t('desserts.pcs2'), 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.mochiLemon">Mochi Ice Lemon</div><div class="boisson-desc" data-i18n="desserts.pcs2">2 pcs.</div></div><div class="boisson-price">€4.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Coco', '2 pcs.', 4.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mochi Ice Coco</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.mochiCoco'), t('desserts.pcs2'), 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.mochiCoco">Mochi Ice Coco</div><div class="boisson-desc" data-i18n="desserts.pcs2">2 pcs.</div></div><div class="boisson-price">€4.50</div>
     </div>
-    <div class="boisson-item reveal" onclick="openAddToCart('Mochi Ice Spéculoos', '2 pcs.', 4.50)" style="cursor:pointer;">
-      <div><div class="boisson-name">Mochi Ice Spéculoos</div><div class="boisson-desc">2 pcs.</div></div><div class="boisson-price">€4.50</div>
+    <div class="boisson-item reveal" onclick="openAddToCart(t('dessert.mochiSpeculoos'), t('desserts.pcs2'), 4.50)" style="cursor:pointer;">
+      <div><div class="boisson-name" data-i18n="dessert.mochiSpeculoos">Mochi Ice Spéculoos</div><div class="boisson-desc" data-i18n="desserts.pcs2">2 pcs.</div></div><div class="boisson-price">€4.50</div>
     </div>
   </div>
 </section>
@@ -1131,22 +1159,22 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-info reveal">
-    <span class="section-label">Nous Trouver</span>
-    <h2 class="section-title" style="margin-bottom:48px">Venez nous<br><em>rendre visite</em></h2>
+    <span class="section-label" data-i18n="contact.label">Nous Trouver</span>
+    <h2 class="section-title" style="margin-bottom:48px"><span data-i18n="contact.title1">Venez nous</span><br><em data-i18n="contact.title2">rendre visite</em></h2>
     <div class="contact-block">
-      <span class="contact-block-label">Adresse</span>
+      <span class="contact-block-label" data-i18n="contact.addressLabel">Adresse</span>
       <div class="contact-block-value">Opperstraat 59<br>1770 Liedekerke, Belgium</div>
     </div>
     <div class="contact-block">
-      <span class="contact-block-label">Horaires</span>
+      <span class="contact-block-label" data-i18n="contact.hoursLabel">Horaires</span>
       <div>
-        <div class="hours-row"><span class="hours-day">Mardi – Jeudi</span><span class="hours-time">16:00 – 22:30</span></div>
-        <div class="hours-row"><span class="hours-day">Vendredi – Samedi</span><span class="hours-time">16:00 – 00:00</span></div>
-        <div class="hours-row"><span class="hours-day">Dimanche</span><span class="hours-time">16:00 – 23:00</span></div>
+        <div class="hours-row"><span class="hours-day" data-i18n="contact.day1">Mardi – Jeudi</span><span class="hours-time">16:00 – 22:30</span></div>
+        <div class="hours-row"><span class="hours-day" data-i18n="contact.day2">Vendredi – Samedi</span><span class="hours-time">16:00 – 00:00</span></div>
+        <div class="hours-row"><span class="hours-day" data-i18n="contact.day3">Dimanche</span><span class="hours-time">16:00 – 23:00</span></div>
       </div>
     </div>
     <div class="contact-block">
-      <span class="contact-block-label">Téléphone</span>
+      <span class="contact-block-label" data-i18n="contact.phoneLabel">Téléphone</span>
       <div class="contact-block-value"><a href="tel:0233584444" style="color:var(--ivory);text-decoration:none;">02 335 84 44</a></div>
     </div>
   </div>
@@ -1161,31 +1189,31 @@
   <div class="footer-main">
     <div>
       <div class="footer-logo">Sweety <span>🍓</span></div>
-      <p class="footer-brand-desc">La douceur sucrée de Sushi'N Shake. Crêpes, pancakes, gaufres et bien plus — composez votre dessert parfait.</p>
+      <p class="footer-brand-desc" data-i18n="footer.brandDesc">La douceur sucrée de Sushi'N Shake. Crêpes, pancakes, gaufres et bien plus — composez votre dessert parfait.</p>
       <a href="https://www.instagram.com/sushin.shake/" target="_blank" class="footer-social">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
       </a>
     </div>
     <div>
-      <div class="footer-col-title">Navigation</div>
+      <div class="footer-col-title" data-i18n="footer.navTitle">Navigation</div>
       <ul class="footer-nav">
-        <li><a href="#bases">Menu</a></li>
-        <li><a href="#composer">Composer</a></li>
-        <li><a href="#boissons">Boissons</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="sushin.html" style="color:var(--pink);">Sushi'N Shake →</a></li>
+        <li><a href="#bases" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="#composer" data-i18n="nav.composer">Composer</a></li>
+        <li><a href="#boissons" data-i18n="nav.boissons">Boissons</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        <li><a href="sushin.html" style="color:var(--pink);" data-i18n="footer.sushinlink">Sushi'N Shake →</a></li>
       </ul>
     </div>
     <div>
-      <div class="footer-col-title">Horaires</div>
+      <div class="footer-col-title" data-i18n="footer.hoursTitle">Horaires</div>
       <ul class="footer-hours">
-        <li><span>Mardi – Jeudi</span><span>16h00 – 22h30</span></li>
-        <li><span>Vendredi – Samedi</span><span>16h00 – 00h00</span></li>
-        <li><span>Dimanche</span><span>16h00 – 23h00</span></li>
+        <li><span data-i18n="contact.day1">Mardi – Jeudi</span><span>16h00 – 22h30</span></li>
+        <li><span data-i18n="contact.day2">Vendredi – Samedi</span><span>16h00 – 00h00</span></li>
+        <li><span data-i18n="contact.day3">Dimanche</span><span>16h00 – 23h00</span></li>
       </ul>
     </div>
     <div>
-      <div class="footer-col-title">Contact</div>
+      <div class="footer-col-title" data-i18n="footer.contactTitle">Contact</div>
       <ul class="footer-contact-list">
         <li>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1199,7 +1227,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 Sushi'N Shake — Sweety. Tous droits réservés. Website created by <a href="https://soufware.be/" target="_blank" style="color:var(--pink);text-decoration:none;">Soufware</a></p>
+    <p><span data-i18n="footer.copy">© 2026 Sushi'N Shake — Sweety. Tous droits réservés. Website created by</span> <a href="https://soufware.be/" target="_blank" style="color:var(--pink);text-decoration:none;">Soufware</a></p>
   </div>
 </footer>
 
@@ -1277,7 +1305,7 @@ new IntersectionObserver(entries => {
 <div class="cart-popup-overlay" id="cart-popup-overlay" onclick="if(event.target===this)closeCartPopup()">
   <div class="cart-popup">
     <button class="cart-popup-close" onclick="closeCartPopup()">&#x2715;</button>
-    <div class="cart-popup-label">Ajouter au panier</div>
+    <div class="cart-popup-label" data-i18n="cart.popupLabel">Ajouter au panier</div>
     <div class="cart-popup-name" id="popup-name"></div>
     <div class="cart-popup-desc" id="popup-desc"></div>
     <div class="cart-popup-price" id="popup-price"></div>
@@ -1288,7 +1316,7 @@ new IntersectionObserver(entries => {
     </div>
     <button class="cart-popup-add-btn" onclick="confirmAddToCart()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
-      Ajouter au panier
+      <span data-i18n="cart.popupBtn">Ajouter au panier</span>
     </button>
   </div>
 </div>
@@ -1297,35 +1325,36 @@ new IntersectionObserver(entries => {
 <div class="cart-sidebar-overlay" id="cart-sidebar-overlay" onclick="closeCartSidebar()"></div>
 <div class="cart-sidebar" id="cart-sidebar">
   <div class="cart-sidebar-header">
-    <div class="cart-sidebar-title">Mon <span>Panier</span></div>
+    <div class="cart-sidebar-title"><span data-i18n="cart.title1">Mon</span> <span data-i18n="cart.title2">Panier</span></div>
     <button class="cart-sidebar-close" onclick="closeCartSidebar()">&#x2715;</button>
   </div>
   <div class="cart-stepper">
-    <div class="cart-step-item active" id="step-ind-1"><div class="cart-step-circle">1</div><div class="cart-step-label">Panier</div></div>
+    <div class="cart-step-item active" id="step-ind-1"><div class="cart-step-circle">1</div><div class="cart-step-label" data-i18n="cart.step1">Panier</div></div>
     <div class="cart-step-line"></div>
-    <div class="cart-step-item" id="step-ind-2"><div class="cart-step-circle">2</div><div class="cart-step-label">Livraison</div></div>
+    <div class="cart-step-item" id="step-ind-2"><div class="cart-step-circle">2</div><div class="cart-step-label" data-i18n="cart.step2">Livraison</div></div>
     <div class="cart-step-line"></div>
-    <div class="cart-step-item" id="step-ind-3"><div class="cart-step-circle">3</div><div class="cart-step-label">Paiement</div></div>
+    <div class="cart-step-item" id="step-ind-3"><div class="cart-step-circle">3</div><div class="cart-step-label" data-i18n="cart.step3">Paiement</div></div>
     <div class="cart-step-line"></div>
-    <div class="cart-step-item" id="step-ind-4"><div class="cart-step-circle">4</div><div class="cart-step-label">Commander</div></div>
+    <div class="cart-step-item" id="step-ind-4"><div class="cart-step-circle">4</div><div class="cart-step-label" data-i18n="cart.step4">Commander</div></div>
   </div>
 
   <!-- STEP 1 -->
   <div class="cart-step-content" id="cart-step-1">
     <div class="cart-sidebar-empty" id="cart-empty-state">
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="opacity:0.2"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
-      <span style="color:#F5F0E8;font-size:15px;">Votre panier est vide</span>
-      <span style="font-size:12px;color:#8a8080;text-align:center;line-height:1.7;padding:0 20px;">Cliquez sur un article pour l'ajouter</span>
-      <a href="#bases" onclick="closeCartSidebar()" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--pink);color:#fff;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;border-radius:50px;text-decoration:none;margin-top:8px;">Voir le menu</a>
+      <span style="color:#F5F0E8;font-size:15px;" data-i18n="cart.emptyTitle">Votre panier est vide</span>
+      <span style="font-size:12px;color:#8a8080;text-align:center;line-height:1.7;padding:0 20px;" data-i18n="cart.emptySub">Cliquez sur un article pour l'ajouter</span>
+      <a href="#bases" onclick="closeCartSidebar()" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--pink);color:#fff;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;border-radius:50px;text-decoration:none;margin-top:8px;" data-i18n="cart.emptyBtn">Voir le menu</a>
     </div>
     <div class="cart-items-list" id="cart-items-list" style="display:none;"></div>
     <div class="cart-step-footer" id="cart-step1-footer" style="display:none;flex-direction:column;">
+           <div id="cart-freebies-box" class="cart-freebies-box"></div>
       <div class="cart-total-row">
-        <span class="cart-total-label">Total estimé</span>
+        <span class="cart-total-label" data-i18n="cart.total">Total estimé</span>
         <span class="cart-total-price" id="cart-total-step1">€0.00</span>
       </div>
       <button class="cart-next-btn" onclick="goToStep(2)" style="width:100%;">
-        <span>Continuer</span>
+        <span data-i18n="cart.continue">Continuer</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
     </div>
@@ -1334,37 +1363,37 @@ new IntersectionObserver(entries => {
   <!-- STEP 2 -->
   <div class="cart-step-content" id="cart-step-2" style="display:none;">
     <div class="cart-step-inner">
-      <div class="cart-step-title">Comment recevoir votre commande ?</div>
-      <div class="cart-step-sub">Choisissez une option pour continuer</div>
+      <div class="cart-step-title" data-i18n="cart.deliveryQuestion">Comment recevoir votre commande ?</div>
+      <div class="cart-step-sub" data-i18n="cart.deliverySub">Choisissez une option pour continuer</div>
       <div class="cart-delivery-btns">
         <button class="cart-delivery-choice-btn" id="choice-place" onclick="selectDelivery('place')">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          <span>Sur place</span>
+          <span data-i18n="cart.onSite">Sur place</span>
         </button>
         <button class="cart-delivery-choice-btn" id="choice-livrer" onclick="selectDelivery('livrer')">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          <span>À livrer</span>
+          <span data-i18n="cart.delivery">À livrer</span>
         </button>
       </div>
       <div id="address-section" style="display:none;margin-top:20px;">
-        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--pink);margin-bottom:14px;">📍 Adresse de livraison</div>
-        <input type="text" id="cart-customer-name" placeholder="Votre nom complet *" maxlength="50" class="cart-input"/>
-        <input type="text" id="cart-customer-rue" placeholder="Rue *" maxlength="100" class="cart-input"/>
+        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--pink);margin-bottom:14px;" data-i18n="cart.deliveryAddressLabel">📍 Adresse de livraison</div>
+        <input type="text" id="cart-customer-name" data-i18n-placeholder="cart.inputName" placeholder="Votre nom complet *" maxlength="50" class="cart-input"/>
+        <input type="text" id="cart-customer-rue" data-i18n-placeholder="cart.inputRue" placeholder="Rue *" maxlength="100" class="cart-input"/>
         <div style="display:flex;gap:10px;">
-          <input type="text" id="cart-customer-numero" placeholder="N° *" maxlength="10" class="cart-input" style="width:80px;flex-shrink:0;"/>
-          <input type="text" id="cart-customer-cp" placeholder="Code postal *" maxlength="10" class="cart-input" style="flex:1;"/>
+          <input type="text" id="cart-customer-numero" data-i18n-placeholder="cart.inputNumero" placeholder="N° *" maxlength="10" class="cart-input" style="width:80px;flex-shrink:0;"/>
+          <input type="text" id="cart-customer-cp" data-i18n-placeholder="cart.inputCp" placeholder="Code postal *" maxlength="10" class="cart-input" style="flex:1;"/>
         </div>
-        <input type="text" id="cart-customer-ville" placeholder="Ville / Commune *" maxlength="100" class="cart-input"/>
+        <input type="text" id="cart-customer-ville" data-i18n-placeholder="cart.inputVille" placeholder="Ville / Commune *" maxlength="100" class="cart-input"/>
         <div id="cart-emporter-error" style="font-size:11px;color:var(--pink);margin-top:6px;display:none;"></div>
       </div>
     </div>
     <div class="cart-step-footer">
       <button class="cart-back-btn" onclick="goToStep(1)">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-14 0"/><path d="m5 12 7-7"/><path d="m5 12 7 7"/></svg>
-        Retour
+        <span data-i18n="cart.back">Retour</span>
       </button>
       <button class="cart-next-btn" onclick="validateStep2()" style="flex:1;">
-        <span>Continuer</span>
+        <span data-i18n="cart.continue">Continuer</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
     </div>
@@ -1373,26 +1402,26 @@ new IntersectionObserver(entries => {
   <!-- STEP 3 -->
   <div class="cart-step-content" id="cart-step-3" style="display:none;">
     <div class="cart-step-inner">
-      <div class="cart-step-title">Mode de paiement</div>
-      <div class="cart-step-sub">Choisissez comment vous souhaitez payer</div>
+      <div class="cart-step-title" data-i18n="cart.paymentTitle">Mode de paiement</div>
+      <div class="cart-step-sub" data-i18n="cart.paymentSub">Choisissez comment vous souhaitez payer</div>
       <div class="cart-delivery-btns">
         <button class="cart-delivery-choice-btn" id="pay-cash" onclick="selectPayment('cash')">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
-          <span>Espèces</span>
+          <span data-i18n="cart.cash">Espèces</span>
         </button>
         <button class="cart-delivery-choice-btn" id="pay-card" onclick="selectPayment('card')">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-          <span>Carte</span>
+          <span data-i18n="cart.card">Carte</span>
         </button>
       </div>
     </div>
     <div class="cart-step-footer">
       <button class="cart-back-btn" onclick="goToStep(2)">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-14 0"/><path d="m5 12 7-7"/><path d="m5 12 7 7"/></svg>
-        Retour
+        <span data-i18n="cart.back">Retour</span>
       </button>
       <button class="cart-next-btn" onclick="validateStep3()" style="flex:1;">
-        <span>Continuer</span>
+        <span data-i18n="cart.continue">Continuer</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
     </div>
@@ -1401,41 +1430,41 @@ new IntersectionObserver(entries => {
   <!-- STEP 4 -->
   <div class="cart-step-content" id="cart-step-4" style="display:none;">
     <div class="cart-step-inner">
-      <div class="cart-step-title">Récapitulatif</div>
+      <div class="cart-step-title" data-i18n="cart.recapTitle">Récapitulatif</div>
       <div id="recap-box" style="background:rgba(255,107,157,0.04);border-radius:14px;padding:16px;margin-bottom:20px;border:1px solid rgba(255,107,157,0.1);">
         <div id="recap-delivery" style="font-size:12px;color:#8a8080;margin-bottom:8px;"></div>
                 <div id="recap-frais" style="font-size:12px;color:#8a8080;margin-bottom:8px;"></div>
         <div id="recap-address" style="font-size:12px;color:#8a8080;margin-bottom:8px;display:none;"></div>
         <div id="recap-payment" style="font-size:12px;color:#8a8080;margin-bottom:12px;"></div>
         <div style="border-top:1px solid rgba(255,107,157,0.1);padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a8080;">Total</span>
+          <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a8080;" data-i18n="cart.recapTotalLabel">Total</span>
           <span class="cart-total-price" id="cart-total-step4">€0.00</span>
         </div>
       </div>
       <div class="cart-phone-wrap">
-        <span class="cart-phone-label">Votre numéro *</span>
+        <span class="cart-phone-label" data-i18n="cart.phoneLabel">Votre numéro *</span>
         <input type="tel" class="cart-phone-input" id="cart-phone" placeholder="0472123456" maxlength="10"/>
-        <div class="cart-phone-error" id="cart-phone-error">Entrez un numéro valide (ex: 0472123456)</div>
+        <div class="cart-phone-error" id="cart-phone-error" data-i18n="cart.phoneError">Entrez un numéro valide (ex: 0472123456)</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
         <button onclick="sendCartWhatsApp()" class="cart-order-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-          <span>WhatsApp</span>
+          <span data-i18n="cart.btnWhatsapp">WhatsApp</span>
         </button>
         <button onclick="sendSMSOrder(event)" class="cart-order-btn-ghost">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>SMS</span>
+          <span data-i18n="cart.btnSms">SMS</span>
         </button>
         <button onclick="window.location.href='tel:0233584444'" class="cart-order-btn-ghost">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span>Appeler</span>
+          <span data-i18n="cart.btnCall">Appeler</span>
         </button>
       </div>
     </div>
     <div class="cart-step-footer" style="padding-top:0;">
       <button class="cart-back-btn" onclick="goToStep(3)" style="width:100%;justify-content:center;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-14 0"/><path d="m5 12 7-7"/><path d="m5 12 7 7"/></svg>
-        Retour
+        <span data-i18n="cart.back">Retour</span>
       </button>
     </div>
   </div>
@@ -1447,9 +1476,9 @@ new IntersectionObserver(entries => {
     <div class="cart-confirm-icon">
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-    <div class="cart-confirm-title">Commande envoyée !</div>
-    <div class="cart-confirm-sub">Votre commande a été transmise via WhatsApp.<br>Nous vous confirmons dès que possible.<br><br><strong style="color:#F5F0E8;">Sushi'N Shake Sweety — 02 335 84 44</strong></div>
-    <button class="cart-confirm-btn" onclick="closeConfirm()">Parfait, merci !</button>
+    <div class="cart-confirm-title" data-i18n="cart.confirmTitle">Commande envoyée !</div>
+    <div class="cart-confirm-sub"><span data-i18n="cart.confirmSub" data-i18n-html="1">Votre commande a été transmise via WhatsApp.<br>Nous vous confirmons dès que possible.</span><br><br><strong style="color:#F5F0E8;">Sushi'N Shake Sweety — 02 335 84 44</strong></div>
+    <button class="cart-confirm-btn" onclick="closeConfirm()" data-i18n="cart.confirmBtn">Parfait, merci !</button>
   </div>
 </div>
 
@@ -1497,8 +1526,50 @@ function confirmAddToCart() {
   setTimeout(function() { fab.style.transform = ''; }, 350);
 }
 
+var FREEBIES = [
+  { name: 'The Sweet', desc: 'Riz, poulet, avocat, fromage, miel, sésame, spicy par dessus', threshold: 40, emoji: '🍣' },
+  { name: 'Smoothie Mangue', desc: 'Smoothie maison', threshold: 60, emoji: '🍓' }
+];
+function addFreebie(idx) {
+  var f = FREEBIES[idx];
+  if (cart.some(function(i){ return i.name === f.name && i.free; })) return;
+  cart.push({ name: f.name, desc: f.desc, price: 0, qty: 1, free: true });
+  saveCart(); updateCartUI();
+}
+function removeFreebie(idx) {
+  var f = FREEBIES[idx];
+  var i = cart.findIndex(function(item){ return item.name === f.name && item.free; });
+  if (i >= 0) { cart.splice(i, 1); saveCart(); updateCartUI(); }
+}
+function renderFreebiesStatus(total) {
+  var box = document.getElementById('cart-freebies-box');
+  if (!box) return;
+  var FREEBIE_NAME_KEYS = ['freebies.sweetName', 'freebies.mangueName'];
+  var html = '';
+  FREEBIES.forEach(function(f, idx) {
+    var inCart = cart.some(function(item){ return item.name === f.name && item.free; });
+    var remaining = f.threshold - total;
+    var dName = (FREEBIE_NAME_KEYS[idx] ? t(FREEBIE_NAME_KEYS[idx]) : f.name);
+    if (inCart) {
+      html += '<div class="cart-freebie-line unlocked"><span>' + t('freebies.unlockedAdded').replace('{emoji}', f.emoji).replace('{name}', dName) + '</span><button class="cart-freebie-remove" onclick="removeFreebie(' + idx + ')">' + t('freebies.remove') + '</button></div>';
+    } else if (remaining <= 0) {
+      html += '<div class="cart-freebie-line unlocked"><span>' + t('freebies.unlockedAvailable').replace('{emoji}', f.emoji).replace('{name}', dName) + '</span><button class="cart-freebie-add" onclick="addFreebie(' + idx + ')">' + t('freebies.add') + '</button></div>';
+    } else {
+      html += '<div class="cart-freebie-line locked"><span>' + t('freebies.locked').replace('{amount}', '<strong>' + remaining.toFixed(2) + '€</strong>').replace('{emoji}', f.emoji).replace('{name}', dName) + '</span></div>';
+    }
+  });
+  box.innerHTML = html;
+}
 function updateCartUI() {
-  var n = 0, total = 0;
+  var total = 0;
+  for (var i = 0; i < cart.length; i++) { total += cart[i].price * cart[i].qty; }
+  var changed = false;
+  FREEBIES.forEach(function(f) {
+    var idx = cart.findIndex(function(item){ return item.name === f.name && item.free; });
+    if (idx >= 0 && total < f.threshold) { cart.splice(idx, 1); changed = true; }
+  });
+  if (changed) saveCart();
+  var n = 0; total = 0;
   for (var i = 0; i < cart.length; i++) { n += cart[i].qty; total += cart[i].price * cart[i].qty; }
   document.getElementById('cart-fab-badge').textContent = n;
   var fab = document.getElementById('cart-fab');
@@ -1516,7 +1587,7 @@ function updateCartUI() {
     for (var i = 0; i < cart.length; i++) {
       html += '<div class="cart-line-item">'
         + '<div class="cart-line-info"><div class="cart-line-name">' + cart[i].name + '</div>'
-        + '<div class="cart-line-price">€' + cart[i].price.toFixed(2) + ' / pièce</div></div>'
+        + '<div class="cart-line-price">€' + cart[i].price.toFixed(2) + ' ' + t('cart.linePerPiece') + '</div></div>'
         + '<div class="cart-line-controls">'
         + '<button class="cart-line-qty-btn remove" onclick="cartDec(' + i + ')">−</button>'
         + '<div class="cart-line-qty">' + cart[i].qty + '</div>'
@@ -1526,6 +1597,7 @@ function updateCartUI() {
     document.getElementById('cart-items-list').innerHTML = html;
     document.getElementById('cart-total-step1').textContent = '€' + total.toFixed(2);
   }
+  renderFreebiesStatus(total);
 }
 function cartInc(i) { cart[i].qty++; saveCart(); updateCartUI(); }
 function cartDec(i) { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); saveCart(); updateCartUI(); }
@@ -1569,7 +1641,7 @@ function selectDelivery(type) {
 }
 
 function validateStep2() {
-  if (!deliveryChoice) { alert('Choisissez sur place ou à livrer.'); return; }
+  if (!deliveryChoice) { alert(t('js.chooseDelivery')); return; }
   var emErr = document.getElementById('cart-emporter-error');
   if (deliveryChoice === 'livrer') {
     var nom = document.getElementById('cart-customer-name').value.trim();
@@ -1578,12 +1650,12 @@ function validateStep2() {
     var cp = document.getElementById('cart-customer-cp').value.trim();
     var ville = document.getElementById('cart-customer-ville').value.trim();
     if (nom.length < 2 || rue.length < 2 || numero.length < 1 || cp.length < 4 || ville.length < 2) {
-      emErr.textContent = 'Veuillez remplir tous les champs.';
+      emErr.textContent = t('js.fillFields');
       emErr.style.display = 'block'; return;
     }
     var total = 0; for (var i = 0; i < cart.length; i++) total += cart[i].price * cart[i].qty;
     if (total < 40) {
-      emErr.textContent = 'Minimum 40€ requis pour la livraison. (actuel : ' + total.toFixed(2) + '€)';
+      emErr.textContent = t('js.minOrder') + total.toFixed(2) + '€)';
       emErr.style.display = 'block'; return;
     }
     emErr.style.display = 'none';
@@ -1599,20 +1671,20 @@ function selectPayment(type) {
   document.getElementById('pay-card').classList.toggle('selected', type === 'card');
 }
 function validateStep3() {
-  if (!paymentMethod) { alert('Choisissez un mode de paiement.'); return; }
+  if (!paymentMethod) { alert(t('js.choosePayment')); return; }
   goToStep(4);
 }
 
 function updateStep4Recap() {
   var total = 0; for (var i = 0; i < cart.length; i++) total += cart[i].price * cart[i].qty;
   var totalFinal = deliveryChoice === 'livrer' ? total + 4.50 : total;
-  document.getElementById('recap-delivery').textContent = deliveryChoice === 'livrer' ? '🚚 Livraison à domicile' : '🏠 Sur place';
-  document.getElementById('recap-frais').textContent = deliveryChoice === 'livrer' ? 'Frais de livraison : +4.50€' : '';
+  document.getElementById('recap-delivery').textContent = deliveryChoice === 'livrer' ? t('cart.recapDeliveryHome') : t('cart.recapOnSite');
+  document.getElementById('recap-frais').textContent = deliveryChoice === 'livrer' ? t('cart.recapFrais') : '';
   var addrEl = document.getElementById('recap-address');
   if (deliveryChoice === 'livrer' && customerAddress) {
     addrEl.style.display = 'block'; addrEl.textContent = '📍 ' + customerName + ' — ' + customerAddress;
   } else { addrEl.style.display = 'none'; }
-  document.getElementById('recap-payment').textContent = paymentMethod === 'cash' ? '💵 Paiement en espèces' : '💳 Paiement par carte';
+  document.getElementById('recap-payment').textContent = paymentMethod === 'cash' ? t('cart.recapPaymentCash') : t('cart.recapPaymentCard');
   document.getElementById('cart-total-step4').textContent = '€' + totalFinal.toFixed(2);
 }
 
@@ -1626,19 +1698,19 @@ function sendCartWhatsApp() {
   err.style.display = 'none'; inp.style.borderColor = '';
   if (deliveryChoice === 'livrer') {
     var btn = document.querySelector('.cart-order-btn');
-    btn.disabled = true; btn.querySelector('span').textContent = 'Vérification...';
+    btn.disabled = true; btn.querySelector('span').textContent = t('js.verifying');
     fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(customerAddress) + '&limit=1&countrycodes=be', { headers: { 'Accept-Language': 'fr' } })
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      btn.disabled = false; btn.querySelector('span').textContent = 'WhatsApp';
+      btn.disabled = false; btn.querySelector('span').textContent = t('cart.btnWhatsapp');
       if (!data || data.length === 0) {
         var emErr = document.getElementById('cart-emporter-error');
-        emErr.textContent = 'Adresse introuvable. Vérifiez vos informations.';
+        emErr.textContent = t('js.addressNotFound');
         emErr.style.display = 'block'; goToStep(2); return;
       }
       finishOrder(phone);
     })
-    .catch(function() { btn.disabled = false; btn.querySelector('span').textContent = 'WhatsApp'; finishOrder(phone); });
+    .catch(function() { btn.disabled = false; btn.querySelector('span').textContent = t('cart.btnWhatsapp'); finishOrder(phone); });
     return;
   }
   finishOrder(phone);
@@ -1685,7 +1757,29 @@ function sendSMSOrder(e) {
 function closeConfirm() { document.getElementById('cart-confirm-overlay').classList.remove('open'); }
 </script>
 
-
+<div class="builder-overlay" id="base-choice-overlay" onclick="if(event.target===this)closeBaseChoice()">
+  <div class="builder-modal">
+    <div class="builder-header">
+      <div class="builder-base-info">
+        <div class="builder-base-emoji" id="choice-emoji">🥞</div>
+        <div>
+          <div class="builder-base-name" id="choice-base-name">Crêpes</div>
+          <div class="builder-base-price" data-i18n="builder.chooseOption">Choisissez une option</div>
+        </div>
+      </div>
+      <button class="builder-close" onclick="closeBaseChoice()">&#x2715;</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:16px 24px;">
+      <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:6px;" data-i18n="builder.signatureLabel">✨ Nos Signatures</div>
+      <div id="choice-items-list"></div>
+    </div>
+    <div style="padding:16px 24px 24px;border-top:1px solid rgba(255,107,157,0.1);flex-shrink:0;">
+      <button id="choice-compose-btn" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;background:var(--pink);border:none;border-radius:50px;color:#fff;font-family:'Josefin Sans',sans-serif;font-size:13px;letter-spacing:0.05em;cursor:pointer;width:100%;" data-i18n="builder.composeMyself">
+        🎨 Composer moi-même
+      </button>
+    </div>
+  </div>
+</div>
 <!-- ══ DESSERT BUILDER MODAL ══ -->
 <div class="builder-overlay" id="builder-overlay" onclick="if(event.target===this)closeBuilder()">
   <div class="builder-modal">
@@ -1703,9 +1797,9 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
     <div class="builder-body" id="builder-body">
 
            <!-- TOPPINGS -->
-      <span class="builder-section-title">🍫 Toppings</span>
+      <span class="builder-section-title" data-i18n="builder.toppingsTitle">🍫 Toppings</span>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Coulis Nutella</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.coulisNutella">Coulis Nutella</div><div class="builder-item-price">+1.00€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Coulis Nutella',1.00,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Coulis Nutella">0</div>
@@ -1713,7 +1807,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Cassonade</div><div class="builder-item-price">+1.25€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.cassonade">Cassonade</div><div class="builder-item-price">+1.25€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Cassonade',1.25,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Cassonade">0</div>
@@ -1721,7 +1815,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Coulis Fraises</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.coulisFraises">Coulis Fraises</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Coulis Fraises',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Coulis Fraises">0</div>
@@ -1729,7 +1823,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Coulis Pistache</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.coulisPistache">Coulis Pistache</div><div class="builder-item-price">+2.00€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Coulis Pistache',2.00,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Coulis Pistache">0</div>
@@ -1737,7 +1831,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Coulis Choc. Blanc</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.coulisChocBlanc">Coulis Choc. Blanc</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Coulis Choc. Blanc',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Coulis Choc. Blanc">0</div>
@@ -1745,7 +1839,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Coulis Spéculoos</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.coulisSpeculoos">Coulis Spéculoos</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Coulis Spéculoos',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Coulis Spéculoos">0</div>
@@ -1753,7 +1847,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Caramel Beurre Salé</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.carambs">Caramel Beurre Salé</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Caramel Beurre Salé',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Caramel Beurre Salé">0</div>
@@ -1762,9 +1856,9 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
       </div>
 
       <!-- FRUITS -->
-      <span class="builder-section-title">🍓 Fruits</span>
+      <span class="builder-section-title" data-i18n="builder.fruitsTitle">🍓 Fruits</span>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Fraises</div><div class="builder-item-price">+1.75€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.fraises">Fraises</div><div class="builder-item-price">+1.75€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Fraises',1.75,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Fraises">0</div>
@@ -1772,7 +1866,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Framboise</div><div class="builder-item-price">+1.25€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.framboise">Framboise</div><div class="builder-item-price">+1.25€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Framboise',1.25,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Framboise">0</div>
@@ -1780,7 +1874,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Mûres</div><div class="builder-item-price">+1.25€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.mures">Mûres</div><div class="builder-item-price">+1.25€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Mûres',1.25,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Mûres">0</div>
@@ -1788,7 +1882,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Myrtilles</div><div class="builder-item-price">+1.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.myrtilles">Myrtilles</div><div class="builder-item-price">+1.00€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Myrtilles',1.00,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Myrtilles">0</div>
@@ -1796,7 +1890,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Banane</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.banane">Banane</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Banane',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Banane">0</div>
@@ -1805,9 +1899,9 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
       </div>
 
       <!-- IRRÉSISTABLES -->
-      <span class="builder-section-title">✨ Irrésistables</span>
+      <span class="builder-section-title" data-i18n="builder.irresistablesTitle">✨ Irrésistables</span>
            <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Kinder Bueno</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.kinderBueno">Kinder Bueno</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Kinder Bueno',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Kinder Bueno">0</div>
@@ -1815,7 +1909,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Kinder Bueno White</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.kinderBuenoWhite">Kinder Bueno White</div><div class="builder-item-price">+2.00€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Kinder Bueno White',2.00,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Kinder Bueno White">0</div>
@@ -1823,7 +1917,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Kinder Country</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.kinderCountry">Kinder Country</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Kinder Country',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Kinder Country">0</div>
@@ -1831,7 +1925,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Oreo</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.oreo">Oreo</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Oreo',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Oreo">0</div>
@@ -1839,7 +1933,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Spéculoos</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.speculoos">Spéculoos</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Spéculoos',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Spéculoos">0</div>
@@ -1847,7 +1941,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">M&M's</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.mms">M&M's</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('MandMs',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-MandMs">0</div>
@@ -1855,7 +1949,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Copeaux Choc. Lait</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.copeauxLait">Copeaux Choc. Lait</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Copeaux Choc. Lait',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Copeaux Choc. Lait">0</div>
@@ -1863,7 +1957,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Copeaux Choc. Blanc</div><div class="builder-item-price">+1.50€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.copeauxBlanc">Copeaux Choc. Blanc</div><div class="builder-item-price">+1.50€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Copeaux Choc. Blanc',1.50,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Copeaux Choc. Blanc">0</div>
@@ -1871,7 +1965,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Noix de pécan</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.noixPecan">Noix de pécan</div><div class="builder-item-price">+2.00€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Noix de pécan',2.00,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Noix de pécan">0</div>
@@ -1879,7 +1973,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Pistache</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.pistache">Pistache</div><div class="builder-item-price">+2.00€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Pistache',2.00,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Pistache">0</div>
@@ -1887,7 +1981,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
         </div>
       </div>
       <div class="builder-item">
-        <div class="builder-item-left"><div class="builder-item-name">Rafaello</div><div class="builder-item-price">+2.00€</div></div>
+        <div class="builder-item-left"><div class="builder-item-name" data-i18n="ingr.rafaello">Rafaello</div><div class="builder-item-price">+2.00€</div></div>
         <div class="builder-item-controls">
           <button class="builder-qty-btn minus" onclick="builderChange('Rafaello',2.00,-1)">−</button>
           <div class="builder-qty-num" id="bqty-Rafaello">0</div>
@@ -1900,22 +1994,22 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
     <!-- ÉCRAN SUCCÈS -->
     <div id="builder-success" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 24px;flex:1;overflow-y:auto;">
       <div style="font-size:48px;">🎉</div>
-      <div style="font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;text-align:center;">Ajouté au panier !</div>
-      <div style="font-size:13px;color:#8a8080;text-align:center;">Que souhaitez-vous faire ?</div>
+      <div style="font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;text-align:center;" data-i18n="builder.successTitle">Ajouté au panier !</div>
+      <div style="font-size:13px;color:#8a8080;text-align:center;" data-i18n="builder.successSub">Que souhaitez-vous faire ?</div>
       <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px;">
-        <button onclick="openDessertBuilder('Crêpes',5.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
-          <span>🥞 Crêpes</span><span style="color:var(--pink);">5.00€</span>
+       <button onclick="openBaseChoice('Crêpes',5.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span>🥞 <span data-i18n="base.crepes.name">Crêpes</span></span><span style="color:var(--pink);">5.00€</span>
         </button>
-        <button onclick="openDessertBuilder('Pancakes',6.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
-          <span>🥞 Pancakes</span><span style="color:var(--pink);">5.50€</span>
+        <button onclick="openBaseChoice('Pancakes',6.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span>🥞 <span data-i18n="base.pancakes.name">Pancakes</span></span><span style="color:var(--pink);">5.50€</span>
         </button>
-        <button onclick="openDessertBuilder('Gaufres',6.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
-          <span>🧇 Gaufres</span><span style="color:var(--pink);">6.00€</span>
+        <button onclick="openBaseChoice('Gaufres',5.50)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span>🧇 <span data-i18n="base.gaufres.name">Gaufres</span></span><span style="color:var(--pink);">6.00€</span>
         </button>
         <button onclick="showBuilderBoissons()" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.04);border:1px solid rgba(255,107,157,0.12);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
-          <span>🥤 Ajouter une boisson</span><span style="color:var(--pink);font-size:11px;">→</span>
+          <span data-i18n="builder.addDrink">🥤 Ajouter une boisson</span><span style="color:var(--pink);font-size:11px;">→</span>
         </button>
-        <button onclick="closeBuilder()" style="padding:12px 20px;background:transparent;border:1px solid rgba(255,107,157,0.15);border-radius:14px;color:#8a8080;font-family:'Josefin Sans',sans-serif;font-size:12px;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;width:100%;">
+        <button onclick="closeBuilder()" style="padding:12px 20px;background:transparent;border:1px solid rgba(255,107,157,0.15);border-radius:14px;color:#8a8080;font-family:'Josefin Sans',sans-serif;font-size:12px;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;width:100%;" data-i18n="builder.viewCart">
           Voir mon panier
         </button>
       </div>
@@ -1925,53 +2019,53 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
     <div id="builder-boissons" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
       <div style="padding:16px 24px 12px;border-bottom:1px solid rgba(255,107,157,0.1);display:flex;align-items:center;gap:12px;flex-shrink:0;">
         <button onclick="document.getElementById('builder-boissons').style.display='none';document.getElementById('builder-success').style.display='flex';" style="background:none;border:none;color:#8a8080;font-size:22px;cursor:pointer;padding:0;line-height:1;">←</button>
-        <span style="font-family:'AsianNinja',serif;font-size:20px;color:#F5F0E8;">Choisir une boisson</span>
+        <span style="font-family:'AsianNinja',serif;font-size:20px;color:#F5F0E8;" data-i18n="builder.chooseDrink">Choisir une boisson</span>
       </div>
       <div style="flex:1;overflow-y:auto;padding:16px 24px;">
-        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;">🥤 Soft</div>
-        <div onclick="builderAddDrink('Pales Cola',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Pales Cola</span><span style="color:var(--pink);">€2.50</span></div>
-        <div onclick="builderAddDrink('Pales Orange Grenadine',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Pales Orange Grenadine</span><span style="color:var(--pink);">€2.50</span></div>
-        <div onclick="builderAddDrink('Pales Myrtille & Fraise',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Pales Myrtille &amp; Fraise</span><span style="color:var(--pink);">€2.50</span></div>
-        <div onclick="builderAddDrink('Pales Pêche & Violette',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Pales Pêche &amp; Violette</span><span style="color:var(--pink);">€2.50</span></div>
-        <div onclick="builderAddDrink('Eau plate',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Eau plate</span><span style="color:var(--pink);">€2.50</span></div>
-        <div onclick="builderAddDrink('Eau gazeuse',2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Eau gazeuse</span><span style="color:var(--pink);">€2.50</span></div>
+        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;" data-i18n="boissons.catSoft">🥤 Soft</div>
+        <div onclick="builderAddDrink(t('drink.palesCola'),2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.palesCola">Pales Cola</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink(t('drink.palesOrange'),2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.palesOrange">Pales Orange Grenadine</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink(t('drink.palesMyrtilleFraise'),2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.palesMyrtilleFraise">Pales Myrtille &amp; Fraise</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink(t('drink.palesPecheViolette'),2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.palesPecheViolette">Pales Pêche &amp; Violette</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink(t('drink.eauPlate'),2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.eauPlate">Eau plate</span><span style="color:var(--pink);">€2.50</span></div>
+        <div onclick="builderAddDrink(t('drink.eauGazeuse'),2.50)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.eauGazeuse">Eau gazeuse</span><span style="color:var(--pink);">€2.50</span></div>
 
-        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;">🍹 Mojito</div>
-        <div onclick="builderAddDrink('Mojito Classique',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Classique</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Mojito Fraises',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Fraises</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Mojito Violette',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Violette</span><span style="color:var(--pink);">€5.90</span></div>
+        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;" data-i18n="boissons.catMojito">🍹 Mojito</div>
+        <div onclick="builderAddDrink(t('base.mojito.name')+' '+t('drink.mojitoClassique'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.mojitoClassique">Classique</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.mojito.name')+' '+t('drink.mojitoFraises'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.mojitoFraises">Fraises</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.mojito.name')+' '+t('drink.mojitoViolette'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.mojitoViolette">Violette</span><span style="color:var(--pink);">€5.90</span></div>
 
-        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;">🥛 Milkshake</div>
-        <div onclick="builderAddDrink('Milkshake Vanille',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Vanille</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Milkshake Kinder Bueno',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Kinder Bueno</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Milkshake Oreo',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Oreo</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Milkshake Spéculoos',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Spéculoos</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Milkshake Twix White',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Twix White</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Milkshake Kinder Bueno White',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Kinder Bueno White</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Milkshake Rafaello',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Rafaello</span><span style="color:var(--pink);">€5.90</span></div>
+        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;" data-i18n="boissons.catMilkshake">🥛 Milkshake</div>
+        <div onclick="builderAddDrink(t('base.milkshake.name')+' '+t('drink.milkshakeVanille'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.milkshakeVanille">Vanille</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.milkshake.name')+' '+t('drink.milkshakeKinderBueno'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.milkshakeKinderBueno">Kinder Bueno</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.milkshake.name')+' '+t('drink.milkshakeOreo'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.milkshakeOreo">Oreo</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.milkshake.name')+' '+t('drink.milkshakeSpeculoos'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.milkshakeSpeculoos">Spéculoos</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.milkshake.name')+' '+t('drink.milkshakeTwixWhite'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.milkshakeTwixWhite">Twix White</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.milkshake.name')+' '+t('drink.milkshakeKinderBuenoWhite'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.milkshakeKinderBuenoWhite">Kinder Bueno White</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.milkshake.name')+' '+t('drink.milkshakeRafaello'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.milkshakeRafaello">Rafaello</span><span style="color:var(--pink);">€5.90</span></div>
 
-        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;">🍓 Smoothie</div>
-        <div onclick="builderAddDrink('Smoothie Fraise',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Fraise</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Smoothie Framboise',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Framboise</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Smoothie Fruits des bois',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Fruits des bois</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Smoothie Avocat',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Avocat</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Smoothie Mangue',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Mangue</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Smoothie Ananas',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Ananas</span><span style="color:var(--pink);">€5.90</span></div>
-        <div onclick="builderAddDrink('Smoothie Tropical',5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;">Tropical</span><span style="color:var(--pink);">€5.90</span></div>
+        <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;margin-top:20px;" data-i18n="boissons.catSmoothie">🍓 Smoothie</div>
+        <div onclick="builderAddDrink(t('base.smoothie.name')+' '+t('drink.smoothieFraise'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.smoothieFraise">Fraise</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.smoothie.name')+' '+t('drink.smoothieFramboise'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.smoothieFramboise">Framboise</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.smoothie.name')+' '+t('drink.smoothieFruitsBois'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.smoothieFruitsBois">Fruits des bois</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.smoothie.name')+' '+t('drink.smoothieAvocat'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.smoothieAvocat">Avocat</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.smoothie.name')+' '+t('drink.smoothieMangue'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.smoothieMangue">Mangue</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.smoothie.name')+' '+t('drink.smoothieAnanas'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.smoothieAnanas">Ananas</span><span style="color:var(--pink);">€5.90</span></div>
+        <div onclick="builderAddDrink(t('base.smoothie.name')+' '+t('drink.smoothieTropical'),5.90)" style="cursor:pointer;border-bottom:1px solid rgba(255,107,157,0.06);padding:12px 0;display:flex;justify-content:space-between;"><span style="color:#F5F0E8;font-size:14px;" data-i18n="drink.smoothieTropical">Tropical</span><span style="color:var(--pink);">€5.90</span></div>
       </div>
     </div>
 
     <!-- FOOTER PRINCIPAL -->
     <div id="builder-footer-main">
       <div class="builder-footer">
-        <div class="builder-extras-summary" id="builder-summary">Aucun extra sélectionné</div>
+        <div class="builder-extras-summary" id="builder-summary" data-i18n="builder.noExtras">Aucun extra sélectionné</div>
         <div class="builder-total-row">
-          <span class="builder-total-label">Total</span>
+          <span class="builder-total-label" data-i18n="cart.recapTotalLabel">Total</span>
           <span class="builder-total-price" id="builder-total">€5.00</span>
         </div>
         <button class="builder-add-btn" onclick="builderAddToCart()">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
-          Ajouter au panier
+          <span data-i18n="builder.addBtn">Ajouter au panier</span>
         </button>
       </div>
     </div>
@@ -1985,6 +2079,65 @@ var builderExtras = {};
 
 var baseEmojis = { 'Crêpes': '🥞', 'Pancakes': '🥞', 'Gaufres': '🧇' };
 
+var SIGNATURE_ITEMS = {
+  'Crêpes': [
+    { key: 'nutellaLover', price: 6.50 },
+    { key: 'midnightTokyo', price: 7.90 },
+    { key: 'pinkyCrepe', price: 8.90 },
+    { key: 'monkeyBusiness', price: 8.90 },
+    { key: 'goldenLotus', price: 9.50 }
+  ],
+  'Gaufres': [
+    { key: 'panda', price: 7.90 },
+    { key: 'strawberryKiss', price: 8.90 },
+    { key: 'lotusEmpire', price: 8.90 }
+  ],
+  'Pancakes': [
+    { key: 'tokyoNights', price: 8.90 },
+    { key: 'sakura', price: 9.50 },
+    { key: 'lotusAddiction', price: 9.90 },
+    { key: 'pinkyPancake', price: 8.50 }
+  ]
+};
+var SIGNATURE_BASE_SLUG = { 'Crêpes': 'crepes', 'Gaufres': 'gaufres', 'Pancakes': 'pancakes' };
+
+function openBaseChoice(baseName, basePrice) {
+  var list = SIGNATURE_ITEMS[baseName] || [];
+  var slug = SIGNATURE_BASE_SLUG[baseName] || '';
+  document.getElementById('choice-emoji').textContent = baseEmojis[baseName] || '🍽️';
+  document.getElementById('choice-base-name').textContent = tBase(baseName);
+  var html = '';
+  list.forEach(function(item) {
+    var name = t('sig.' + slug + '.' + item.key + '.name');
+    var desc = t('sig.' + slug + '.' + item.key + '.desc');
+    html += '<div onclick="addSignatureItem(\'' + name.replace(/'/g,"\\'") + '\',\'' + desc.replace(/'/g,"\\'") + '\',' + item.price + ')" style="cursor:pointer;padding:14px 0;border-bottom:1px solid rgba(255,107,157,0.08);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">'
+      + '<div><div style="color:#F5F0E8;font-family:\'AsianNinja\',serif;font-size:16px;">' + name + '</div>'
+      + '<div style="color:#8a8080;font-size:12px;margin-top:2px;">' + desc + '</div></div>'
+      + '<div style="color:var(--pink);font-family:\'AsianNinja\',serif;font-size:16px;white-space:nowrap;">' + item.price.toFixed(2) + '€</div>'
+      + '</div>';
+  });
+  html += '<div onclick="closeBaseChoice();openDessertBuilder(\'' + baseName + '\',' + basePrice + ')" style="cursor:pointer;padding:14px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--pink);"><span style="font-family:\'Josefin Sans\',sans-serif;font-size:13px;">' + t('builder.composeOwnRecipe') + '</span><span>→</span></div>';
+  document.getElementById('choice-items-list').innerHTML = html;
+  document.getElementById('base-choice-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeBaseChoice() {
+  document.getElementById('base-choice-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function addSignatureItem(name, desc, price) {
+  var found = -1;
+  for (var i = 0; i < cart.length; i++) { if (cart[i].name === name) { found = i; break; } }
+  if (found >= 0) { cart[found].qty += 1; }
+  else { cart.push({ name: name, desc: desc, price: price, qty: 1 }); }
+  saveCart();
+  updateCartUI();
+  var fab = document.getElementById('cart-fab');
+  fab.style.transform = 'scale(1.3)';
+  setTimeout(function() { fab.style.transform = ''; }, 350);
+  closeBaseChoice();
+}
+
 function openDessertBuilder(baseName, basePrice) {
   builderBase = { name: baseName, price: basePrice, emoji: baseEmojis[baseName] || '🍽️' };
   builderExtras = {};
@@ -1993,8 +2146,8 @@ function openDessertBuilder(baseName, basePrice) {
     el.textContent = '0';
     el.classList.remove('active');
   });
-  document.getElementById('builder-base-name').textContent = baseName;
-  document.getElementById('builder-base-price').textContent = 'Base — ' + basePrice.toFixed(2) + '€';
+  document.getElementById('builder-base-name').textContent = tBase(baseName);
+  document.getElementById('builder-base-price').textContent = t('builder.basePrefix') + basePrice.toFixed(2) + '€';
   document.getElementById('builder-emoji').textContent = baseEmojis[baseName] || '🍽️';
   builderUpdateTotal();
   document.getElementById('builder-body').style.display = 'block';
@@ -2014,7 +2167,7 @@ function closeBuilder() {
 
 function builderChange(name, price, dir) {
   if (!builderExtras[name]) builderExtras[name] = { price: price, qty: 0 };
-  builderExtras[name].qty = Math.max(0, builderExtras[name].qty + dir);
+  builderExtras[name].qty = Math.max(0, Math.min(1, builderExtras[name].qty + dir));
   /* Sanitize key pour getElementById */
   var safeKey = name.replace(/'/g, "\'");
   var el = document.getElementById('bqty-' + name);
@@ -2031,14 +2184,14 @@ function builderUpdateTotal() {
   for (var k in builderExtras) {
     if (builderExtras[k].qty > 0) {
       total += builderExtras[k].price * builderExtras[k].qty;
-      var label = builderExtras[k].qty > 1 ? k + ' x' + builderExtras[k].qty : k;
+      var label = builderExtras[k].qty > 1 ? tIngr(k) + ' x' + builderExtras[k].qty : tIngr(k);
       extras.push(label);
     }
   }
   document.getElementById('builder-total').textContent = '€' + total.toFixed(2);
   var summaryEl = document.getElementById('builder-summary');
   if (extras.length === 0) {
-    summaryEl.textContent = 'Aucun extra sélectionné';
+    summaryEl.textContent = t('builder.noExtras');
   } else {
     summaryEl.textContent = '+ ' + extras.join(', ');
   }
@@ -2050,13 +2203,13 @@ function builderAddToCart() {
   for (var k in builderExtras) {
     if (builderExtras[k].qty > 0) {
       totalPrice += builderExtras[k].price * builderExtras[k].qty;
-      var label = builderExtras[k].qty > 1 ? k + ' x' + builderExtras[k].qty : k;
+      var label = builderExtras[k].qty > 1 ? tIngr(k) + ' x' + builderExtras[k].qty : tIngr(k);
       extras.push(label);
     }
   }
-  var itemName = builderBase.name;
+  var itemName = tBase(builderBase.name);
   if (extras.length > 0) { itemName += ' + ' + extras.join(', '); }
-  var desc = extras.length > 0 ? 'Base + ' + extras.length + ' extra(s)' : 'Base seule';
+  var desc = extras.length > 0 ? t('builder.descBaseExtras').replace('{n}', extras.length) : t('builder.descBaseOnly');
   var found = -1;
   for (var i = 0; i < cart.length; i++) { if (cart[i].name === itemName) { found = i; break; } }
   if (found >= 0) { cart[found].qty += 1; }
@@ -2080,7 +2233,7 @@ function showBuilderBoissons() {
 }
 
 function builderAddDrink(name, price) {
-  cart.push({ name: name, desc: 'Boisson', price: price, qty: 1 });
+  cart.push({ name: name, desc: t('builder.drinkDesc'), price: price, qty: 1 });
   saveCart();
   updateCartUI();
   var fab = document.getElementById('cart-fab');
@@ -2114,16 +2267,16 @@ function builderAddDrink(name, price) {
     <!-- ÉCRAN SUCCÈS DRINK -->
     <div id="drink-success-screen" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 24px;flex:1;">
       <div style="font-size:48px;">🎉</div>
-      <div style="font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;text-align:center;">Ajouté au panier !</div>
-      <div style="font-size:13px;color:#8a8080;text-align:center;">Que souhaitez-vous faire ?</div>
+      <div style="font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;text-align:center;" data-i18n="builder.successTitle">Ajouté au panier !</div>
+      <div style="font-size:13px;color:#8a8080;text-align:center;" data-i18n="builder.successSub">Que souhaitez-vous faire ?</div>
       <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px;">
         <button onclick="openDrinkBuilder(currentDrinkType)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
           <span id="drink-success-another">🍹 Un autre Mojito</span><span style="color:var(--pink);">→</span>
         </button>
-        <button onclick="closeDrinkBuilder();openDessertBuilder('Crêpes',5.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
-          <span>🥞 Ajouter un dessert</span><span style="color:var(--pink);">→</span>
+        <button onclick="closeDrinkBuilder();openBaseChoice('Crêpes',5.00)"style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
+          <span data-i18n="drinkb.addDessert">🥞 Ajouter un dessert</span><span style="color:var(--pink);">→</span>
         </button>
-        <button onclick="closeDrinkBuilder()" style="padding:12px 20px;background:transparent;border:1px solid rgba(255,107,157,0.15);border-radius:14px;color:#8a8080;font-family:'Josefin Sans',sans-serif;font-size:12px;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;width:100%;">
+        <button onclick="closeDrinkBuilder()" style="padding:12px 20px;background:transparent;border:1px solid rgba(255,107,157,0.15);border-radius:14px;color:#8a8080;font-family:'Josefin Sans',sans-serif;font-size:12px;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;width:100%;" data-i18n="builder.viewCart">
           Voir mon panier
         </button>
       </div>
@@ -2157,13 +2310,13 @@ function openDrinkBuilder(type) {
   currentDrinkType = type;
   var data = drinkData[type];
   document.getElementById('drink-builder-emoji').textContent = data.emoji;
-  document.getElementById('drink-builder-name').textContent = type;
-  document.getElementById('drink-builder-price').textContent = data.price.toFixed(2) + '€ / verre';
-  document.getElementById('drink-success-another').textContent = data.emoji + ' Un autre ' + type;
+  document.getElementById('drink-builder-name').textContent = tBase(type);
+  document.getElementById('drink-builder-price').textContent = data.price.toFixed(2) + '€ ' + t('drinkb.perGlass');
+  document.getElementById('drink-success-another').textContent = data.emoji + ' ' + t('drinkb.another').replace('{type}', tBase(type));
 
   /* Générer les boutons variantes */
  var html = '';
-  html += '<div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);margin-bottom:16px;">Choisissez votre variante</div>';
+  html += '<div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);margin-bottom:16px;">' + t('drinkb.variantPrompt') + '</div>';
   for (var i = 0; i < data.variants.length; i++) {
     var v = data.variants[i];
     html += '<div onclick="drinkSelectVariant(\'' + type + '\', \'' + v + '\', ' + data.price + ')"'
@@ -2172,7 +2325,7 @@ function openDrinkBuilder(type) {
       + 'border-radius:12px;margin-bottom:8px;transition:background 0.2s;"'
       + ' onmouseover="this.style.background=\'rgba(255,107,157,0.1)\'"'
       + ' onmouseout="this.style.background=\'rgba(255,107,157,0.04)\'">'
-      + '<span style="color:#F5F0E8;font-size:14px;">' + v + '</span>'
+      + '<span style="color:#F5F0E8;font-size:14px;">' + tVariant(type, v) + '</span>'
       + '<span style="color:var(--pink);font-size:13px;">€' + data.price.toFixed(2) + '</span>'
       + '</div>';
   }
@@ -2193,8 +2346,8 @@ function closeDrinkBuilder() {
 }
 
 function drinkSelectVariant(type, variant, price) {
-  var name = variant === 'Votre propre mix 🎨' ? type + ' — Mix personnalisé' : type + ' ' + variant;
-  cart.push({ name: name, desc: type, price: price, qty: 1 });
+  var name = variant === 'Votre propre mix 🎨' ? tBase(type) + ' — ' + t('drinkb.customMixName') : tBase(type) + ' ' + tVariant(type, variant);
+  cart.push({ name: name, desc: tBase(type), price: price, qty: 1 });
   saveCart();
   updateCartUI();
   var fab = document.getElementById('cart-fab');
@@ -2221,19 +2374,822 @@ function closeSoon() {
 <div class="soon-overlay" id="soon-overlay" onclick="if(event.target===this)closeSoon()">
   <div class="soon-box">
     <div class="soon-emoji">🍓</div>
-    <div class="soon-title">Bientôt <span>Dispo</span></div>
-    <div class="soon-sub">
+    <div class="soon-title"><span data-i18n="soon.title1">Bientôt</span> <span data-i18n="soon.title2">Dispo</span></div>
+    <div class="soon-sub" data-i18n="soon.sub" data-i18n-html="1">
       Le site Sweety est en cours de finalisation.<br>
       Crêpes, Pancakes, Gaufres, Mochis et bien plus<br>
       arrivent très bientôt !
     </div>
-    <div class="soon-badge">
+    <div class="soon-badge" data-i18n="soon.badge">
       🚀 Ouverture prochaine
     </div>
     <br>
-    <button class="soon-close" onclick="closeSoon()">Compris !</button>
+    <button class="soon-close" onclick="closeSoon()" data-i18n="soon.close">Compris !</button>
   </div>
 </div>
+
+
+<script>
+/* ===============================================
+   SYSTEME i18n SWEETY -- FR / NL / EN
+   (meme architecture que sushin.html : translations / t() / setLanguage() / currentLang,
+    cle localStorage partagee 'sushi_lang' pour rester synchronise avec sushin.html)
+=============================================== */
+var translations = {
+  fr: {
+  "nav.menu": "Menu",
+  "nav.composer": "Composer",
+  "nav.boissons": "Boissons",
+  "nav.contact": "Contact",
+  "nav.sushinlink": "← Sushi'N Shake",
+  "nav.cart": "Panier",
+  "hero.eyebrow": "🍓 Desserts · Liedekerke, Belgium",
+  "hero.title1": "Douceurs",
+  "hero.title2": "sucrées.",
+  "hero.sub": "Crêpes · Pancakes · Gaufres · Bubble Tea",
+  "hero.btnMenu": "Voir le menu",
+  "hero.btnPhone": "Commander par téléphone",
+  "bases.label": "Le Menu Sweety",
+  "bases.title1": "Choisissez",
+  "bases.title2Pre": "votre",
+  "bases.title2Em": "base",
+  "bases.hint": "Composez votre dessert en choisissant d'abord votre base, puis ajoutez vos toppings, fruits et irrésistables.",
+  "base.crepes.name": "Crêpes",
+  "base.crepes.desc": "Crêpe dorée et légère, à garnir selon vos envies. La base classique, incontournable.",
+  "base.pancakes.name": "Pancakes",
+  "base.pancakes.desc": "Pancakes moelleux et épais, parfaits pour accueillir toutes vos gourmandises.",
+  "base.gaufres.name": "Gaufres",
+  "base.gaufres.desc": "Gaufres croustillantes dorées à la perfection, aux alvéoles généreuses.",
+  "base.mojito.name": "Mojito",
+  "base.mojito.desc": "Classique, Fraises ou Violette — mojito sans alcool, frais et désaltérant.",
+  "base.milkshake.name": "Milkshake",
+  "base.milkshake.desc": "Vanille, Kinder Bueno, Oreo, Spéculoos, Twix White, Rafaello et bien plus.",
+  "base.smoothie.name": "Smoothie",
+  "base.smoothie.desc": "Fraise, Framboise, Mangue, Avocat, Ananas, Tropical — ou créez votre propre mix !",
+  "composer.label": "À Composer",
+  "composer.title1": "Personnalisez",
+  "composer.title2Pre": "votre",
+  "composer.title2Em": "dessert",
+  "composer.col1Title": "Topping",
+  "composer.col2Title": "🍓 Fruits",
+  "composer.col3Title": "Irrésistables",
+  "composer.moreTitle": "Plus d'irrésistables",
+  "ingr.cassonade": "Cassonade",
+  "ingr.coulisNutella": "Coulis Nutella",
+  "ingr.coulisFraises": "Coulis Fraises",
+  "ingr.coulisPistache": "Coulis Pistache",
+  "ingr.coulisChocBlanc": "Coulis Chocolat Blanc",
+  "ingr.coulisSpeculoos": "Coulis Spéculoos",
+  "ingr.carambs": "Caramel Beurre Salé",
+  "ingr.fraises": "Fraises",
+  "ingr.framboise": "Framboise",
+  "ingr.mures": "Mûres",
+  "ingr.myrtilles": "Myrtilles",
+  "ingr.banane": "Banane",
+  "ingr.kinderBueno": "Kinder Bueno",
+  "ingr.kinderBuenoWhite": "Kinder Bueno White",
+  "ingr.kinderCountry": "Kinder Country",
+  "ingr.oreo": "Oreo",
+  "ingr.speculoos": "Spéculoos",
+  "ingr.mms": "M&M's",
+  "ingr.copeauxLait": "Copeaux Chocolat au Lait",
+  "ingr.copeauxBlanc": "Copeaux Chocolat Blanc",
+  "ingr.noixPecan": "Noix de Pécan",
+  "ingr.pistache": "Pistache",
+  "ingr.rafaello": "Rafaello",
+  "boissons.label": "Boissons",
+  "boissons.title1": "Pour accompagner",
+  "boissons.title2Pre": "votre",
+  "boissons.title2Em": "douceur",
+  "boissons.catSoft": "🥤 Soft",
+  "boissons.catMojito": "🍹 Mojito",
+  "boissons.catMilkshake": "🥛 Milkshake",
+  "boissons.catSmoothie": "🍓 Smoothie",
+  "boissons.customMixName": "Créez votre propre mix !",
+  "boissons.customMixSub": "Dites-nous vos fruits préférés",
+  "boissons.descSoft": "Soft",
+  "boissons.descSansAlcool": "Sans alcool",
+  "boissons.descMilkshakeMaison": "Milkshake maison",
+  "boissons.descSmoothieMaison": "Smoothie maison",
+  "drink.palesCola": "Pales Cola",
+  "drink.palesOrange": "Pales Orange Grenadine",
+  "drink.palesMyrtilleFraise": "Pales Myrtille & Fraise",
+  "drink.palesPecheViolette": "Pales Pêche & Violette",
+  "drink.eauPlate": "Eau plate",
+  "drink.eauGazeuse": "Eau gazeuse",
+  "drink.mojitoClassique": "Classique",
+  "drink.mojitoFraises": "Fraises",
+  "drink.mojitoViolette": "Violette",
+  "drink.milkshakeVanille": "Vanille",
+  "drink.milkshakeKinderBueno": "Kinder Bueno",
+  "drink.milkshakeOreo": "Oreo",
+  "drink.milkshakeSpeculoos": "Spéculoos",
+  "drink.milkshakeTwixWhite": "Twix White",
+  "drink.milkshakeKinderBuenoWhite": "Kinder Bueno White",
+  "drink.milkshakeRafaello": "Rafaello",
+  "drink.smoothieFraise": "Fraise",
+  "drink.smoothieFramboise": "Framboise",
+  "drink.smoothieFruitsBois": "Fruits des bois",
+  "drink.smoothieAvocat": "Avocat",
+  "drink.smoothieMangue": "Mangue",
+  "drink.smoothieAnanas": "Ananas",
+  "drink.smoothieTropical": "Tropical",
+  "drinkb.variantPrompt": "Choisissez votre variante",
+  "drinkb.perGlass": "/ verre",
+  "drinkb.another": "Un autre {type}",
+  "drinkb.addDessert": "🥞 Ajouter un dessert",
+  "drinkb.customMixVariant": "Votre propre mix 🎨",
+  "drinkb.customMixName": "Mix personnalisé",
+  "desserts.label": "Desserts",
+  "desserts.titlePre": "Nos",
+  "desserts.titleEm": "Desserts",
+  "desserts.pcs2": "2 pcs.",
+  "dessert.tiramisu": "Tiramisu",
+  "dessert.dessertMaison": "Dessert maison",
+  "dessert.mochiMango": "Mochi Ice Mango",
+  "dessert.mochiFramboise": "Mochi Ice Framboise",
+  "dessert.mochiTropical": "Mochi Ice Tropical",
+  "dessert.mochiChocolat": "Mochi Ice Chocolat",
+  "dessert.mochiPistache": "Mochi Ice Pistache",
+  "dessert.mochiLemon": "Mochi Ice Lemon",
+  "dessert.mochiCoco": "Mochi Ice Coco",
+  "dessert.mochiSpeculoos": "Mochi Ice Spéculoos",
+  "contact.label": "Nous Trouver",
+  "contact.title1": "Venez nous",
+  "contact.title2": "rendre visite",
+  "contact.addressLabel": "Adresse",
+  "contact.hoursLabel": "Horaires",
+  "contact.day1": "Mardi – Jeudi",
+  "contact.day2": "Vendredi – Samedi",
+  "contact.day3": "Dimanche",
+  "contact.phoneLabel": "Téléphone",
+  "footer.brandDesc": "La douceur sucrée de Sushi'N Shake. Crêpes, pancakes, gaufres et bien plus — composez votre dessert parfait.",
+  "footer.navTitle": "Navigation",
+  "footer.hoursTitle": "Horaires",
+  "footer.contactTitle": "Contact",
+  "footer.copy": "© 2026 Sushi'N Shake — Sweety. Tous droits réservés. Website created by",
+  "footer.sushinlink": "Sushi'N Shake →",
+  "cart.popupLabel": "Ajouter au panier",
+  "cart.popupBtn": "Ajouter au panier",
+  "cart.title1": "Mon",
+  "cart.title2": "Panier",
+  "cart.step1": "Panier",
+  "cart.step2": "Livraison",
+  "cart.step3": "Paiement",
+  "cart.step4": "Commander",
+  "cart.emptyTitle": "Votre panier est vide",
+  "cart.emptySub": "Cliquez sur un article pour l'ajouter",
+  "cart.emptyBtn": "Voir le menu",
+  "cart.total": "Total estimé",
+  "cart.continue": "Continuer",
+  "cart.back": "Retour",
+  "cart.deliveryQuestion": "Comment recevoir votre commande ?",
+  "cart.deliverySub": "Choisissez une option pour continuer",
+  "cart.onSite": "Sur place",
+  "cart.delivery": "À livrer",
+  "cart.deliveryAddressLabel": "📍 Adresse de livraison",
+  "cart.inputName": "Votre nom complet *",
+  "cart.inputRue": "Rue *",
+  "cart.inputNumero": "N° *",
+  "cart.inputCp": "Code postal *",
+  "cart.inputVille": "Ville / Commune *",
+  "cart.paymentTitle": "Mode de paiement",
+  "cart.paymentSub": "Choisissez comment vous souhaitez payer",
+  "cart.cash": "Espèces",
+  "cart.card": "Carte",
+  "cart.recapTitle": "Récapitulatif",
+  "cart.recapDeliveryHome": "🚚 Livraison à domicile",
+  "cart.recapOnSite": "🏠 Sur place",
+  "cart.recapFrais": "Frais de livraison : +4.50€",
+  "cart.recapPaymentCash": "💵 Paiement en espèces",
+  "cart.recapPaymentCard": "💳 Paiement par carte",
+  "cart.recapTotalLabel": "Total",
+  "cart.phoneLabel": "Votre numéro *",
+  "cart.phoneError": "Entrez un numéro valide (ex: 0472123456)",
+  "cart.btnWhatsapp": "WhatsApp",
+  "cart.btnSms": "SMS",
+  "cart.btnCall": "Appeler",
+  "cart.confirmTitle": "Commande envoyée !",
+  "cart.confirmSub": "Votre commande a été transmise via WhatsApp.<br>Nous vous confirmons dès que possible.",
+  "cart.confirmBtn": "Parfait, merci !",
+  "cart.linePerPiece": "/ pièce",
+  "js.chooseDelivery": "Choisissez sur place ou à livrer.",
+  "js.fillFields": "Veuillez remplir tous les champs.",
+  "js.minOrder": "Minimum 40€ requis pour la livraison. (actuel : ",
+  "js.addressNotFound": "Adresse introuvable. Vérifiez vos informations.",
+  "js.choosePayment": "Choisissez un mode de paiement.",
+  "js.verifying": "Vérification...",
+  "builder.toppingsTitle": "🍫 Toppings",
+  "builder.fruitsTitle": "🍓 Fruits",
+  "builder.irresistablesTitle": "✨ Irrésistables",
+  "builder.basePrefix": "Base — ",
+  "builder.noExtras": "Aucun extra sélectionné",
+  "builder.addBtn": "Ajouter au panier",
+  "builder.successTitle": "Ajouté au panier !",
+  "builder.successSub": "Que souhaitez-vous faire ?",
+  "builder.viewCart": "Voir mon panier",
+  "builder.addDrink": "🥤 Ajouter une boisson",
+  "builder.chooseDrink": "Choisir une boisson",
+  "builder.composeMyself": "🎨 Composer moi-même",
+  "builder.chooseOption": "Choisissez une option",
+  "builder.signatureLabel": "✨ Nos Signatures",
+  "builder.composeOwnRecipe": "🎨 Composer ma propre recette",
+  "builder.descBaseOnly": "Base seule",
+  "builder.descBaseExtras": "Base + {n} extra(s)",
+  "builder.drinkDesc": "Boisson",
+  "sig.crepes.nutellaLover.name": "Nutella Lover",
+  "sig.crepes.nutellaLover.desc": "Nutella • Copeaux de chocolat",
+  "sig.crepes.midnightTokyo.name": "Midnight Tokyo",
+  "sig.crepes.midnightTokyo.desc": "Nutella • Kinder Bueno • Copeaux de chocolat",
+  "sig.crepes.pinkyCrepe.name": "Pinky Crêpe",
+  "sig.crepes.pinkyCrepe.desc": "Nutella • Fraises fraîches • Coulis chocolat blanc",
+  "sig.crepes.monkeyBusiness.name": "Monkey Business",
+  "sig.crepes.monkeyBusiness.desc": "Nutella • Banane • Éclats de noisettes",
+  "sig.crepes.goldenLotus.name": "Golden Lotus Crêpe",
+  "sig.crepes.goldenLotus.desc": "Coulis Lotus • Biscuit spéculoos • Caramel beurre salé",
+  "sig.gaufres.panda.name": "Panda",
+  "sig.gaufres.panda.desc": "Nutella • Kinder Bueno • Chocolat blanc",
+  "sig.gaufres.strawberryKiss.name": "Strawberry Kiss",
+  "sig.gaufres.strawberryKiss.desc": "Fraises fraîches • Coulis chocolat blanc",
+  "sig.gaufres.lotusEmpire.name": "Lotus Empire",
+  "sig.gaufres.lotusEmpire.desc": "Coulis Lotus • Biscuit spéculoos • Caramel beurre salé — uniquement à venir récupérer",
+  "sig.pancakes.tokyoNights.name": "Tokyo Nights",
+  "sig.pancakes.tokyoNights.desc": "Nutella • Oreo • Copeaux chocolat",
+  "sig.pancakes.sakura.name": "Sakura",
+  "sig.pancakes.sakura.desc": "Fraises fraîches • Coulis de fraises • Chocolat blanc",
+  "sig.pancakes.lotusAddiction.name": "Lotus Addiction",
+  "sig.pancakes.lotusAddiction.desc": "Coulis Lotus • Biscuit spéculoos • Caramel beurre salé",
+  "sig.pancakes.pinkyPancake.name": "Pinky Pancake",
+  "sig.pancakes.pinkyPancake.desc": "Nutella • Fraises fraîches • Coulis chocolat blanc",
+  "freebies.unlockedAdded": "{emoji} {name} offert ajouté ✅",
+  "freebies.remove": "Retirer",
+  "freebies.unlockedAvailable": "{emoji} {name} offert débloqué !",
+  "freebies.add": "Ajouter",
+  "freebies.locked": "Il vous reste {amount} pour avoir {emoji} {name} offert",
+  "freebies.sweetName": "The Sweet",
+  "freebies.mangueName": "Smoothie Mangue",
+  "soon.title1": "Bientôt",
+  "soon.title2": "Dispo",
+  "soon.sub": "Le site Sweety est en cours de finalisation.<br>Crêpes, Pancakes, Gaufres, Mochis et bien plus<br>arrivent très bientôt !",
+  "soon.badge": "🚀 Ouverture prochaine",
+  "soon.close": "Compris !"
+},
+  nl: {
+  "nav.menu": "Menu",
+  "nav.composer": "Samenstellen",
+  "nav.boissons": "Dranken",
+  "nav.contact": "Contact",
+  "nav.sushinlink": "← Sushi'N Shake",
+  "nav.cart": "Winkelwagen",
+  "hero.eyebrow": "🍓 Desserts · Liedekerke, Belgium",
+  "hero.title1": "Zoete",
+  "hero.title2": "lekkernijen.",
+  "hero.sub": "Crêpes · Pancakes · Wafels · Bubble Tea",
+  "hero.btnMenu": "Bekijk het menu",
+  "hero.btnPhone": "Bestel per telefoon",
+  "bases.label": "Het Sweety Menu",
+  "bases.title1": "Kies",
+  "bases.title2Pre": "je",
+  "bases.title2Em": "basis",
+  "bases.hint": "Stel je dessert samen door eerst je basis te kiezen, voeg dan je toppings, fruit en onweerstaanbare extra's toe.",
+  "base.crepes.name": "Crêpes",
+  "base.crepes.desc": "Gouden en luchtige crêpe, naar wens te beleggen. De klassieke, onmisbare basis.",
+  "base.pancakes.name": "Pancakes",
+  "base.pancakes.desc": "Zachte en dikke pancakes, perfect om al je lekkernijen te dragen.",
+  "base.gaufres.name": "Wafels",
+  "base.gaufres.desc": "Krokante wafels, perfect goudbruin gebakken, met genereuze vakjes.",
+  "base.mojito.name": "Mojito",
+  "base.mojito.desc": "Classic, Aardbei of Viooltje — alcoholvrije mojito, fris en dorstlessend.",
+  "base.milkshake.name": "Milkshake",
+  "base.milkshake.desc": "Vanille, Kinder Bueno, Oreo, Speculoos, Twix White, Rafaello en nog veel meer.",
+  "base.smoothie.name": "Smoothie",
+  "base.smoothie.desc": "Aardbei, Framboos, Mango, Avocado, Ananas, Tropical — of maak je eigen mix!",
+  "composer.label": "Zelf Samenstellen",
+  "composer.title1": "Personaliseer",
+  "composer.title2Pre": "je",
+  "composer.title2Em": "dessert",
+  "composer.col1Title": "Topping",
+  "composer.col2Title": "🍓 Fruit",
+  "composer.col3Title": "Onweerstaanbaar",
+  "composer.moreTitle": "Meer onweerstaanbaars",
+  "ingr.cassonade": "Bruine suiker",
+  "ingr.coulisNutella": "Nutella-coulis",
+  "ingr.coulisFraises": "Aardbeiencoulis",
+  "ingr.coulisPistache": "Pistachecoulis",
+  "ingr.coulisChocBlanc": "Witte chocoladecoulis",
+  "ingr.coulisSpeculoos": "Speculoos-coulis",
+  "ingr.carambs": "Gezouten Botercaramel",
+  "ingr.fraises": "Aardbeien",
+  "ingr.framboise": "Framboos",
+  "ingr.mures": "Bramen",
+  "ingr.myrtilles": "Blauwe bessen",
+  "ingr.banane": "Banaan",
+  "ingr.kinderBueno": "Kinder Bueno",
+  "ingr.kinderBuenoWhite": "Kinder Bueno White",
+  "ingr.kinderCountry": "Kinder Country",
+  "ingr.oreo": "Oreo",
+  "ingr.speculoos": "Speculoos",
+  "ingr.mms": "M&M's",
+  "ingr.copeauxLait": "Melkchocoladeschaafsel",
+  "ingr.copeauxBlanc": "Witte Chocoladeschaafsel",
+  "ingr.noixPecan": "Pecannoten",
+  "ingr.pistache": "Pistache",
+  "ingr.rafaello": "Rafaello",
+  "boissons.label": "Dranken",
+  "boissons.title1": "Om te combineren met",
+  "boissons.title2Pre": "je",
+  "boissons.title2Em": "zoetigheid",
+  "boissons.catSoft": "🥤 Soft",
+  "boissons.catMojito": "🍹 Mojito",
+  "boissons.catMilkshake": "🥛 Milkshake",
+  "boissons.catSmoothie": "🍓 Smoothie",
+  "boissons.customMixName": "Maak je eigen mix!",
+  "boissons.customMixSub": "Vertel ons je favoriete fruit",
+  "boissons.descSoft": "Soft",
+  "boissons.descSansAlcool": "Alcoholvrij",
+  "boissons.descMilkshakeMaison": "Huisgemaakte milkshake",
+  "boissons.descSmoothieMaison": "Huisgemaakte smoothie",
+  "drink.palesCola": "Pales Cola",
+  "drink.palesOrange": "Pales Orange Grenadine",
+  "drink.palesMyrtilleFraise": "Pales Bosbes & Aardbei",
+  "drink.palesPecheViolette": "Pales Perzik & Viooltje",
+  "drink.eauPlate": "Plat water",
+  "drink.eauGazeuse": "Bruisend water",
+  "drink.mojitoClassique": "Classic",
+  "drink.mojitoFraises": "Aardbei",
+  "drink.mojitoViolette": "Viooltje",
+  "drink.milkshakeVanille": "Vanille",
+  "drink.milkshakeKinderBueno": "Kinder Bueno",
+  "drink.milkshakeOreo": "Oreo",
+  "drink.milkshakeSpeculoos": "Speculoos",
+  "drink.milkshakeTwixWhite": "Twix White",
+  "drink.milkshakeKinderBuenoWhite": "Kinder Bueno White",
+  "drink.milkshakeRafaello": "Rafaello",
+  "drink.smoothieFraise": "Aardbei",
+  "drink.smoothieFramboise": "Framboos",
+  "drink.smoothieFruitsBois": "Bosvruchten",
+  "drink.smoothieAvocat": "Avocado",
+  "drink.smoothieMangue": "Mango",
+  "drink.smoothieAnanas": "Ananas",
+  "drink.smoothieTropical": "Tropical",
+  "drinkb.variantPrompt": "Kies uw variant",
+  "drinkb.perGlass": "/ glas",
+  "drinkb.another": "Nog een {type}",
+  "drinkb.addDessert": "🥞 Een dessert toevoegen",
+  "drinkb.customMixVariant": "Jouw eigen mix 🎨",
+  "drinkb.customMixName": "Aangepaste mix",
+  "desserts.label": "Desserts",
+  "desserts.titlePre": "Onze",
+  "desserts.titleEm": "Desserts",
+  "desserts.pcs2": "2 st.",
+  "dessert.tiramisu": "Tiramisu",
+  "dessert.dessertMaison": "Huisgemaakt dessert",
+  "dessert.mochiMango": "Mochi Ice Mango",
+  "dessert.mochiFramboise": "Mochi Ice Framboos",
+  "dessert.mochiTropical": "Mochi Ice Tropical",
+  "dessert.mochiChocolat": "Mochi Ice Chocolade",
+  "dessert.mochiPistache": "Mochi Ice Pistache",
+  "dessert.mochiLemon": "Mochi Ice Lemon",
+  "dessert.mochiCoco": "Mochi Ice Kokos",
+  "dessert.mochiSpeculoos": "Mochi Ice Speculoos",
+  "contact.label": "Vind Ons",
+  "contact.title1": "Kom ons",
+  "contact.title2": "bezoeken",
+  "contact.addressLabel": "Adres",
+  "contact.hoursLabel": "Openingsuren",
+  "contact.day1": "Dinsdag – Donderdag",
+  "contact.day2": "Vrijdag – Zaterdag",
+  "contact.day3": "Zondag",
+  "contact.phoneLabel": "Telefoon",
+  "footer.brandDesc": "De zoete kant van Sushi'N Shake. Crêpes, pancakes, wafels en nog veel meer — stel je perfecte dessert samen.",
+  "footer.navTitle": "Navigatie",
+  "footer.hoursTitle": "Openingsuren",
+  "footer.contactTitle": "Contact",
+  "footer.copy": "© 2026 Sushi'N Shake — Sweety. Alle rechten voorbehouden. Website gemaakt door",
+  "footer.sushinlink": "Sushi'N Shake →",
+  "cart.popupLabel": "Toevoegen aan winkelwagen",
+  "cart.popupBtn": "Toevoegen aan winkelwagen",
+  "cart.title1": "Mijn",
+  "cart.title2": "Winkelwagen",
+  "cart.step1": "Winkelwagen",
+  "cart.step2": "Levering",
+  "cart.step3": "Betaling",
+  "cart.step4": "Bestellen",
+  "cart.emptyTitle": "Je winkelwagen is leeg",
+  "cart.emptySub": "Klik op een artikel om het toe te voegen",
+  "cart.emptyBtn": "Bekijk het menu",
+  "cart.total": "Geschat totaal",
+  "cart.continue": "Doorgaan",
+  "cart.back": "Terug",
+  "cart.deliveryQuestion": "Hoe wil je je bestelling ontvangen?",
+  "cart.deliverySub": "Kies een optie om verder te gaan",
+  "cart.onSite": "Ter plaatse",
+  "cart.delivery": "Levering",
+  "cart.deliveryAddressLabel": "📍 Leveringsadres",
+  "cart.inputName": "Uw volledige naam *",
+  "cart.inputRue": "Straat *",
+  "cart.inputNumero": "Nr. *",
+  "cart.inputCp": "Postcode *",
+  "cart.inputVille": "Stad / Gemeente *",
+  "cart.paymentTitle": "Betaalmethode",
+  "cart.paymentSub": "Kies hoe u wilt betalen",
+  "cart.cash": "Cash",
+  "cart.card": "Kaart",
+  "cart.recapTitle": "Overzicht",
+  "cart.recapDeliveryHome": "🚚 Levering aan huis",
+  "cart.recapOnSite": "🏠 Ter plaatse",
+  "cart.recapFrais": "Leveringskosten: +4,50€",
+  "cart.recapPaymentCash": "💵 Betaling in cash",
+  "cart.recapPaymentCard": "💳 Betaling met kaart",
+  "cart.recapTotalLabel": "Totaal",
+  "cart.phoneLabel": "Uw nummer *",
+  "cart.phoneError": "Voer een geldig nummer in (bijv: 0472123456)",
+  "cart.btnWhatsapp": "WhatsApp",
+  "cart.btnSms": "SMS",
+  "cart.btnCall": "Bellen",
+  "cart.confirmTitle": "Bestelling verzonden!",
+  "cart.confirmSub": "Uw bestelling is verzonden via WhatsApp.<br>Wij bevestigen zo snel mogelijk.",
+  "cart.confirmBtn": "Perfect, bedankt!",
+  "cart.linePerPiece": "/ stuk",
+  "js.chooseDelivery": "Kies ter plaatse of levering.",
+  "js.fillFields": "Vul alle velden in.",
+  "js.minOrder": "Minimum 40€ vereist voor levering. (huidig: ",
+  "js.addressNotFound": "Adres niet gevonden. Controleer uw gegevens.",
+  "js.choosePayment": "Kies een betaalmethode.",
+  "js.verifying": "Verifiëren...",
+  "builder.toppingsTitle": "🍫 Toppings",
+  "builder.fruitsTitle": "🍓 Fruit",
+  "builder.irresistablesTitle": "✨ Onweerstaanbaar",
+  "builder.basePrefix": "Basis — ",
+  "builder.noExtras": "Geen extra's geselecteerd",
+  "builder.addBtn": "Toevoegen aan winkelwagen",
+  "builder.successTitle": "Toegevoegd aan winkelwagen!",
+  "builder.successSub": "Wat wilt u nu doen?",
+  "builder.viewCart": "Bekijk mijn winkelwagen",
+  "builder.addDrink": "🥤 Een drankje toevoegen",
+  "builder.chooseDrink": "Kies een drankje",
+  "builder.composeMyself": "🎨 Zelf samenstellen",
+  "builder.chooseOption": "Kies een optie",
+  "builder.signatureLabel": "✨ Onze Signatures",
+  "builder.composeOwnRecipe": "🎨 Stel je eigen recept samen",
+  "builder.descBaseOnly": "Enkel de basis",
+  "builder.descBaseExtras": "Basis + {n} extra('s)",
+  "builder.drinkDesc": "Drankje",
+  "sig.crepes.nutellaLover.name": "Nutella Lover",
+  "sig.crepes.nutellaLover.desc": "Nutella • Chocoladeschaafsel",
+  "sig.crepes.midnightTokyo.name": "Midnight Tokyo",
+  "sig.crepes.midnightTokyo.desc": "Nutella • Kinder Bueno • Chocoladeschaafsel",
+  "sig.crepes.pinkyCrepe.name": "Pinky Crêpe",
+  "sig.crepes.pinkyCrepe.desc": "Nutella • Verse aardbeien • Witte chocoladecoulis",
+  "sig.crepes.monkeyBusiness.name": "Monkey Business",
+  "sig.crepes.monkeyBusiness.desc": "Nutella • Banaan • Hazelnootstukjes",
+  "sig.crepes.goldenLotus.name": "Golden Lotus Crêpe",
+  "sig.crepes.goldenLotus.desc": "Lotuscoulis • Speculooskoekje • Gezouten botercaramel",
+  "sig.gaufres.panda.name": "Panda",
+  "sig.gaufres.panda.desc": "Nutella • Kinder Bueno • Witte chocolade",
+  "sig.gaufres.strawberryKiss.name": "Strawberry Kiss",
+  "sig.gaufres.strawberryKiss.desc": "Verse aardbeien • Witte chocoladecoulis",
+  "sig.gaufres.lotusEmpire.name": "Lotus Empire",
+  "sig.gaufres.lotusEmpire.desc": "Lotuscoulis • Speculooskoekje • Gezouten botercaramel — enkel om af te halen",
+  "sig.pancakes.tokyoNights.name": "Tokyo Nights",
+  "sig.pancakes.tokyoNights.desc": "Nutella • Oreo • Chocoladeschaafsel",
+  "sig.pancakes.sakura.name": "Sakura",
+  "sig.pancakes.sakura.desc": "Verse aardbeien • Aardbeiencoulis • Witte chocolade",
+  "sig.pancakes.lotusAddiction.name": "Lotus Addiction",
+  "sig.pancakes.lotusAddiction.desc": "Lotuscoulis • Speculooskoekje • Gezouten botercaramel",
+  "sig.pancakes.pinkyPancake.name": "Pinky Pancake",
+  "sig.pancakes.pinkyPancake.desc": "Nutella • Verse aardbeien • Witte chocoladecoulis",
+  "freebies.unlockedAdded": "{emoji} {name} gratis toegevoegd ✅",
+  "freebies.remove": "Verwijderen",
+  "freebies.unlockedAvailable": "{emoji} {name} gratis ontgrendeld!",
+  "freebies.add": "Toevoegen",
+  "freebies.locked": "Nog {amount} te gaan voor {emoji} {name} gratis",
+  "freebies.sweetName": "The Sweet",
+  "freebies.mangueName": "Mango Smoothie",
+  "soon.title1": "Binnenkort",
+  "soon.title2": "Beschikbaar",
+  "soon.sub": "De Sweety-website wordt momenteel afgewerkt.<br>Crêpes, pancakes, wafels, mochi's en nog veel meer<br>komen er zeer binnenkort aan!",
+  "soon.badge": "🚀 Binnenkort open",
+  "soon.close": "Begrepen!"
+},
+  en: {
+  "nav.menu": "Menu",
+  "nav.composer": "Build Your Own",
+  "nav.boissons": "Drinks",
+  "nav.contact": "Contact",
+  "nav.sushinlink": "← Sushi'N Shake",
+  "nav.cart": "Cart",
+  "hero.eyebrow": "🍓 Desserts · Liedekerke, Belgium",
+  "hero.title1": "Sweet",
+  "hero.title2": "treats.",
+  "hero.sub": "Crêpes · Pancakes · Waffles · Bubble Tea",
+  "hero.btnMenu": "View Menu",
+  "hero.btnPhone": "Order by Phone",
+  "bases.label": "The Sweety Menu",
+  "bases.title1": "Choose",
+  "bases.title2Pre": "your",
+  "bases.title2Em": "base",
+  "bases.hint": "Compose your dessert by first choosing your base, then add your toppings, fruits and irresistible extras.",
+  "base.crepes.name": "Crêpes",
+  "base.crepes.desc": "Golden, light crêpe, ready to top however you like. The classic, essential base.",
+  "base.pancakes.name": "Pancakes",
+  "base.pancakes.desc": "Soft, thick pancakes, perfect for holding all your favourite treats.",
+  "base.gaufres.name": "Waffles",
+  "base.gaufres.desc": "Crispy waffles, baked to golden perfection, with generous pockets.",
+  "base.mojito.name": "Mojito",
+  "base.mojito.desc": "Classic, Strawberry or Violet — alcohol-free mojito, fresh and thirst-quenching.",
+  "base.milkshake.name": "Milkshake",
+  "base.milkshake.desc": "Vanilla, Kinder Bueno, Oreo, Speculoos, Twix White, Rafaello and much more.",
+  "base.smoothie.name": "Smoothie",
+  "base.smoothie.desc": "Strawberry, Raspberry, Mango, Avocado, Pineapple, Tropical — or create your own mix!",
+  "composer.label": "Build Your Own",
+  "composer.title1": "Personalise",
+  "composer.title2Pre": "your",
+  "composer.title2Em": "dessert",
+  "composer.col1Title": "Topping",
+  "composer.col2Title": "🍓 Fruits",
+  "composer.col3Title": "Irresistibles",
+  "composer.moreTitle": "More Irresistibles",
+  "ingr.cassonade": "Brown Sugar",
+  "ingr.coulisNutella": "Nutella Sauce",
+  "ingr.coulisFraises": "Strawberry Sauce",
+  "ingr.coulisPistache": "Pistachio Sauce",
+  "ingr.coulisChocBlanc": "White Chocolate Sauce",
+  "ingr.coulisSpeculoos": "Speculoos Sauce",
+  "ingr.carambs": "Salted Butter Caramel",
+  "ingr.fraises": "Strawberries",
+  "ingr.framboise": "Raspberry",
+  "ingr.mures": "Blackberries",
+  "ingr.myrtilles": "Blueberries",
+  "ingr.banane": "Banana",
+  "ingr.kinderBueno": "Kinder Bueno",
+  "ingr.kinderBuenoWhite": "Kinder Bueno White",
+  "ingr.kinderCountry": "Kinder Country",
+  "ingr.oreo": "Oreo",
+  "ingr.speculoos": "Speculoos",
+  "ingr.mms": "M&M's",
+  "ingr.copeauxLait": "Milk Chocolate Shavings",
+  "ingr.copeauxBlanc": "White Chocolate Shavings",
+  "ingr.noixPecan": "Pecan Nuts",
+  "ingr.pistache": "Pistachio",
+  "ingr.rafaello": "Rafaello",
+  "boissons.label": "Drinks",
+  "boissons.title1": "To go with",
+  "boissons.title2Pre": "your",
+  "boissons.title2Em": "treat",
+  "boissons.catSoft": "🥤 Soft",
+  "boissons.catMojito": "🍹 Mojito",
+  "boissons.catMilkshake": "🥛 Milkshake",
+  "boissons.catSmoothie": "🍓 Smoothie",
+  "boissons.customMixName": "Create your own mix!",
+  "boissons.customMixSub": "Tell us your favourite fruits",
+  "boissons.descSoft": "Soft",
+  "boissons.descSansAlcool": "Alcohol-free",
+  "boissons.descMilkshakeMaison": "Homemade milkshake",
+  "boissons.descSmoothieMaison": "Homemade smoothie",
+  "drink.palesCola": "Pales Cola",
+  "drink.palesOrange": "Pales Orange Grenadine",
+  "drink.palesMyrtilleFraise": "Pales Blueberry & Strawberry",
+  "drink.palesPecheViolette": "Pales Peach & Violet",
+  "drink.eauPlate": "Still Water",
+  "drink.eauGazeuse": "Sparkling Water",
+  "drink.mojitoClassique": "Classic",
+  "drink.mojitoFraises": "Strawberry",
+  "drink.mojitoViolette": "Violet",
+  "drink.milkshakeVanille": "Vanilla",
+  "drink.milkshakeKinderBueno": "Kinder Bueno",
+  "drink.milkshakeOreo": "Oreo",
+  "drink.milkshakeSpeculoos": "Speculoos",
+  "drink.milkshakeTwixWhite": "Twix White",
+  "drink.milkshakeKinderBuenoWhite": "Kinder Bueno White",
+  "drink.milkshakeRafaello": "Rafaello",
+  "drink.smoothieFraise": "Strawberry",
+  "drink.smoothieFramboise": "Raspberry",
+  "drink.smoothieFruitsBois": "Mixed Berries",
+  "drink.smoothieAvocat": "Avocado",
+  "drink.smoothieMangue": "Mango",
+  "drink.smoothieAnanas": "Pineapple",
+  "drink.smoothieTropical": "Tropical",
+  "drinkb.variantPrompt": "Choose your variant",
+  "drinkb.perGlass": "/ glass",
+  "drinkb.another": "Another {type}",
+  "drinkb.addDessert": "🥞 Add a dessert",
+  "drinkb.customMixVariant": "Your Own Mix 🎨",
+  "drinkb.customMixName": "Custom Mix",
+  "desserts.label": "Desserts",
+  "desserts.titlePre": "Our",
+  "desserts.titleEm": "Desserts",
+  "desserts.pcs2": "2 pcs.",
+  "dessert.tiramisu": "Tiramisu",
+  "dessert.dessertMaison": "Homemade Dessert",
+  "dessert.mochiMango": "Mochi Ice Mango",
+  "dessert.mochiFramboise": "Mochi Ice Raspberry",
+  "dessert.mochiTropical": "Mochi Ice Tropical",
+  "dessert.mochiChocolat": "Mochi Ice Chocolate",
+  "dessert.mochiPistache": "Mochi Ice Pistachio",
+  "dessert.mochiLemon": "Mochi Ice Lemon",
+  "dessert.mochiCoco": "Mochi Ice Coconut",
+  "dessert.mochiSpeculoos": "Mochi Ice Speculoos",
+  "contact.label": "Find Us",
+  "contact.title1": "Come",
+  "contact.title2": "visit us",
+  "contact.addressLabel": "Address",
+  "contact.hoursLabel": "Opening Hours",
+  "contact.day1": "Tuesday – Thursday",
+  "contact.day2": "Friday – Saturday",
+  "contact.day3": "Sunday",
+  "contact.phoneLabel": "Phone",
+  "footer.brandDesc": "The sweet side of Sushi'N Shake. Crêpes, pancakes, waffles and much more — build your perfect dessert.",
+  "footer.navTitle": "Navigation",
+  "footer.hoursTitle": "Hours",
+  "footer.contactTitle": "Contact",
+  "footer.copy": "© 2026 Sushi'N Shake — Sweety. All rights reserved. Website created by",
+  "footer.sushinlink": "Sushi'N Shake →",
+  "cart.popupLabel": "Add to Cart",
+  "cart.popupBtn": "Add to Cart",
+  "cart.title1": "My",
+  "cart.title2": "Cart",
+  "cart.step1": "Cart",
+  "cart.step2": "Delivery",
+  "cart.step3": "Payment",
+  "cart.step4": "Order",
+  "cart.emptyTitle": "Your cart is empty",
+  "cart.emptySub": "Click an item to add it",
+  "cart.emptyBtn": "View Menu",
+  "cart.total": "Estimated total",
+  "cart.continue": "Continue",
+  "cart.back": "Back",
+  "cart.deliveryQuestion": "How would you like to receive your order?",
+  "cart.deliverySub": "Choose an option to continue",
+  "cart.onSite": "Dine In",
+  "cart.delivery": "Delivery",
+  "cart.deliveryAddressLabel": "📍 Delivery Address",
+  "cart.inputName": "Your full name *",
+  "cart.inputRue": "Street *",
+  "cart.inputNumero": "No. *",
+  "cart.inputCp": "Postal code *",
+  "cart.inputVille": "City / Town *",
+  "cart.paymentTitle": "Payment Method",
+  "cart.paymentSub": "Choose how you'd like to pay",
+  "cart.cash": "Cash",
+  "cart.card": "Card",
+  "cart.recapTitle": "Summary",
+  "cart.recapDeliveryHome": "🚚 Home delivery",
+  "cart.recapOnSite": "🏠 Dine in",
+  "cart.recapFrais": "Delivery fee: +€4.50",
+  "cart.recapPaymentCash": "💵 Cash payment",
+  "cart.recapPaymentCard": "💳 Card payment",
+  "cart.recapTotalLabel": "Total",
+  "cart.phoneLabel": "Your number *",
+  "cart.phoneError": "Enter a valid number (e.g. 0472123456)",
+  "cart.btnWhatsapp": "WhatsApp",
+  "cart.btnSms": "SMS",
+  "cart.btnCall": "Call",
+  "cart.confirmTitle": "Order sent!",
+  "cart.confirmSub": "Your order has been sent via WhatsApp.<br>We will confirm as soon as possible.",
+  "cart.confirmBtn": "Great, thank you!",
+  "cart.linePerPiece": "/ piece",
+  "js.chooseDelivery": "Please choose dine in or delivery.",
+  "js.fillFields": "Please fill in all fields.",
+  "js.minOrder": "Minimum €40 order required for delivery. (current: ",
+  "js.addressNotFound": "Address not found. Please check your information.",
+  "js.choosePayment": "Please choose a payment method.",
+  "js.verifying": "Verifying...",
+  "builder.toppingsTitle": "🍫 Toppings",
+  "builder.fruitsTitle": "🍓 Fruits",
+  "builder.irresistablesTitle": "✨ Irresistibles",
+  "builder.basePrefix": "Base — ",
+  "builder.noExtras": "No extras selected",
+  "builder.addBtn": "Add to Cart",
+  "builder.successTitle": "Added to cart!",
+  "builder.successSub": "What would you like to do next?",
+  "builder.viewCart": "View my cart",
+  "builder.addDrink": "🥤 Add a drink",
+  "builder.chooseDrink": "Choose a drink",
+  "builder.composeMyself": "🎨 Build it myself",
+  "builder.chooseOption": "Choose an option",
+  "builder.signatureLabel": "✨ Our Signatures",
+  "builder.composeOwnRecipe": "🎨 Build your own recipe",
+  "builder.descBaseOnly": "Base only",
+  "builder.descBaseExtras": "Base + {n} extra(s)",
+  "builder.drinkDesc": "Drink",
+  "sig.crepes.nutellaLover.name": "Nutella Lover",
+  "sig.crepes.nutellaLover.desc": "Nutella • Chocolate shavings",
+  "sig.crepes.midnightTokyo.name": "Midnight Tokyo",
+  "sig.crepes.midnightTokyo.desc": "Nutella • Kinder Bueno • Chocolate shavings",
+  "sig.crepes.pinkyCrepe.name": "Pinky Crêpe",
+  "sig.crepes.pinkyCrepe.desc": "Nutella • Fresh strawberries • White chocolate sauce",
+  "sig.crepes.monkeyBusiness.name": "Monkey Business",
+  "sig.crepes.monkeyBusiness.desc": "Nutella • Banana • Hazelnut pieces",
+  "sig.crepes.goldenLotus.name": "Golden Lotus Crêpe",
+  "sig.crepes.goldenLotus.desc": "Lotus sauce • Speculoos biscuit • Salted butter caramel",
+  "sig.gaufres.panda.name": "Panda",
+  "sig.gaufres.panda.desc": "Nutella • Kinder Bueno • White chocolate",
+  "sig.gaufres.strawberryKiss.name": "Strawberry Kiss",
+  "sig.gaufres.strawberryKiss.desc": "Fresh strawberries • White chocolate sauce",
+  "sig.gaufres.lotusEmpire.name": "Lotus Empire",
+  "sig.gaufres.lotusEmpire.desc": "Lotus sauce • Speculoos biscuit • Salted butter caramel — pickup only",
+  "sig.pancakes.tokyoNights.name": "Tokyo Nights",
+  "sig.pancakes.tokyoNights.desc": "Nutella • Oreo • Chocolate shavings",
+  "sig.pancakes.sakura.name": "Sakura",
+  "sig.pancakes.sakura.desc": "Fresh strawberries • Strawberry sauce • White chocolate",
+  "sig.pancakes.lotusAddiction.name": "Lotus Addiction",
+  "sig.pancakes.lotusAddiction.desc": "Lotus sauce • Speculoos biscuit • Salted butter caramel",
+  "sig.pancakes.pinkyPancake.name": "Pinky Pancake",
+  "sig.pancakes.pinkyPancake.desc": "Nutella • Fresh strawberries • White chocolate sauce",
+  "freebies.unlockedAdded": "{emoji} {name} free — added ✅",
+  "freebies.remove": "Remove",
+  "freebies.unlockedAvailable": "{emoji} {name} free — unlocked!",
+  "freebies.add": "Add",
+  "freebies.locked": "{amount} more to unlock {emoji} {name} for free",
+  "freebies.sweetName": "The Sweet",
+  "freebies.mangueName": "Mango Smoothie",
+  "soon.title1": "Coming",
+  "soon.title2": "Soon",
+  "soon.sub": "The Sweety website is being finalised.<br>Crêpes, pancakes, waffles, mochi and much more<br>are coming very soon!",
+  "soon.badge": "🚀 Opening soon",
+  "soon.close": "Got it!"
+}
+};
+
+var currentLang = localStorage.getItem('sushi_lang') || 'fr';
+
+function t(key) {
+  return (translations[currentLang] && translations[currentLang][key] !== undefined)
+    ? translations[currentLang][key]
+    : (translations['fr'][key] || key);
+}
+
+/* Helpers pour traduire les identifiants internes (noms de base / ingredients / variantes de boisson)
+   utilises comme cles metier (onclick, objets JS, cart) sans jamais les traduire eux-memes -
+   seul le LIBELLE AFFICHE change de langue. */
+var BASE_KEYS = {"Crêpes": "base.crepes.name", "Pancakes": "base.pancakes.name", "Gaufres": "base.gaufres.name", "Mojito": "base.mojito.name", "Milkshake": "base.milkshake.name", "Smoothie": "base.smoothie.name"};
+function tBase(name) { return BASE_KEYS[name] ? t(BASE_KEYS[name]) : name; }
+
+var INGR_KEYS = {"Coulis Nutella": "ingr.coulisNutella", "Cassonade": "ingr.cassonade", "Coulis Fraises": "ingr.coulisFraises", "Coulis Pistache": "ingr.coulisPistache", "Coulis Choc. Blanc": "ingr.coulisChocBlanc", "Coulis Spéculoos": "ingr.coulisSpeculoos", "Caramel Beurre Salé": "ingr.carambs", "Fraises": "ingr.fraises", "Framboise": "ingr.framboise", "Mûres": "ingr.mures", "Myrtilles": "ingr.myrtilles", "Banane": "ingr.banane", "Kinder Bueno": "ingr.kinderBueno", "Kinder Bueno White": "ingr.kinderBuenoWhite", "Kinder Country": "ingr.kinderCountry", "Oreo": "ingr.oreo", "Spéculoos": "ingr.speculoos", "MandMs": "ingr.mms", "Copeaux Choc. Lait": "ingr.copeauxLait", "Copeaux Choc. Blanc": "ingr.copeauxBlanc", "Noix de pécan": "ingr.noixPecan", "Pistache": "ingr.pistache", "Rafaello": "ingr.rafaello"};
+function tIngr(name) { return INGR_KEYS[name] ? t(INGR_KEYS[name]) : name; }
+
+var VARIANT_KEYS = {
+  "Mojito": {
+    "Classique": "drink.mojitoClassique",
+    "Fraises": "drink.mojitoFraises",
+    "Violette": "drink.mojitoViolette"
+  },
+  "Milkshake": {
+    "Vanille": "drink.milkshakeVanille",
+    "Kinder Bueno": "drink.milkshakeKinderBueno",
+    "Oreo": "drink.milkshakeOreo",
+    "Spéculoos": "drink.milkshakeSpeculoos",
+    "Twix White": "drink.milkshakeTwixWhite",
+    "Kinder Bueno White": "drink.milkshakeKinderBuenoWhite",
+    "Rafaello": "drink.milkshakeRafaello"
+  },
+  "Smoothie": {
+    "Fraise": "drink.smoothieFraise",
+    "Framboise": "drink.smoothieFramboise",
+    "Fruits des bois": "drink.smoothieFruitsBois",
+    "Avocat": "drink.smoothieAvocat",
+    "Mangue": "drink.smoothieMangue",
+    "Ananas": "drink.smoothieAnanas",
+    "Tropical": "drink.smoothieTropical",
+    "Votre propre mix 🎨": "drinkb.customMixVariant"
+  }
+};
+function tVariant(type, v) { return (VARIANT_KEYS[type] && VARIANT_KEYS[type][v]) ? t(VARIANT_KEYS[type][v]) : v; }
+
+function setLanguage(lang) {
+  if (!translations[lang]) return;
+  currentLang = lang;
+  localStorage.setItem('sushi_lang', lang);
+  document.documentElement.lang = lang;
+
+  /* Apply textContent translations */
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    var val = t(key);
+    if (el.getAttribute('data-i18n-html')) {
+      el.innerHTML = val;
+    } else {
+      el.textContent = val;
+    }
+  });
+
+  /* Apply placeholder translations */
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+
+  /* Update lang buttons */
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+
+  /* Re-render cart UI (line items, freebies, recap...) in the new language */
+  if (typeof updateCartUI === 'function') updateCartUI();
+}
+
+document.addEventListener('DOMContentLoaded', function() { setLanguage(currentLang); });
+</script>
 
 </body>
 </html>
