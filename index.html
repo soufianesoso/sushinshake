@@ -9,10 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
   @font-face {
-    font-family: 'AsianNinja';
-    src: url('assets/aAsianNinja.woff2') format('woff2'),
-         url('assets/aAsianNinja.otf') format('opentype'),
-         url('assets/aAsianNinja.ttf') format('truetype');
+    font-family: 'GangOfThree';
+    src: url('assets/go3v2.ttf') format('truetype');
+    size-adjust: 88%; /* GangOfThree est ~19% plus large que l'ancienne police : compense pour garder la mise en page */
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -68,7 +70,7 @@
 
   /* ── TITRE ── */
   .entry-title {
-    font-family: 'AsianNinja', serif;
+    font-family: 'GangOfThree', serif;
     font-size: clamp(28px, 5vw, 52px);
     color: var(--ivory);
     letter-spacing: 0.05em;
@@ -169,7 +171,7 @@
   .sweety-logo-emoji { font-size: 40px; }
 
   .entry-card-name {
-    font-family: 'AsianNinja', serif;
+    font-family: 'GangOfThree', serif;
     font-size: 28px;
     color: var(--ivory);
     text-align: center;
@@ -424,7 +426,7 @@ animate();
 <div id="soon-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(8px);">
   <div style="background:#1a1a1c;border:1px solid rgba(255,107,157,0.3);border-radius:24px;padding:48px 40px;width:90%;max-width:420px;text-align:center;">
     <div style="font-size:52px;margin-bottom:20px;">🍓</div>
-    <div style="font-family:'AsianNinja',serif;font-size:38px;color:#F5F0E8;margin-bottom:12px;">Bientôt <span style="color:#FF6B9D;">Dispo</span></div>
+    <div style="font-family:'GangOfThree',serif;font-size:38px;color:#F5F0E8;margin-bottom:12px;">Bientôt <span style="color:#FF6B9D;">Dispo</span></div>
     <div style="font-size:13px;color:#8a8680;line-height:1.8;margin-bottom:28px;">
       Le site Sweety est en cours de finalisation.<br>
       Crêpes, Pancakes, Gaufres, Mochis et bien plus<br>

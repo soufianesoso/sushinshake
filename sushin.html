@@ -11,12 +11,12 @@
 <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
 <style>
   @font-face {
-    font-family: 'AsianNinja';
-    src: url('assets/aAsianNinja.woff2') format('woff2'),
-         url('assets/aAsianNinja.otf') format('opentype'),
-         url('assets/aAsianNinja.ttf') format('truetype');
+    font-family: 'GangOfThree';
+    src: url('assets/go3v2.ttf') format('truetype');
+    size-adjust: 88%; /* GangOfThree est ~19% plus large que l'ancienne police : compense pour garder la mise en page */
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
   }
 </style>
  
@@ -35,7 +35,7 @@
   --gold-soft: #a8893e;
   --border: rgba(11,11,12,0.08);
   --border2: rgba(11,11,12,0.15);
-  --font-display: 'AsianNinja', serif;
+  --font-display: 'GangOfThree', serif;
   --font-ui: 'Josefin Sans', sans-serif;
   --cover-timing: 0.5s;
   --cover-ease: cubic-bezier(0.66, 0.08, 0.19, 0.97);
@@ -254,7 +254,7 @@ html {
     animation: fadeUp 1.2s 0.5s forwards;
   }
   .hero-title em {
-    font-style: italic;
+    font-style: normal; /* GangOfThree n'a pas d'italique : évite l'italique synthétique */
     color: var(--red);
     display: block;
   }
@@ -515,7 +515,7 @@ html {
     line-height: 1.1;
     color: var(--ivory);
   }
-  .section-title em { font-style: italic; color: var(--red); }
+  .section-title em { font-style: normal; color: var(--red); }
   .divider {
     width: 40px;
     height: 1px;
@@ -1149,7 +1149,7 @@ html {
     justify-content: center;
     font-family: var(--font-display);
     font-size: clamp(14px, 2vw, 22px);
-    font-style: italic;
+    font-style: normal;
     color: rgba(36,30,26,0.15);
     position: relative;
     overflow: hidden;
@@ -2096,13 +2096,13 @@ html {
 .cart-popup-close{position:absolute;top:14px;right:18px;background:none;border:none;color:#8a8680;font-size:22px;cursor:pointer;line-height:1;}
 .cart-popup-close:hover{color:#F5F0E8;}
 .cart-popup-label{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:#fb8500;margin-bottom:10px;}
-.cart-popup-name{font-family:'AsianNinja',serif;font-size:26px;color:#F5F0E8;margin-bottom:6px;line-height:1.2;}
+.cart-popup-name{font-family:'GangOfThree',serif;font-size:26px;color:#F5F0E8;margin-bottom:6px;line-height:1.2;}
 .cart-popup-desc{font-size:12px;color:#8a8680;line-height:1.6;margin-bottom:8px;}
-.cart-popup-price{font-family:'AsianNinja',serif;font-size:22px;color:#E8E2D6;margin-bottom:28px;}
+.cart-popup-price{font-family:'GangOfThree',serif;font-size:22px;color:#E8E2D6;margin-bottom:28px;}
 .cart-qty-wrap{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:28px;}
 .cart-qty-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#F5F0E8;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .cart-qty-btn:hover{background:rgba(255,255,255,0.15);}
-.cart-qty-num{font-family:'AsianNinja',serif;font-size:36px;color:#F5F0E8;min-width:40px;text-align:center;}
+.cart-qty-num{font-family:'GangOfThree',serif;font-size:36px;color:#F5F0E8;min-width:40px;text-align:center;}
 .cart-popup-add-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 24px;background:#fb8500;color:#fff;font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;transition:background 0.3s;box-shadow:0 8px 24px rgba(251,133,0,0.3);}
 .cart-popup-add-btn:hover{background:#e07600;}
 .cart-fab{position:fixed;bottom:28px;right:24px;width:64px;height:64px;border-radius:50%;background:#fb8500;color:#fff;border:none;cursor:pointer;z-index:400;box-shadow:0 8px 28px rgba(251,133,0,0.5);display:flex;align-items:center;justify-content:center;transition:transform 0.3s;}
@@ -2115,7 +2115,7 @@ html {
 .cart-sidebar{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);height:100%;background:#111113;border-left:1px solid rgba(255,255,255,0.1);z-index:800;display:flex;flex-direction:column;transform:translateX(110%);transition:transform 0.4s ease;}
 .cart-sidebar.open{transform:translateX(0);}
 .cart-sidebar-header{padding:28px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.cart-sidebar-title{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;}
+.cart-sidebar-title{font-family:'GangOfThree',serif;font-size:28px;color:#F5F0E8;}
 .cart-sidebar-title span{color:#fb8500;}
 .cart-sidebar-close{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#8a8680;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .cart-sidebar-close:hover{color:#F5F0E8;}
@@ -2124,16 +2124,16 @@ html {
 .cart-line-item{padding:16px 28px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,0.05);}
 .cart-line-item:hover{background:rgba(255,255,255,0.03);}
 .cart-line-info{flex:1;}
-.cart-line-name{font-family:'AsianNinja',serif;font-size:17px;color:#F5F0E8;margin-bottom:3px;}
+.cart-line-name{font-family:'GangOfThree',serif;font-size:17px;color:#F5F0E8;margin-bottom:3px;}
 .cart-line-price{font-size:12px;color:#8a8680;}
 .cart-line-controls{display:flex;align-items:center;gap:8px;}
 .cart-line-qty-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#F5F0E8;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .cart-line-qty-btn.remove{border-color:rgba(251,133,0,0.3);color:#fb8500;}
-.cart-line-qty{font-family:'AsianNinja',serif;font-size:18px;color:#F5F0E8;min-width:20px;text-align:center;}
+.cart-line-qty{font-family:'GangOfThree',serif;font-size:18px;color:#F5F0E8;min-width:20px;text-align:center;}
 .cart-sidebar-footer{padding:20px 28px 32px;border-top:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
 .cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
 .cart-total-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a8680;}
-.cart-total-price{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;}
+.cart-total-price{font-family:'GangOfThree',serif;font-size:28px;color:#F5F0E8;}
 .cart-phone-wrap{margin-bottom:14px;}
 .cart-phone-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:8px;}
 .cart-phone-input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 18px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:15px;outline:none;transition:border-color 0.3s;}
@@ -2146,7 +2146,7 @@ html {
 .cart-confirm-overlay.open{display:flex;}
 .cart-confirm-box{background:#1a1a1c;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:40px;width:90%;max-width:400px;text-align:center;}
 .cart-confirm-icon{width:64px;height:64px;background:rgba(37,211,102,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
-.cart-confirm-title{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;margin-bottom:10px;}
+.cart-confirm-title{font-family:'GangOfThree',serif;font-size:28px;color:#F5F0E8;margin-bottom:10px;}
 .cart-confirm-sub{font-size:13px;color:#8a8680;line-height:1.7;margin-bottom:28px;}
 .cart-confirm-btn{padding:14px 36px;background:#fb8500;color:#fff;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;}
 .cart-confirm-btn:hover{background:#e07600;}
@@ -2384,7 +2384,7 @@ html {
   flex: 1; overflow-y: auto; padding: 24px 28px;
 }
 .cart-step-title {
-  font-family: 'AsianNinja', serif; font-size: 22px; color: #F5F0E8;
+  font-family: 'GangOfThree', serif; font-size: 22px; color: #F5F0E8;
   margin-bottom: 8px; text-align: center;
 }
 .cart-step-sub {
@@ -2849,7 +2849,7 @@ html {
       <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(255,255,255,0.1);border-radius:50%;"></div>
       <div style="font-size:40px;">🍣</div>
       <div>
-        <div style="font-family:'AsianNinja',serif;font-size:22px;color:#fff;line-height:1.1;">The Sweet</div>
+        <div style="font-family:'GangOfThree',serif;font-size:22px;color:#fff;line-height:1.1;">The Sweet</div>
         <div style="font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.9);margin-top:4px;">Offert à partir de 40€ d'achat</div>
       </div>
       <div style="background:rgba(255,255,255,0.2);border-radius:50px;padding:6px 14px;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#fff;white-space:nowrap;border:1px solid rgba(255,255,255,0.3);">OFFERT</div>
@@ -2860,7 +2860,7 @@ html {
       <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(255,255,255,0.1);border-radius:50%;"></div>
       <div style="font-size:40px;"></div>
       <div>
-        <div style="font-family:'AsianNinja',serif;font-size:22px;color:#fff;line-height:1.1;">Smoothie Mangue</div>
+        <div style="font-family:'GangOfThree',serif;font-size:22px;color:#fff;line-height:1.1;">Smoothie Mangue</div>
         <div style="font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.9);margin-top:4px;">Offert à partir de 60€ d'achat</div>
       </div>
       <div style="background:rgba(255,255,255,0.2);border-radius:50px;padding:6px 14px;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#fff;white-space:nowrap;border:1px solid rgba(255,255,255,0.3);">OFFERT</div>
@@ -2896,7 +2896,7 @@ html {
   <!-- ── ENTRÉES ── -->
   <div id="cat-entrees" class="menu-category active">
     <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥢 Entrées</span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥢 Entrées</span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Poulet Yakitori', '2 pcs.', 6.90)"><div class="menu-item-info"><div class="menu-item-name">Poulet Yakitori</div><div class="menu-item-desc">2 pcs.</div></div><img src="assets/PouletYakitori.webp" alt="Poulet Yakitori" class="menu-item-img" style="object-fit:cover;"/><div class="menu-item-price">€6.90</div></div>
@@ -2913,7 +2913,7 @@ html {
   <!-- ── SUSHIS 8 PCS ── -->
   <div id="cat-sushis" class="menu-category">
    <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍣 Sushis <span style="color:var(--red);">8 pcs.</span></span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍣 Sushis <span style="color:var(--red);">8 pcs.</span></span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Saumon Avocat', 'Riz, saumon, avocat, sésame', 8.20)"><div class="menu-item-info"><div class="menu-item-name">Saumon Avocat</div><div class="menu-item-desc">Riz, saumon, avocat, sésame</div></div><img src="assets/sushi-saumon-avocat.webp" alt="Saumon Avocat" class="menu-item-img"/><div class="menu-item-price">€8.20</div></div>
@@ -2935,7 +2935,7 @@ html {
   <!-- ── NIGIRI & SASHIMI ── -->
   <div id="cat-nigiri" class="menu-category">
     <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🐟 Nigiri <span style="color:var(--red);">&</span> Sashimi</span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🐟 Nigiri <span style="color:var(--red);">&</span> Sashimi</span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Nigiri Saumon', '3 pcs.', 7.20)"><div class="menu-item-info"><div class="menu-item-name">Nigiri Saumon</div><div class="menu-item-desc">3 pcs.</div></div><img src="assets/nigiri-saumon.webp" alt="Nigiri Saumon" class="menu-item-img"/><div class="menu-item-price">€7.20</div></div>
@@ -2953,7 +2953,7 @@ html {
   <!-- ── CROUSTY ROLL 8 PCS ── -->
   <div id="cat-crousty" class="menu-category">
     <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🌯 Crousty <span style="color:var(--red);">Roll</span></span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🌯 Crousty <span style="color:var(--red);">Roll</span></span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Crousty Cheese', 'Fromage et miel', 9.50)"><div class="menu-item-info"><div class="menu-item-name">Crousty Cheese</div><div class="menu-item-desc">Fromage et miel</div></div><img src="assets/crousty-cheese.webp" alt="Crousty Cheese" class="menu-item-img"/><div class="menu-item-price">€9.50</div></div>
@@ -2970,7 +2970,7 @@ html {
   <!-- ── MAKI 8 PCS ── -->
   <div id="cat-maki" class="menu-category">
     <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🌀 Maki <span style="color:var(--red);">8 pcs.</span></span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🌀 Maki <span style="color:var(--red);">8 pcs.</span></span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Maki Saumon', '8 pcs.', 6.60)"><div class="menu-item-info"><div class="menu-item-name">Maki Saumon</div><div class="menu-item-desc">8 pcs.</div></div><img src="assets/maki-saumon.webp" alt="Maki Saumon" class="menu-item-img"/><div class="menu-item-price">€6.60</div></div>
@@ -2985,7 +2985,7 @@ html {
   <!-- ── DONBURI ── -->
   <div id="cat-donburi" class="menu-category">
     <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍚 Donburi</span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍚 Donburi</span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Donburi Végétarien', 'Bowl végétarien sur riz assaisonné', 14.50)"><div class="menu-item-info"><div class="menu-item-name">Donburi Végétarien</div><div class="menu-item-desc">Bowl végétarien sur riz assaisonné</div></div><img src="assets/donburi-veggie.webp" alt="Donburi Végétarien" class="menu-item-img"/><div class="menu-item-price">€14.50</div></div>
@@ -3002,7 +3002,7 @@ html {
   <!-- ── PLATS & BOWLS ── -->
   <div id="cat-plats" class="menu-category">
     <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥗 Plats <span style="color:var(--red);">&</span> Bowls</span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥗 Plats <span style="color:var(--red);">&</span> Bowls</span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Chiracha Bowl — Thon Cru', 'Bowl façon poke, thon cru', 15.50)"><div class="menu-item-info"><div class="menu-item-name">Chiracha Bowl — Thon Cru</div><div class="menu-item-desc">Bowl façon poke, thon cru</div></div><img src="assets/bowl-thon.webp" alt="Chiracha Bowl Thon" class="menu-item-img"/><div class="menu-item-price">€15.50</div></div>
@@ -3018,7 +3018,7 @@ html {
   <!-- ── YAKISOBA & UDON ── -->
   <div id="cat-yakisoba" class="menu-category">
     <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍜 Yakisoba <span style="color:var(--red);">&</span> Udon</span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🍜 Yakisoba <span style="color:var(--red);">&</span> Udon</span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Poulet Teriyaki', 'Yakisoba ou Udon au poulet teriyaki', 15.50)"><div class="menu-item-info"><div class="menu-item-name">Poulet Teriyaki</div><div class="menu-item-desc">Yakisoba ou Udon au poulet teriyaki</div></div><img src="assets/yaki-poulet-teriyaki.webp" alt="Poulet Teriyaki" class="menu-item-img"style="object-fit:cover;"/><div class="menu-item-price">€15.50</div></div>
@@ -3031,7 +3031,7 @@ html {
   <!-- ── ACCOMPAGNEMENTS ── -->
   <div id="cat-accompagnements" class="menu-category">
     <div style="max-width:1000px;margin:0 auto 24px;padding:0 0 16px;border-bottom:2px solid var(--red);text-align:center;">
-      <span style="font-family:'AsianNinja',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥡 Accompagnements</span>
+      <span style="font-family:'GangOfThree',serif;font-size:36px;color:var(--ivory);letter-spacing:0.05em;">🥡 Accompagnements</span>
     </div>
     <div class="menu-items">
       <div class="menu-item" onclick="openAddToCart('Riz Blanc', 'Riz japonais nature', 3.40)"><div class="menu-item-info"><div class="menu-item-name">Riz Blanc</div><div class="menu-item-desc">Riz japonais nature</div></div><img src="assets/accomp-riz-blanc.webp" alt="Riz Blanc" class="menu-item-img"/><div class="menu-item-price">€3.40</div></div>
@@ -3050,7 +3050,7 @@ html {
     <div style="max-width:1000px;margin:0 auto;">
 
       <!-- SOFT -->
-      <div style="padding:16px 0 8px;font-family:'AsianNinja',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🥤 Soft</div>
+      <div style="padding:16px 0 8px;font-family:'GangOfThree',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🥤 Soft</div>
       <div class="menu-items" style="margin-bottom:32px;">
         <div class="menu-item" onclick="openAddToCart('Pales Cola', 'Soft', 2.50)"><div class="menu-item-info"><div class="menu-item-name">Pales Cola</div></div><img src="assets/boisson-pales-cola.webp" alt="Pales Cola" class="menu-item-img"/><div class="menu-item-price">€2.50</div></div>
         <div class="menu-item" onclick="openAddToCart('Pales Orange & Grenadine', 'Soft', 2.50)"><div class="menu-item-info"><div class="menu-item-name">Pales Orange &amp; Grenadine</div></div><img src="assets/boisson-pales-orange.webp" alt="Pales Orange" class="menu-item-img"/><div class="menu-item-price">€2.50</div></div>
@@ -3064,7 +3064,7 @@ html {
     
 
       <!-- MOJITO -->
-      <div style="padding:16px 0 8px;font-family:'AsianNinja',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🍹 Mojito</div>
+      <div style="padding:16px 0 8px;font-family:'GangOfThree',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🍹 Mojito</div>
       <div class="menu-items" style="margin-bottom:32px;">
         <div class="menu-item" onclick="openAddToCart('Mojito Classique', 'Sans alcool', 5.50)"><div class="menu-item-info"><div class="menu-item-name">Mojito Classique</div></div><img src="assets/boisson-mojito.webp" alt="Mojito" class="menu-item-img"/><div class="menu-item-price">€5.50</div></div>
         <div class="menu-item" onclick="openAddToCart('Mojito Fraises', 'Sans alcool', 5.50)"><div class="menu-item-info"><div class="menu-item-name">Mojito Fraises</div></div><img src="assets/boisson-mojitoF.webp" alt="Mojito Fraises" class="menu-item-img"/><div class="menu-item-price">€5.50</div></div>
@@ -3073,7 +3073,7 @@ html {
       </div>
 
       <!-- MILKSHAKE -->
-      <div style="padding:16px 0 8px;font-family:'AsianNinja',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🥛 Milkshake</div>
+      <div style="padding:16px 0 8px;font-family:'GangOfThree',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🥛 Milkshake</div>
       <div class="menu-items" style="margin-bottom:32px;">
         <div class="menu-item" onclick="openAddToCart('Milkshake Vanille', 'Milkshake maison', 5.90)"><div class="menu-item-info"><div class="menu-item-name">Milkshake Vanille</div></div><img src="assets/boisson-milkshake-vanille.webp" alt="Milkshake Vanille" class="menu-item-img"/><div class="menu-item-price">€5.90</div></div>
         <div class="menu-item" onclick="openAddToCart('Milkshake Kinder Bueno', 'Milkshake maison', 5.90)"><div class="menu-item-info"><div class="menu-item-name">Milkshake Kinder Bueno</div></div><img src="assets/boisson-milkshake-kinder.webp" alt="Milkshake Kinder" class="menu-item-img"/><div class="menu-item-price">€5.90</div></div>
@@ -3085,7 +3085,7 @@ html {
       </div>
 
       <!-- SMOOTHIE -->
-      <div style="padding:16px 0 8px;font-family:'AsianNinja',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🍓 Smoothie</div>
+      <div style="padding:16px 0 8px;font-family:'GangOfThree',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🍓 Smoothie</div>
       <div class="menu-items">
         <div class="menu-item" onclick="openAddToCart('Smoothie Fraise', 'Smoothie maison', 5.90)"><div class="menu-item-info"><div class="menu-item-name">Smoothie Fraise</div></div><img src="assets/boisson-smoothieFraise.webp" alt="Smoothie" class="menu-item-img"/><div class="menu-item-price">€5.90</div></div>
         <div class="menu-item" onclick="openAddToCart('Smoothie Framboise', 'Smoothie maison', 5.90)"><div class="menu-item-info"><div class="menu-item-name">Smoothie Framboise</div></div><img src="assets/boisson-smoothieFrambois.webp" alt="Smoothie" class="menu-item-img"/><div class="menu-item-price">€5.90</div></div>
@@ -3104,7 +3104,7 @@ html {
     <div style="max-width:1000px;margin:0 auto;">
 
       <!-- MOCHIS -->
-      <div style="padding:16px 0 8px;font-family:'AsianNinja',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🍡 Mochi Ice</div>
+      <div style="padding:16px 0 8px;font-family:'GangOfThree',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🍡 Mochi Ice</div>
       <div class="menu-items" style="margin-bottom:32px;">
         <div class="menu-item" onclick="openAddToCart('Mochi Ice Framboise', '2 pcs.', 4.50)"><div class="menu-item-info"><div class="menu-item-name">Mochi Ice Framboise</div><div class="menu-item-desc">2 pcs.</div></div><img src="assets/dessert-mochi-framboise.webp" alt="Mochi Framboise" class="menu-item-img"/><div class="menu-item-price">€4.50</div></div>
         <div class="menu-item" onclick="openAddToCart('Mochi Ice Citron', '2 pcs.', 4.50)"><div class="menu-item-info"><div class="menu-item-name">Mochi Ice Citron</div><div class="menu-item-desc">2 pcs.</div></div><img src="assets/dessert-mochi-citron.webp" alt="Mochi Citron" class="menu-item-img"/><div class="menu-item-price">€4.50</div></div>
@@ -3117,7 +3117,7 @@ html {
       </div>
 
       <!-- TIRAMISU -->
-      <div style="padding:16px 0 8px;font-family:'AsianNinja',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🍮 Tiramisu</div>
+      <div style="padding:16px 0 8px;font-family:'GangOfThree',serif;font-size:24px;color:var(--ivory);border-bottom:2px solid var(--red);margin-bottom:4px;letter-spacing:0.05em;">🍮 Tiramisu</div>
       <div class="menu-items">
         <div class="menu-item" onclick="openAddToCart('Tiramisu Banatella', 'Goût : Banane & Nutella', 3.99)"><div class="menu-item-info"><div class="menu-item-name">Tiramisu Banatella</div><div class="menu-item-desc">Goût : Banane &amp; Nutella</div></div><img src="assets/dessert-tiramisu.webp" alt="Tiramisu" class="menu-item-img"/><div class="menu-item-price">€3.99</div></div>
         <div class="menu-item" onclick="openAddToCart('Tiramisu Creamy Mango', 'Goût : Mangue', 3.99)"><div class="menu-item-info"><div class="menu-item-name">Tiramisu Creamy Mango</div><div class="menu-item-desc">Goût : Mangue</div></div><img src="assets/dessert-tiramisu.webp" alt="Tiramisu" class="menu-item-img"/><div class="menu-item-price">€3.99</div></div>
@@ -4449,7 +4449,7 @@ function closeSoon() {
 <div id="soon-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(8px);">
   <div style="background:#1a1a1c;border:1px solid rgba(255,107,157,0.3);border-radius:24px;padding:48px 40px;width:90%;max-width:420px;text-align:center;">
     <div style="font-size:52px;margin-bottom:20px;">🍓</div>
-    <div style="font-family:'AsianNinja',serif;font-size:38px;color:#F5F0E8;margin-bottom:12px;">Bientôt <span style="color:#FF6B9D;">Dispo</span></div>
+    <div style="font-family:'GangOfThree',serif;font-size:38px;color:#F5F0E8;margin-bottom:12px;">Bientôt <span style="color:#FF6B9D;">Dispo</span></div>
     <div style="font-size:13px;color:#8a8680;line-height:1.8;margin-bottom:28px;">
       Le site Sweety est en cours de finalisation.<br>
       Crêpes, Pancakes, Gaufres, Mochis et bien plus<br>

@@ -11,10 +11,12 @@
 <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
 <style>
   @font-face {
-    font-family: 'AsianNinja';
-    src: url('assets/aAsianNinja.woff2') format('woff2'),
-         url('assets/aAsianNinja.otf') format('opentype'),
-         url('assets/aAsianNinja.ttf') format('truetype');
+    font-family: 'GangOfThree';
+    src: url('assets/go3v2.ttf') format('truetype');
+    size-adjust: 88%; /* GangOfThree est ~19% plus large que l'ancienne police : compense pour garder la mise en page */
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
   }
   :root {
     --black: #FFF8F0;
@@ -30,7 +32,7 @@
     --gold: #C9A84C;
     --border: rgba(255,107,157,0.15);
     --border2: rgba(255,107,157,0.30);
-    --font-display: 'AsianNinja', serif;
+    --font-display: 'GangOfThree', serif;
     --font-ui: 'Josefin Sans', sans-serif;
   }
 
@@ -140,7 +142,7 @@
         font-weight: 300; line-height: 1.0; color: #F5F0E8;
     opacity: 0; transform: translateY(30px); animation: fadeUp 1.2s 0.5s forwards;
   }
-  .hero-title em { font-style: italic; color: var(--pink); display: block; }
+  .hero-title em { font-style: normal; color: var(--pink); display: block; }
   .hero-sub {
     font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase;
       color: #F5F0E8; margin-top: 32px;
@@ -178,7 +180,7 @@
     font-family: var(--font-display); font-size: clamp(36px, 5vw, 72px);
     font-weight: 300; line-height: 1.1; color: var(--ivory);
   }
-  .section-title em { font-style: italic; color: var(--pink); }
+  .section-title em { font-style: normal; color: var(--pink); }
   .divider { width: 40px; height: 1px; background: var(--pink); margin: 24px 0; opacity: 0.5; }
 
   /* ══ MENU PRINCIPAL : CRÊPES / PANCAKES / GAUFRES ══ */
@@ -468,13 +470,13 @@
 .cart-popup-close{position:absolute;top:14px;right:18px;background:none;border:none;color:#8a8080;font-size:22px;cursor:pointer;line-height:1;}
 .cart-popup-close:hover{color:#F5F0E8;}
 .cart-popup-label{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;}
-.cart-popup-name{font-family:'AsianNinja',serif;font-size:26px;color:#F5F0E8;margin-bottom:6px;line-height:1.2;}
+.cart-popup-name{font-family:'GangOfThree',serif;font-size:26px;color:#F5F0E8;margin-bottom:6px;line-height:1.2;}
 .cart-popup-desc{font-size:12px;color:#8a8080;line-height:1.6;margin-bottom:8px;}
-.cart-popup-price{font-family:'AsianNinja',serif;font-size:22px;color:#E8E2D6;margin-bottom:28px;}
+.cart-popup-price{font-family:'GangOfThree',serif;font-size:22px;color:#E8E2D6;margin-bottom:28px;}
 .cart-qty-wrap{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:28px;}
 .cart-qty-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,107,157,0.3);background:rgba(255,107,157,0.08);color:#F5F0E8;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .cart-qty-btn:hover{background:rgba(255,107,157,0.2);}
-.cart-qty-num{font-family:'AsianNinja',serif;font-size:36px;color:#F5F0E8;min-width:40px;text-align:center;}
+.cart-qty-num{font-family:'GangOfThree',serif;font-size:36px;color:#F5F0E8;min-width:40px;text-align:center;}
 .cart-popup-add-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 24px;background:var(--pink);color:#fff;font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;transition:background 0.3s;box-shadow:0 8px 24px rgba(255,107,157,0.3);}
 .cart-popup-add-btn:hover{background:var(--pink-soft);}
 .cart-fab{position:fixed;bottom:28px;right:24px;width:64px;height:64px;border-radius:50%;background:var(--pink);color:#fff;border:none;cursor:pointer;z-index:400;box-shadow:0 8px 28px rgba(255,107,157,0.5);display:flex;align-items:center;justify-content:center;transition:transform 0.3s;}
@@ -487,7 +489,7 @@
 .cart-sidebar{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);height:100%;background:#110a0e;border-left:1px solid rgba(255,107,157,0.15);z-index:800;display:flex;flex-direction:column;transform:translateX(110%);transition:transform 0.4s ease;}
 .cart-sidebar.open{transform:translateX(0);}
 .cart-sidebar-header{padding:28px;border-bottom:1px solid rgba(255,107,157,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.cart-sidebar-title{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;}
+.cart-sidebar-title{font-family:'GangOfThree',serif;font-size:28px;color:#F5F0E8;}
 .cart-sidebar-title span{color:var(--pink);}
 .cart-sidebar-close{width:36px;height:36px;border-radius:50%;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.15);color:#8a8080;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .cart-sidebar-close:hover{color:#F5F0E8;}
@@ -496,15 +498,15 @@
 .cart-line-item{padding:16px 28px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,107,157,0.06);}
 .cart-line-item:hover{background:rgba(255,107,157,0.04);}
 .cart-line-info{flex:1;}
-.cart-line-name{font-family:'AsianNinja',serif;font-size:17px;color:#F5F0E8;margin-bottom:3px;font-family: var(--font-ui);}
+.cart-line-name{font-family:'GangOfThree',serif;font-size:17px;color:#F5F0E8;margin-bottom:3px;font-family: var(--font-ui);}
 .cart-line-price{font-size:12px;color:#8a8080;}
 .cart-line-controls{display:flex;align-items:center;gap:8px;}
 .cart-line-qty-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,107,157,0.2);background:rgba(255,107,157,0.06);color:#F5F0E8;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .cart-line-qty-btn.remove{border-color:rgba(255,107,157,0.4);color:var(--pink);}
-.cart-line-qty{font-family:'AsianNinja',serif;font-size:18px;color:#F5F0E8;min-width:20px;text-align:center;}
+.cart-line-qty{font-family:'GangOfThree',serif;font-size:18px;color:#F5F0E8;min-width:20px;text-align:center;}
 .cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;width:100%;}
 .cart-total-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a8080;}
-.cart-total-price{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;}
+.cart-total-price{font-family:'GangOfThree',serif;font-size:28px;color:#F5F0E8;}
 .cart-phone-wrap{margin-bottom:14px;}
 .cart-phone-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);display:block;margin-bottom:8px;}
 .cart-phone-input{width:100%;background:rgba(255,107,157,0.05);border:1px solid rgba(255,107,157,0.15);border-radius:12px;padding:14px 18px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:15px;outline:none;transition:border-color 0.3s;}
@@ -517,7 +519,7 @@
 .cart-confirm-overlay.open{display:flex;}
 .cart-confirm-box{background:#1a0f14;border:1px solid rgba(255,107,157,0.2);border-radius:20px;padding:40px;width:90%;max-width:400px;text-align:center;}
 .cart-confirm-icon{width:64px;height:64px;background:rgba(37,211,102,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
-.cart-confirm-title{font-family:'AsianNinja',serif;font-size:28px;color:#F5F0E8;margin-bottom:10px;}
+.cart-confirm-title{font-family:'GangOfThree',serif;font-size:28px;color:#F5F0E8;margin-bottom:10px;}
 .cart-confirm-sub{font-size:13px;color:#8a8080;line-height:1.7;margin-bottom:28px;}
 .cart-confirm-btn{padding:14px 36px;background:var(--pink);color:#fff;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;}
 .cart-confirm-btn:hover{background:var(--pink-soft);}
@@ -533,7 +535,7 @@
 .cart-step-item.done .cart-step-label{color:rgba(255,107,157,0.7);}
 .cart-step-content{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .cart-step-inner{flex:1;overflow-y:auto;padding:24px 28px;}
-.cart-step-title{font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;margin-bottom:8px;text-align:center;}
+.cart-step-title{font-family:'GangOfThree',serif;font-size:22px;color:#F5F0E8;margin-bottom:8px;text-align:center;}
 .cart-step-sub{font-size:12px;color:#8a8080;text-align:center;margin-bottom:28px;letter-spacing:0.05em;}
 .cart-delivery-btns{display:flex;gap:12px;margin-top:8px;}
 .cart-delivery-choice-btn{flex:1;padding:24px 12px;background:rgba(255,107,157,0.04);border:1px solid rgba(255,107,157,0.12);border-radius:16px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;display:flex;flex-direction:column;align-items:center;gap:12px;}
@@ -1994,7 +1996,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
     <!-- ÉCRAN SUCCÈS -->
     <div id="builder-success" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 24px;flex:1;overflow-y:auto;">
       <div style="font-size:48px;">🎉</div>
-      <div style="font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;text-align:center;" data-i18n="builder.successTitle">Ajouté au panier !</div>
+      <div style="font-family:'GangOfThree',serif;font-size:22px;color:#F5F0E8;text-align:center;" data-i18n="builder.successTitle">Ajouté au panier !</div>
       <div style="font-size:13px;color:#8a8080;text-align:center;" data-i18n="builder.successSub">Que souhaitez-vous faire ?</div>
       <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px;">
        <button onclick="openBaseChoice('Crêpes',5.00)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
@@ -2019,7 +2021,7 @@ function closeConfirm() { document.getElementById('cart-confirm-overlay').classL
     <div id="builder-boissons" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
       <div style="padding:16px 24px 12px;border-bottom:1px solid rgba(255,107,157,0.1);display:flex;align-items:center;gap:12px;flex-shrink:0;">
         <button onclick="document.getElementById('builder-boissons').style.display='none';document.getElementById('builder-success').style.display='flex';" style="background:none;border:none;color:#8a8080;font-size:22px;cursor:pointer;padding:0;line-height:1;">←</button>
-        <span style="font-family:'AsianNinja',serif;font-size:20px;color:#F5F0E8;" data-i18n="builder.chooseDrink">Choisir une boisson</span>
+        <span style="font-family:'GangOfThree',serif;font-size:20px;color:#F5F0E8;" data-i18n="builder.chooseDrink">Choisir une boisson</span>
       </div>
       <div style="flex:1;overflow-y:auto;padding:16px 24px;">
         <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;" data-i18n="boissons.catSoft">🥤 Soft</div>
@@ -2111,9 +2113,9 @@ function openBaseChoice(baseName, basePrice) {
     var name = t('sig.' + slug + '.' + item.key + '.name');
     var desc = t('sig.' + slug + '.' + item.key + '.desc');
     html += '<div onclick="addSignatureItem(\'' + name.replace(/'/g,"\\'") + '\',\'' + desc.replace(/'/g,"\\'") + '\',' + item.price + ')" style="cursor:pointer;padding:14px 0;border-bottom:1px solid rgba(255,107,157,0.08);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">'
-      + '<div><div style="color:#F5F0E8;font-family:\'AsianNinja\',serif;font-size:16px;">' + name + '</div>'
+      + '<div><div style="color:#F5F0E8;font-family:\'GangOfThree\',serif;font-size:16px;">' + name + '</div>'
       + '<div style="color:#8a8080;font-size:12px;margin-top:2px;">' + desc + '</div></div>'
-      + '<div style="color:var(--pink);font-family:\'AsianNinja\',serif;font-size:16px;white-space:nowrap;">' + item.price.toFixed(2) + '€</div>'
+      + '<div style="color:var(--pink);font-family:\'GangOfThree\',serif;font-size:16px;white-space:nowrap;">' + item.price.toFixed(2) + '€</div>'
       + '</div>';
   });
   html += '<div onclick="closeBaseChoice();openDessertBuilder(\'' + baseName + '\',' + basePrice + ')" style="cursor:pointer;padding:14px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--pink);"><span style="font-family:\'Josefin Sans\',sans-serif;font-size:13px;">' + t('builder.composeOwnRecipe') + '</span><span>→</span></div>';
@@ -2267,7 +2269,7 @@ function builderAddDrink(name, price) {
     <!-- ÉCRAN SUCCÈS DRINK -->
     <div id="drink-success-screen" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 24px;flex:1;">
       <div style="font-size:48px;">🎉</div>
-      <div style="font-family:'AsianNinja',serif;font-size:22px;color:#F5F0E8;text-align:center;" data-i18n="builder.successTitle">Ajouté au panier !</div>
+      <div style="font-family:'GangOfThree',serif;font-size:22px;color:#F5F0E8;text-align:center;" data-i18n="builder.successTitle">Ajouté au panier !</div>
       <div style="font-size:13px;color:#8a8080;text-align:center;" data-i18n="builder.successSub">Que souhaitez-vous faire ?</div>
       <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px;">
         <button onclick="openDrinkBuilder(currentDrinkType)" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;color:#F5F0E8;font-family:'Josefin Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;">
